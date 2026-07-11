@@ -1,0 +1,86 @@
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Embedder-Policy = "require-corp"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json; charset=utf-8"
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/launch.html"
+  [headers.values]
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/game.html"
+  [headers.values]
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/app.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/install.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/service-worker.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/build/Build/*.wasm"
+  [headers.values]
+    Content-Type = "application/wasm"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/build/Build/*.data"
+  [headers.values]
+    Content-Type = "application/octet-stream"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/build/Build/*.framework.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/build/Build/*.wasm.br"
+  [headers.values]
+    Content-Type = "application/wasm"
+    Content-Encoding = "br"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/build/Build/*.data.br"
+  [headers.values]
+    Content-Type = "application/octet-stream"
+    Content-Encoding = "br"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/build/Build/*.framework.js.br"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
+    Content-Encoding = "br"
+    Cache-Control = "public, max-age=31536000, immutable"

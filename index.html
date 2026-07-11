@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+	<meta name="theme-color" content="#101820">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-title" content="StoryBook">
+	<title>StoryBook</title>
+	<link rel="manifest" href="manifest.webmanifest">
+	<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+	<link rel="apple-touch-icon" href="icons/icon-192.png">
+	<link rel="stylesheet" href="styles.css">
+	<script>
+		const isInstalledWindow = window.matchMedia("(display-mode: browser)").matches === false
+			|| window.matchMedia("(display-mode: fullscreen)").matches
+			|| window.matchMedia("(display-mode: standalone)").matches
+			|| window.matchMedia("(display-mode: minimal-ui)").matches
+			|| window.matchMedia("(display-mode: window-controls-overlay)").matches
+			|| window.navigator.standalone === true;
+
+		if (isInstalledWindow) {
+			location.replace("game.html?launch=installed");
+		}
+	</script>
+</head>
+<body class="install-page">
+	<main class="install-shell">
+		<img class="install-logo" src="icons/icon.svg" alt="">
+		<h1>StoryBook</h1>
+		<button class="install-button" id="installButton" type="button">
+			Telecharger
+		</button>
+		<p class="install-status" id="installStatus" aria-live="polite"></p>
+	</main>
+
+	<script src="install.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+
+/manifest.webmanifest
+  Content-Type: application/manifest+json; charset=utf-8
+  Cache-Control: no-store
+
+/index.html
+  Cache-Control: no-store
+
+/launch.html
+  Cache-Control: no-store
+
+/game.html
+  Cache-Control: no-store
+
+/app.js
+  Content-Type: application/javascript; charset=utf-8
+  Cache-Control: no-store
+
+/install.js
+  Content-Type: application/javascript; charset=utf-8
+  Cache-Control: no-store
+
+/service-worker.js
+  Content-Type: application/javascript; charset=utf-8
+  Cache-Control: no-store
+
+/build/Build/*.wasm
+  Content-Type: application/wasm
+  Cache-Control: public, max-age=31536000, immutable
+
+/build/Build/*.data
+  Content-Type: application/octet-stream
+  Cache-Control: public, max-age=31536000, immutable
+
+/build/Build/*.framework.js
+  Content-Type: application/javascript; charset=utf-8
+  Cache-Control: public, max-age=31536000, immutable
+
+/build/Build/*.wasm.br
+  Content-Type: application/wasm
+  Content-Encoding: br
+  Cache-Control: public, max-age=31536000, immutable
+
+/build/Build/*.data.br
+  Content-Type: application/octet-stream
+  Content-Encoding: br
+  Cache-Control: public, max-age=31536000, immutable
+
+/build/Build/*.framework.js.br
+  Content-Type: application/javascript; charset=utf-8
+  Content-Encoding: br
+  Cache-Control: public, max-age=31536000, immutable
