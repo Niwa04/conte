@@ -1,4 +1,4 @@
-const CACHE_NAME = "maison-des-contes-pwa-v18";
+const CACHE_NAME = "maison-des-contes-pwa-v20";
 const APP_SHELL = [
 	"./",
 	"./index.html",
@@ -12,10 +12,8 @@ const APP_SHELL = [
 	"./assets/images/loading-cover.png",
 	"./assets/images/header-logo.png",
 	"./assets/images/hero-book.png",
-	"./icons/icon.svg",
-	"./icons/maskable-icon.svg",
-	"./icons/icon-192.png",
-	"./icons/icon-512.png"
+	"./icons/maison-des-contes-192.png",
+	"./icons/maison-des-contes-512.png"
 ];
 const GAME_FILES = [
 	"./build/Build/Build.loader.js",

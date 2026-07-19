@@ -2,6 +2,8 @@ const UNITY_BUILD_ROOTS = ["build", "Build", "PWA/build", "PWA/Build"];
 // À mettre à jour après chaque nouveau build Unity pour invalider à la fois
 // le cache du service worker et le cache IndexedDB interne du loader WebGL.
 const UNITY_BUILD_VERSION = "20260719-150251";
+const GAME_REVEAL_DELAY_MS = 3000;
+const LOADING_MESSAGE = "Ouverture de la Maison des Contes...";
 const UNITY_LOADER_NAMES = [
 	"Build.loader.js",
 	"StoryBook.loader.js",
@@ -51,7 +53,7 @@ async function precacheGameForOffline() {
 }
 
 async function initUnity() {
-	setStatus("Recherche du build Unity...");
+	setStatus(LOADING_MESSAGE);
 
 	const loaderUrl = await findUnityLoader();
 	if (!loaderUrl) {
@@ -78,10 +80,13 @@ async function initUnity() {
 		productVersion: "1.0"
 	};
 
-	setStatus("Chargement du jeu...");
+	setStatus(LOADING_MESSAGE);
 	createUnityInstance(unityCanvas, config, (progress) => {
 		progressFill.style.width = `${Math.round(progress * 100)}%`;
-	}).then(() => {
+	}).then(async () => {
+		progressFill.style.width = "100%";
+		setStatus(LOADING_MESSAGE);
+		await delay(GAME_REVEAL_DELAY_MS);
 		loadingPanel.classList.add("is-hidden");
 	}).catch((error) => {
 		console.error(error);
@@ -213,6 +218,10 @@ function setMissingBuildState() {
 
 function setStatus(message) {
 	statusText.textContent = message;
+}
+
+function delay(duration) {
+	return new Promise((resolve) => window.setTimeout(resolve, duration));
 }
 
 function formatError(error) {
