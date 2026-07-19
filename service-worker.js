@@ -1,13 +1,17 @@
-const CACHE_NAME = "storybook-pwa-v11";
+const CACHE_NAME = "maison-des-contes-pwa-v18";
 const APP_SHELL = [
 	"./",
 	"./index.html",
 	"./launch.html",
 	"./game.html",
+	"./game.css",
 	"./styles.css",
 	"./app.js",
 	"./install.js",
 	"./manifest.webmanifest",
+	"./assets/images/loading-cover.png",
+	"./assets/images/header-logo.png",
+	"./assets/images/hero-book.png",
 	"./icons/icon.svg",
 	"./icons/maskable-icon.svg",
 	"./icons/icon-192.png",
@@ -15,9 +19,9 @@ const APP_SHELL = [
 ];
 const GAME_FILES = [
 	"./build/Build/Build.loader.js",
-	"./build/Build/Build.data",
-	"./build/Build/Build.framework.js",
-	"./build/Build/Build.wasm",
+	"./build/Build/Build.data.br",
+	"./build/Build/Build.framework.js.br",
+	"./build/Build/Build.wasm.br",
 	"./build/TemplateData/favicon.ico",
 	"./build/TemplateData/style.css"
 ];

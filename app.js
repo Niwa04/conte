@@ -1,4 +1,7 @@
 const UNITY_BUILD_ROOTS = ["build", "Build", "PWA/build", "PWA/Build"];
+// À mettre à jour après chaque nouveau build Unity pour invalider à la fois
+// le cache du service worker et le cache IndexedDB interne du loader WebGL.
+const UNITY_BUILD_VERSION = "20260719-150251";
 const UNITY_LOADER_NAMES = [
 	"Build.loader.js",
 	"StoryBook.loader.js",
@@ -56,7 +59,7 @@ async function initUnity() {
 		return;
 	}
 
-	await loadScript(loaderUrl);
+	await loadScript(withBuildVersion(loaderUrl));
 
 	if (typeof createUnityInstance !== "function") {
 		setStatus("Le loader Unity est present, mais createUnityInstance est introuvable.");
@@ -66,9 +69,9 @@ async function initUnity() {
 	const buildBasePath = loaderUrl.slice(0, loaderUrl.lastIndexOf("/"));
 	const buildName = loaderUrl.split("/").pop().replace(".loader.js", "");
 	const config = {
-		dataUrl: await findExistingUnityFile(buildBasePath, buildName, "data"),
-		frameworkUrl: await findExistingUnityFile(buildBasePath, buildName, "framework.js"),
-		codeUrl: await findExistingUnityFile(buildBasePath, buildName, "wasm"),
+		dataUrl: withBuildVersion(await findExistingUnityFile(buildBasePath, buildName, "data")),
+		frameworkUrl: withBuildVersion(await findExistingUnityFile(buildBasePath, buildName, "framework.js")),
+		codeUrl: withBuildVersion(await findExistingUnityFile(buildBasePath, buildName, "wasm")),
 		streamingAssetsUrl: "StreamingAssets",
 		companyName: "StoryBook",
 		productName: "StoryBook",
@@ -195,6 +198,12 @@ function loadScript(src) {
 		script.onerror = reject;
 		document.body.appendChild(script);
 	});
+}
+
+function withBuildVersion(url) {
+	const versionedUrl = new URL(url, location.href);
+	versionedUrl.searchParams.set("build", UNITY_BUILD_VERSION);
+	return versionedUrl.href;
 }
 
 function setMissingBuildState() {

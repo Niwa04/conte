@@ -1,0 +1,141 @@
+:root {
+	color-scheme: dark;
+	--game-background: #000;
+	--game-text: #f7f4ea;
+	--game-muted: #c6d1d3;
+	--game-accent: #f2b84b;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+	background: var(--game-background);
+	color: var(--game-text);
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.game-page {
+	touch-action: none;
+	padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.game-shell {
+	position: fixed;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	background: var(--game-background);
+}
+
+.game-frame {
+	position: relative;
+	width: min(100vw, calc(100vh * 16 / 9));
+	aspect-ratio: 16 / 9;
+	max-height: 100vh;
+	overflow: hidden;
+	background: var(--game-background);
+}
+
+#unityCanvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: var(--game-background);
+}
+
+.loading-panel {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	overflow: hidden;
+	background: var(--game-background);
+}
+
+.loading-panel::after {
+	content: "";
+	position: absolute;
+	inset: 45% 0 0;
+	background: linear-gradient(transparent, rgba(20, 8, 2, 0.88));
+	pointer-events: none;
+}
+
+.loading-panel.is-hidden {
+	display: none;
+}
+
+.loading-cover {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+}
+
+.loading-content {
+	position: relative;
+	z-index: 1;
+	display: grid;
+	justify-items: center;
+	gap: 12px;
+	width: min(560px, 72vw);
+	margin-bottom: clamp(28px, 6vh, 64px);
+	padding: 16px 22px 20px;
+	border: 1px solid rgba(238, 187, 91, 0.6);
+	border-radius: 14px;
+	background: rgba(31, 13, 5, 0.74);
+	box-shadow: 0 14px 45px rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(7px);
+}
+
+.loading-content p {
+	margin: 0;
+	color: #fff1cf;
+	font-size: 17px;
+	font-weight: 700;
+	line-height: 1.5;
+	text-shadow: 0 2px 8px #000;
+}
+
+.progress-track {
+	width: 100%;
+	height: 10px;
+	border: 1px solid rgba(255, 221, 150, 0.5);
+	border-radius: 999px;
+	overflow: hidden;
+	background: rgba(0, 0, 0, 0.48);
+}
+
+.progress-fill {
+	width: 0%;
+	height: 100%;
+	border-radius: inherit;
+	background: linear-gradient(90deg, #b87822, #ffe29b, #e2a23f);
+	box-shadow: 0 0 15px rgba(255, 196, 84, 0.8);
+	transition: width 0.16s ease-out;
+}
+
+@media (orientation: portrait) {
+	.game-frame {
+		width: min(100vh, calc(100vw * 16 / 9));
+		height: auto;
+		max-height: none;
+		transform: rotate(90deg);
+		transform-origin: center;
+	}
+}
+
+@media (max-width: 720px) {
+	.loading-content p {
+		font-size: 14px;
+	}
+}

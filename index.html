@@ -1,40 +1,66 @@
 <!doctype html>
 <html lang="fr">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-	<meta name="theme-color" content="#101820">
-	<meta name="mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-title" content="StoryBook">
-	<title>StoryBook</title>
-	<link rel="manifest" href="manifest.webmanifest">
-	<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
-	<link rel="apple-touch-icon" href="icons/icon-192.png">
-	<link rel="stylesheet" href="styles.css">
-	<script>
-		const isInstalledWindow = window.matchMedia("(display-mode: browser)").matches === false
-			|| window.matchMedia("(display-mode: fullscreen)").matches
-			|| window.matchMedia("(display-mode: standalone)").matches
-			|| window.matchMedia("(display-mode: minimal-ui)").matches
-			|| window.matchMedia("(display-mode: window-controls-overlay)").matches
-			|| window.navigator.standalone === true;
-
-		if (isInstalledWindow) {
-			location.replace("game.html?launch=installed");
-		}
-	</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#06111f">
+  <meta name="description" content="Des histoires illustrées, racontées et mises en musique pour transformer chaque lecture en moment magique.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="stylesheet" href="styles.css">
+  <title>La Maison des Contes — Des histoires qui prennent vie</title>
 </head>
-<body class="install-page">
-	<main class="install-shell">
-		<img class="install-logo" src="icons/icon.svg" alt="">
-		<h1>StoryBook</h1>
-		<button class="install-button" id="installButton" type="button">
-			Telecharger
-		</button>
-		<p class="install-status" id="installStatus" aria-live="polite"></p>
-	</main>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="#accueil"><img class="brand-logo" src="assets/images/header-logo.png" alt="">La Maison des Contes</a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
+    <nav id="main-nav" class="main-nav"><a class="active" href="#accueil">Accueil</a><a href="#contes">Nos contes</a><a href="#experience">L’expérience</a><a href="#familles">Familles</a><a href="#ecoles">Écoles</a><a class="nav-cta install-button" href="#telecharger">↓ Télécharger</a></nav>
+  </header>
 
-	<script src="install.js" defer></script>
-</body>
-</html>
+  <main>
+    <section id="accueil" class="hero">
+      <div class="hero-backdrop"></div><div class="fireflies" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="hero-inner section-shell"><div class="hero-copy reveal">
+        <p class="eyebrow">La lecture devient magie</p>
+        <h1>Ce soir, allumez<br><span>l’imaginaire.</span></h1>
+        <p class="hero-text">Des histoires illustrées, racontées et mises en musique pour transformer le coucher en un moment magique.</p>
+        <div class="hero-actions"><a class="button button-primary" href="#demo">✦ Découvrir gratuitement</a><button class="button button-secondary install-button">↓ Télécharger l’application</button></div>
+      </div></div>
+    </section>
+
+    <section class="proof-strip" aria-label="Les avantages"><div><strong>100 %</strong><span>pensé pour les enfants</span></div><div><strong>0 publicité</strong><span>pour une lecture sereine</span></div><div><strong>Partout</strong><span>même sans connexion</span></div><div><strong>En famille</strong><span>ou à l’école</span></div></section>
+
+    <section id="experience" class="section-shell compact-section">
+      <div class="section-intro reveal"><p class="eyebrow">Plus qu’un livre</p><div class="ornament-title"><span></span><h2>Une expérience féerique</h2><span></span></div><p>Chaque détail est pensé pour nourrir l’imaginaire sans surstimuler l’enfant.</p></div>
+      <div class="feature-grid"><article class="feature-card reveal" style="--img:url('assets/images/snow-white-scene.png')"><i>▣</i><div><h3>Des images qui émerveillent</h3><p>De grandes illustrations riches en détails invitent à observer, raconter et rêver.</p></div></article><article class="feature-card reveal" style="--img:url('assets/images/child-reading.png')"><i>♫</i><div><h3>Une bulle de douceur</h3><p>Voix chaleureuse, musique apaisante et rythme calme accompagnent chaque histoire.</p></div></article><article class="feature-card reveal" style="--img:url('assets/images/family-reading.png')"><i>✦</i><div><h3>Un monde vivant</h3><p>Les scènes prennent vie avec délicatesse pour placer l’enfant au cœur du récit.</p></div></article></div>
+      <div class="unity-demo reveal" id="essai-application">
+        <div class="unity-demo-copy"><span class="unity-demo-badge">Démo WebGL</span><p class="eyebrow">Essayez maintenant</p><h3>Une histoire à regarder, écouter et explorer</h3><p>La Maison des Contes transforme la lecture en aventure vivante. Entrez dans une bibliothèque enchantée, choisissez un livre et laissez les illustrations, la narration et la musique guider l’imagination.</p><ul><li><span>✦</span> Des livres illustrés qui prennent vie</li><li><span>♫</span> Une narration douce et immersive</li><li><span>⌂</span> Une bibliothèque pensée pour les enfants</li></ul><p class="unity-demo-invitation">Essayez-la ici, sans téléchargement. Cliquez sur la couverture puis passez en grand écran pour profiter pleinement de l’expérience.</p></div>
+        <div class="unity-demo-stage">
+          <div class="unity-demo-frame">
+            <div class="unity-demo-controls"><button class="unity-demo-expand" type="button" aria-label="Afficher la démo en grand écran">⛶ Grand écran</button><button class="unity-demo-close" type="button" aria-label="Fermer le grand écran">× Fermer</button></div>
+            <div class="unity-demo-poster"><img src="assets/images/loading-cover.png" alt="La Maison des Contes"><div><button class="button button-primary unity-demo-launch" type="button">✦ Lancer la démo</button><small>Le premier chargement peut prendre quelques instants.</small></div></div>
+            <iframe class="unity-demo-iframe" title="Démo interactive de La Maison des Contes" allow="fullscreen; autoplay" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contes" class="section-shell compact-section">
+      <div class="section-intro reveal"><p class="eyebrow">La bibliothèque enchantée</p><div class="ornament-title"><span></span><h2>Choisissez votre prochaine aventure</h2><span></span></div><p>Des classiques réinventés avec tendresse, mystère et émerveillement.</p></div>
+      <div class="story-grid"><article class="story-card reveal"><div class="story-visual"><img src="assets/images/cover-snow-white.png" alt="Blanche-Neige"><span>Dès 4 ans</span></div><div><h3>Blanche-Neige</h3><p>Une forêt mystérieuse, une amitié inattendue et une pomme ensorcelée.</p><small>◷ Environ 12 minutes</small><a href="#demo">Découvrir ce conte →</a></div></article><article class="story-card reveal"><div class="story-visual"><img src="assets/images/cover-cinderella.png" alt="Cendrillon"><span>Dès 3 ans</span></div><div><h3>Cendrillon</h3><p>Une nuit magique qui célèbre l’espoir, le courage et la liberté.</p><small>◷ Environ 10 minutes</small><a href="#demo">Découvrir ce conte →</a></div></article><article class="story-card reveal"><div class="story-visual"><img src="assets/images/cover-poucet.png" alt="Le Petit Poucet"><span>Dès 5 ans</span></div><div><h3>Le Petit Poucet</h3><p>Un petit héros, une grande forêt et beaucoup d’ingéniosité.</p><small>◷ Environ 14 minutes</small><a href="#demo">Découvrir ce conte →</a></div></article></div>
+    </section>
+
+    <section id="demo" class="demo-section compact-section"><div class="section-shell">
+      <div class="section-intro reveal"><p class="eyebrow">À vous de choisir</p><div class="ornament-title"><span></span><h2>Découvrez la magie en action</h2><span></span></div><p>Explorez les trois dimensions qui rendent chaque lecture inoubliable.</p></div>
+      <div class="interactive-demo reveal"><div class="demo-tabs" role="tablist"><button class="active" role="tab" aria-selected="true" data-demo="read">▣ <span>Lire<small>De grandes pages illustrées</small></span></button><button role="tab" aria-selected="false" data-demo="listen">♫ <span>Écouter<small>Une narration douce</small></span></button><button role="tab" aria-selected="false" data-demo="explore">✦ <span>Explorer<small>Des décors qui prennent vie</small></span></button></div><div class="demo-screen"><div class="demo-device"><img id="demo-image" src="assets/images/app-screen-2.jpg" alt="Aperçu de la lecture illustrée"><span class="demo-shine"></span></div><p id="demo-caption">Tournez les pages et laissez les illustrations raconter leur propre histoire.</p></div></div>
+    </div></section>
+
+    <section id="familles" class="section-shell compact-section"><div class="section-intro reveal"><p class="eyebrow">À chaque moment son histoire</p><div class="ornament-title"><span></span><h2>Des souvenirs à partager</h2><span></span></div></div><div class="moment-grid"><article class="moment-card reveal"><img src="assets/images/family-reading.png" alt="Lecture en famille"><div><h3>♥ En famille</h3><p>Des instants complices pour rêver et grandir ensemble.</p></div></article><article class="moment-card reveal"><img src="assets/images/child-reading.png" alt="Lecture avant le coucher"><div><h3>☾ Avant le coucher</h3><p>Un rituel doux pour ralentir et préparer une belle nuit.</p></div></article><article id="ecoles" class="moment-card reveal"><img src="assets/images/school-reading.png" alt="Lecture à l’école"><div><h3>⌂ À l’école</h3><p>Un support vivant pour écouter, observer et échanger.</p></div></article></div></section>
+
+    <section id="telecharger" class="final-cta section-shell reveal"><img src="assets/images/hero-book.png" alt="Livre féerique"><div><p class="eyebrow">La prochaine histoire vous attend</p><h2>Ce soir, n’éteignez pas seulement la lumière.</h2><p>Allumez l’imaginaire et partagez un moment que votre enfant n’oubliera pas.</p></div><div class="hero-actions"><a class="button button-primary" href="#demo">✦ Commencer notre histoire</a><button class="button button-secondary install-button">↓ Télécharger l’application</button></div></section>
+  </main>
+
+  <footer><div class="footer-inner"><div><strong><span class="brand-mark mini"><span>⌂</span><i>✦</i></span> La Maison des Contes</strong><p>Ouvrez un livre. Entrez dans un monde.</p></div><div><strong>Découvrir</strong><a href="#contes">Nos contes</a><a href="#experience">L’expérience</a><a href="#demo">Démonstration</a></div><div><strong>Pour tous</strong><a href="#familles">Familles</a><a href="#ecoles">Écoles</a></div><div><strong>Informations</strong><a href="#">À propos</a><a href="#">Confidentialité</a><a href="#">Nous contacter</a></div></div><p class="copyright">© 2026 La Maison des Contes · Tous droits réservés.</p></footer>
+  <dialog id="lightbox"><button class="lightbox-close" aria-label="Fermer">×</button><img alt="Aperçu agrandi"></dialog><div id="toast" role="status" aria-live="polite"></div><script src="script.js"></script>
+</body></html>

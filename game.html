@@ -10,20 +10,21 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 	<title>StoryBook</title>
 	<link rel="manifest" href="manifest.webmanifest">
-	<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+	<link rel="icon" href="icons/icon-192.png" type="image/png">
 	<link rel="apple-touch-icon" href="icons/icon-192.png">
-	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="game.css">
 </head>
 <body class="game-page">
 	<main class="game-shell">
 		<div class="game-frame" id="gameFrame">
 			<canvas id="unityCanvas" tabindex="-1"></canvas>
 			<div class="loading-panel" id="loadingPanel">
-				<img class="app-mark" src="icons/icon.svg" alt="">
-				<h1>StoryBook</h1>
-				<p id="statusText">Preparation du jeu...</p>
-				<div class="progress-track" aria-hidden="true">
-					<div class="progress-fill" id="progressFill"></div>
+				<img class="loading-cover" src="assets/images/loading-cover.png" alt="La Maison des Contes">
+				<div class="loading-content">
+					<p id="statusText">Préparation du jeu…</p>
+					<div class="progress-track" aria-hidden="true">
+						<div class="progress-fill" id="progressFill"></div>
+					</div>
 				</div>
 			</div>
 		</div>

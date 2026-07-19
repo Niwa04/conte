@@ -1,8 +1,8 @@
 {
-	"name": "StoryBook",
-	"short_name": "StoryBook",
-	"description": "Jeu de livre interactif StoryBook.",
-	"id": "./storybook-game-v8",
+	"name": "La Maison des Contes",
+	"short_name": "Contes",
+	"description": "Des histoires illustrées, racontées et mises en musique pour rêver en famille.",
+	"id": "./maison-des-contes-v1",
 	"start_url": "./launch.html",
 	"launch_handler": {
 		"client_mode": "navigate-new"
@@ -11,8 +11,9 @@
 	"display_override": ["fullscreen", "standalone"],
 	"display": "standalone",
 	"orientation": "landscape",
-	"background_color": "#101820",
-	"theme_color": "#101820",
+	"categories": ["education", "entertainment", "kids"],
+	"background_color": "#090b0e",
+	"theme_color": "#17130f",
 	"icons": [
 		{
 			"src": "icons/icon-192.png",
