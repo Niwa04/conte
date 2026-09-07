@@ -1,4 +1,4 @@
-const CACHE_NAME = "maison-des-contes-pwa-v20";
+const CACHE_NAME = "maison-des-contes-pwa-v21";
 const APP_SHELL = [
 	"./",
 	"./index.html",
@@ -15,15 +15,6 @@ const APP_SHELL = [
 	"./icons/maison-des-contes-192.png",
 	"./icons/maison-des-contes-512.png"
 ];
-const GAME_FILES = [
-	"./build/Build/Build.loader.js",
-	"./build/Build/Build.data.br",
-	"./build/Build/Build.framework.js.br",
-	"./build/Build/Build.wasm.br",
-	"./build/TemplateData/favicon.ico",
-	"./build/TemplateData/style.css"
-];
-
 self.addEventListener("install", (event) => {
 	event.waitUntil(
 		caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
@@ -45,7 +36,12 @@ self.addEventListener("message", (event) => {
 		return;
 	}
 
-	event.waitUntil(cacheGameFiles(event.source));
+	const files = Array.isArray(event.data.files) ? event.data.files : [];
+	if (files.length === 0) {
+		return;
+	}
+
+	event.waitUntil(cacheGameFiles(event.source, files));
 });
 
 self.addEventListener("fetch", (event) => {
@@ -54,7 +50,7 @@ self.addEventListener("fetch", (event) => {
 	}
 
 	const url = new URL(event.request.url);
-	const isUnityBuildFile = url.pathname.includes("/build/");
+	const isUnityBuildFile = isUnityArtifact(url);
 
 	if (isUnityBuildFile) {
 		event.respondWith(cacheFirst(event.request));
@@ -64,34 +60,43 @@ self.addEventListener("fetch", (event) => {
 	event.respondWith(networkFirst(event.request));
 });
 
-async function cacheGameFiles(client) {
+function isUnityArtifact(url) {
+	const path = url.pathname.toLowerCase();
+	return /\/build\/(?:[^/]+\/)*[^/]+\.(?:loader\.js|data(?:\.[^/]*)?|framework\.js(?:\.[^/]*)?|wasm(?:\.[^/]*)?)$/i.test(path);
+}
+
+async function cacheGameFiles(client, files) {
 	const cache = await caches.open(CACHE_NAME);
 	let cachedCount = 0;
 
-	for (const file of GAME_FILES) {
+	for (const file of files) {
 		const request = new Request(file, { cache: "reload" });
 		const cached = await caches.match(request);
 		if (cached) {
 			cachedCount++;
-			reportCacheProgress(client, cachedCount, GAME_FILES.length);
+			reportCacheProgress(client, cachedCount, files.length);
 			continue;
 		}
 
 		try {
 			const response = await fetch(request);
-			if (response.ok) {
-				await cache.put(request, response.clone());
-				cachedCount++;
+			if (!response.ok) {
+				reportCacheProgress(client, cachedCount, files.length, true);
+				return;
 			}
+
+			await cache.put(request, response.clone());
+			cachedCount++;
 		} catch {
-			reportCacheProgress(client, cachedCount, GAME_FILES.length, true);
+			reportCacheProgress(client, cachedCount, files.length, true);
 			return;
 		}
 
-		reportCacheProgress(client, cachedCount, GAME_FILES.length);
+		reportCacheProgress(client, cachedCount, files.length);
 	}
 
-	reportCacheProgress(client, cachedCount, GAME_FILES.length, false, true);
+	await removeObsoleteBuildVariants(cache, files);
+	reportCacheProgress(client, cachedCount, files.length, false, true);
 }
 
 function reportCacheProgress(client, cachedCount, totalCount, failed = false, complete = false) {
@@ -122,19 +127,40 @@ async function cacheFirst(request) {
 	return response;
 }
 
+async function removeObsoleteBuildVariants(cache, files) {
+	const wanted = new Set(files.map((file) => new URL(file, self.location.href).href));
+	const requests = await cache.keys();
+
+	for (const request of requests) {
+		const url = new URL(request.url);
+		if (isUnityArtifact(url) && !wanted.has(url.href)) {
+			await cache.delete(request);
+		}
+	}
+}
+
 async function networkFirst(request) {
+	const requestUrl = new URL(request.url);
+	const cacheRequest = isUnityIndex(requestUrl)
+		? new Request(new URL(requestUrl.pathname, requestUrl.origin).href)
+		: request;
+
 	try {
 		const response = await fetch(request);
 		if (response.ok) {
 			const cache = await caches.open(CACHE_NAME);
-			cache.put(request, response.clone());
+			cache.put(cacheRequest, response.clone());
 		}
 		return response;
 	} catch {
-		const cached = await caches.match(request);
+		const cached = await caches.match(cacheRequest);
 		if (cached) {
 			return cached;
 		}
 		throw new Error("Offline and no cached response available.");
 	}
+}
+
+function isUnityIndex(url) {
+	return /\/build\/index\.html$/i.test(url.pathname);
 }
