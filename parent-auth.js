@@ -1215,19 +1215,38 @@ async function reportStoryProgress(storyId, lastPageNumber, completed = false) {
 
 function sendPageViewResult(requestId, success) {
   const unity = window.unityInstance;
-  if (!requestId || !receiverName || !unity || typeof unity.SendMessage !== "function") return;
+  if (!requestId || !receiverName || !unity || typeof unity.SendMessage !== "function") {
+    console.warn("[MaisonDesContes PageView] Impossible de renvoyer le résultat à Unity.", {
+      requestId,
+      success: success === true,
+      hasReceiver: Boolean(receiverName),
+      hasUnity: Boolean(unity)
+    });
+    return;
+  }
   try {
     unity.SendMessage(receiverName, "OnParentPageViewResult", JSON.stringify({
       requestId,
       success: success === true
     }));
+    console.info(`[MaisonDesContes PageView] Résultat renvoyé à Unity — requête=${requestId}, succès=${success === true}.`);
   } catch (_error) {
-    // Unity peut etre en train de fermer le lecteur ; la file locale gerera le prochain essai.
+    console.warn(`[MaisonDesContes PageView] Unity n'a pas pu recevoir le résultat — requête=${requestId}.`);
   }
 }
 
 async function reportPageView(storyId, pageNumber, durationSeconds, viewedAt, requestId) {
+  const normalizedPageNumber = Math.max(1, Number(pageNumber) || 1);
+  const normalizedDurationSeconds = Math.max(1, Number(durationSeconds) || 1);
+  console.info("[MaisonDesContes PageView] Demande de comptage reçue", {
+    requestId,
+    storyId,
+    pageNumber: normalizedPageNumber,
+    durationSeconds: normalizedDurationSeconds
+  });
+
   if (!storyId || !requestId) {
+    console.warn("[MaisonDesContes PageView] Demande invalide : vue non comptée.", { requestId, storyId });
     sendPageViewResult(requestId, false);
     return;
   }
@@ -1235,6 +1254,10 @@ async function reportPageView(storyId, pageNumber, durationSeconds, viewedAt, re
   try {
     const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
     if (sessionError || !sessionData.session) {
+      console.warn("[MaisonDesContes PageView] Session absente ou invalide : vue non comptée.", {
+        requestId,
+        error: sessionError?.message || "no_session"
+      });
       sendPageViewResult(requestId, false);
       return;
     }
@@ -1243,15 +1266,33 @@ async function reportPageView(storyId, pageNumber, durationSeconds, viewedAt, re
       body: {
         story_id: String(storyId),
         action: "page_view",
-        page_number: Math.max(1, Number(pageNumber) || 1),
-        duration_seconds: Math.max(1, Number(durationSeconds) || 1),
+        page_number: normalizedPageNumber,
+        duration_seconds: normalizedDurationSeconds,
         viewed_at: viewedAt || new Date().toISOString()
       }
     });
-    if (error) console.warn("Vue de page non enregistrée.", error);
+    if (error) {
+      console.warn("[MaisonDesContes PageView] Supabase a refusé/enregistré en erreur la vue.", {
+        requestId,
+        storyId,
+        pageNumber: normalizedPageNumber,
+        error: error.message || String(error)
+      });
+    } else {
+      console.info("[MaisonDesContes PageView] ✓ Supabase a accepté la vue.", {
+        requestId,
+        storyId,
+        pageNumber: normalizedPageNumber,
+        durationSeconds: normalizedDurationSeconds
+      });
+    }
     sendPageViewResult(requestId, !error);
   } catch (error) {
-    console.warn("Synchronisation de la vue de page impossible.", error);
+    console.warn("[MaisonDesContes PageView] Exception pendant l'envoi : vue non comptée.", {
+      requestId,
+      storyId,
+      error: error?.message || String(error)
+    });
     sendPageViewResult(requestId, false);
   }
 }
