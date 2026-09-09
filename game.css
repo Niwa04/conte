@@ -72,6 +72,257 @@ body {
 	display: none;
 }
 
+.reader-auth-modal {
+	width: min(460px, calc(100vw - 28px));
+	max-width: 100%;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: #fff1cf;
+	overflow: visible;
+}
+
+.reader-auth-modal [hidden] {
+	display: none !important;
+}
+
+.reader-auth-modal::backdrop {
+	background: rgba(2, 7, 14, 0.82);
+	backdrop-filter: blur(8px);
+}
+
+.reader-auth-card {
+	position: relative;
+	display: grid;
+	gap: 16px;
+	padding: clamp(24px, 5vw, 40px);
+	border: 1px solid rgba(242, 184, 75, 0.68);
+	border-radius: 20px;
+	background: radial-gradient(circle at 50% 0%, rgba(145, 83, 29, 0.22), transparent 45%), linear-gradient(145deg, rgba(37, 15, 6, 0.98), rgba(8, 17, 31, 0.98));
+	box-shadow: 0 24px 80px rgba(0, 0, 0, 0.78), 0 0 0 1px rgba(255, 225, 153, 0.08) inset;
+}
+
+.reader-auth-close {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	width: 36px;
+	height: 36px;
+	border: 1px solid rgba(242, 184, 75, 0.5);
+	border-radius: 50%;
+	background: rgba(0, 0, 0, 0.22);
+	color: #fff1cf;
+	cursor: pointer;
+	font-size: 24px;
+	line-height: 1;
+}
+
+.reader-auth-close:hover,
+.reader-auth-close:focus-visible,
+.reader-auth-link:hover,
+.reader-auth-link:focus-visible {
+	background: rgba(145, 83, 29, 0.42);
+	outline: 2px solid #ffe199;
+	outline-offset: 2px;
+}
+
+.reader-auth-header {
+	padding-right: 28px;
+}
+
+.reader-catalog-kicker {
+	margin: 0 0 6px;
+	color: #f2b84b;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+}
+
+.reader-auth-header h1 {
+	margin: 0;
+	color: #fff1cf;
+	font-family: Georgia, "Times New Roman", serif;
+	font-size: clamp(28px, 6vw, 40px);
+	line-height: 1.1;
+}
+
+.reader-auth-header p:last-child {
+	margin: 10px 0 0;
+	color: #d9c5a2;
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+.reader-auth-google-button,
+.reader-auth-submit {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	min-height: 48px;
+	border: 1px solid rgba(242, 184, 75, 0.75);
+	border-radius: 10px;
+	padding: 12px 16px;
+	background: #6f390e;
+	color: #fff1cf;
+	cursor: pointer;
+	font: 700 15px Arial, Helvetica, sans-serif;
+}
+
+.reader-auth-google-button {
+	background: #fff8e9;
+	color: #2b1a0f;
+}
+
+.reader-auth-google-button:hover,
+.reader-auth-google-button:focus-visible,
+.reader-auth-submit:hover,
+.reader-auth-submit:focus-visible {
+	background: #91531d;
+	color: #fff1cf;
+	outline: 2px solid #ffe199;
+	outline-offset: 2px;
+}
+
+.reader-auth-google-button:hover,
+.reader-auth-google-button:focus-visible {
+	background: #fff1cf;
+	color: #2b1a0f;
+}
+
+.reader-auth-google-mark {
+	display: inline-grid;
+	place-items: center;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background: #fff;
+	color: #4285f4;
+	font: 700 16px Arial, Helvetica, sans-serif;
+}
+
+.reader-auth-divider {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	color: #bba98d;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.16em;
+}
+
+.reader-auth-divider::before,
+.reader-auth-divider::after {
+	content: "";
+	height: 1px;
+	flex: 1;
+	background: rgba(242, 184, 75, 0.25);
+}
+
+.reader-auth-form {
+	display: grid;
+	gap: 14px;
+}
+
+.reader-auth-field {
+	display: grid;
+	gap: 7px;
+}
+
+.reader-auth-field label {
+	color: #ffe199;
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.reader-auth-field input {
+	width: 100%;
+	min-height: 46px;
+	box-sizing: border-box;
+	border: 1px solid rgba(242, 184, 75, 0.42);
+	border-radius: 9px;
+	padding: 10px 12px;
+	background: rgba(255, 248, 233, 0.96);
+	color: #26150a;
+	font: 16px Arial, Helvetica, sans-serif;
+}
+
+.reader-auth-field input:focus-visible {
+	border-color: #ffe199;
+	outline: 2px solid #ffe199;
+	outline-offset: 2px;
+}
+
+.reader-auth-submit:disabled,
+.reader-auth-google-button:disabled,
+.reader-auth-close:disabled,
+.reader-auth-link:disabled {
+	opacity: 0.55;
+	cursor: wait;
+}
+
+.reader-auth-status {
+	min-height: 21px;
+	margin: 0;
+	color: #d9c5a2;
+	font-size: 13px;
+	line-height: 1.45;
+}
+
+.reader-auth-status.is-error {
+	color: #ffb096;
+}
+
+.reader-auth-status.is-success {
+	color: #b9e4af;
+}
+
+.reader-auth-links {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.reader-auth-link {
+	border: 0;
+	padding: 2px;
+	background: transparent;
+	color: #ffe199;
+	cursor: pointer;
+	font: 700 13px Arial, Helvetica, sans-serif;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.reader-auth-privacy {
+	margin: 0;
+	color: #a99880;
+	font-size: 11px;
+	line-height: 1.5;
+	text-align: center;
+}
+
+.reader-auth-modal.is-recovery .reader-auth-privacy {
+	display: none;
+}
+
+@media (max-width: 520px) {
+	.reader-auth-modal {
+		width: calc(100vw - 18px);
+	}
+
+	.reader-auth-card {
+		padding: 24px 18px;
+		border-radius: 16px;
+	}
+
+	.reader-auth-links {
+		justify-content: center;
+	}
+}
+
 .loading-cover {
 	position: absolute;
 	inset: 0;

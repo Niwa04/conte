@@ -5,7 +5,7 @@ Ce dossier contient la coquille PWA du jeu WebGL.
 ## Utilisation
 
 1. Fais un build Unity WebGL.
-2. Copie les fichiers generes dans `PWA/build`.
+2. Le menu Unity **Maison des contes > Construire le WebGL dans le site** génère directement les fichiers dans `build`.
 3. Lance le dossier via un serveur local ou un hebergement HTTPS.
 
 Exemple local depuis ce dossier:

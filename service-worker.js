@@ -1,4 +1,4 @@
-const CACHE_NAME = "maison-des-contes-pwa-v21";
+const CACHE_NAME = "maison-des-contes-pwa-v28";
 const APP_SHELL = [
 	"./",
 	"./index.html",
@@ -7,6 +7,7 @@ const APP_SHELL = [
 	"./game.css",
 	"./styles.css",
 	"./app.js",
+	"./parent-auth.js",
 	"./install.js",
 	"./manifest.webmanifest",
 	"./assets/images/loading-cover.png",

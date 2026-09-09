@@ -1,4 +1,5 @@
-const UNITY_BUILD_ROOTS = ["build", "Build", "PWA/build", "PWA/Build"];
+// Le build Unity est généré directement dans le dossier build de ce site.
+const UNITY_BUILD_ROOTS = ["build", "Build"];
 const GAME_REVEAL_DELAY_MS = 3000;
 const LOADING_MESSAGE = "Ouverture de la Maison des Contes...";
 const UNITY_LOADER_NAMES = [
@@ -105,13 +106,22 @@ async function initUnity() {
 		streamingAssetsUrl: "StreamingAssets",
 		companyName: "StoryBook",
 		productName: "StoryBook",
-		productVersion: "1.0"
+		productVersion: "1.0",
+		autoSyncPersistentDataPath: true
 	};
 
 	setStatus(LOADING_MESSAGE);
 	createUnityInstance(unityCanvas, config, (progress) => {
 		progressFill.style.width = `${Math.round(progress * 100)}%`;
-	}).then(async () => {
+	}).then(async (unityInstance) => {
+		window.unityInstance = unityInstance;
+		window.dispatchEvent(new Event("MaisonDesContesUnityReady"));
+		// Unity doit être prêt avant de restaurer le catalogue téléchargé.
+		// Le bridge garde la demande en attente si son receiver n'est pas
+		// encore enregistré au moment exact où le player devient disponible.
+		if (window.MaisonDesContesAuth && typeof window.MaisonDesContesAuth.loadRuntimeCatalogCache === "function") {
+			window.MaisonDesContesAuth.loadRuntimeCatalogCache();
+		}
 		progressFill.style.width = "100%";
 		setStatus(LOADING_MESSAGE);
 		await delay(GAME_REVEAL_DELAY_MS);
