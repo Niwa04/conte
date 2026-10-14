@@ -1,4 +1,5 @@
-const CACHE_NAME = "maison-des-contes-pwa-v28";
+const CACHE_NAME = "maison-des-contes-pwa-v77";
+const PWA_CACHE_PREFIX = "maison-des-contes-pwa-";
 const APP_SHELL = [
 	"./",
 	"./index.html",
@@ -16,6 +17,7 @@ const APP_SHELL = [
 	"./icons/maison-des-contes-192.png",
 	"./icons/maison-des-contes-512.png"
 ];
+
 self.addEventListener("install", (event) => {
 	event.waitUntil(
 		caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
@@ -26,7 +28,9 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
 	event.waitUntil(
 		caches.keys().then((keys) => Promise.all(
-			keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+			// Préserver UnityCache et les autres caches qui n'appartiennent pas à la PWA.
+			keys.filter((key) => key.startsWith(PWA_CACHE_PREFIX) && key !== CACHE_NAME)
+				.map((key) => caches.delete(key))
 		))
 	);
 	self.clients.claim();
@@ -37,12 +41,7 @@ self.addEventListener("message", (event) => {
 		return;
 	}
 
-	const files = Array.isArray(event.data.files) ? event.data.files : [];
-	if (files.length === 0) {
-		return;
-	}
-
-	event.waitUntil(cacheGameFiles(event.source, files));
+	event.waitUntil(cacheGameFiles(event.source, event.data.files));
 });
 
 self.addEventListener("fetch", (event) => {
@@ -51,7 +50,7 @@ self.addEventListener("fetch", (event) => {
 	}
 
 	const url = new URL(event.request.url);
-	const isUnityBuildFile = isUnityArtifact(url);
+	const isUnityBuildFile = url.pathname.includes("/build/");
 
 	if (isUnityBuildFile) {
 		event.respondWith(cacheFirst(event.request));
@@ -61,13 +60,10 @@ self.addEventListener("fetch", (event) => {
 	event.respondWith(networkFirst(event.request));
 });
 
-function isUnityArtifact(url) {
-	const path = url.pathname.toLowerCase();
-	return /\/build\/(?:[^/]+\/)*[^/]+\.(?:loader\.js|data(?:\.[^/]*)?|framework\.js(?:\.[^/]*)?|wasm(?:\.[^/]*)?)$/i.test(path);
-}
 
-async function cacheGameFiles(client, files) {
+async function cacheGameFiles(client, requestedFiles) {
 	const cache = await caches.open(CACHE_NAME);
+	const files = Array.isArray(requestedFiles) ? requestedFiles : [];
 	let cachedCount = 0;
 
 	for (const file of files) {
@@ -81,13 +77,10 @@ async function cacheGameFiles(client, files) {
 
 		try {
 			const response = await fetch(request);
-			if (!response.ok) {
-				reportCacheProgress(client, cachedCount, files.length, true);
-				return;
+			if (response.ok) {
+				await cache.put(request, response.clone());
+				cachedCount++;
 			}
-
-			await cache.put(request, response.clone());
-			cachedCount++;
 		} catch {
 			reportCacheProgress(client, cachedCount, files.length, true);
 			return;
@@ -96,7 +89,6 @@ async function cacheGameFiles(client, files) {
 		reportCacheProgress(client, cachedCount, files.length);
 	}
 
-	await removeObsoleteBuildVariants(cache, files);
 	reportCacheProgress(client, cachedCount, files.length, false, true);
 }
 
@@ -128,40 +120,19 @@ async function cacheFirst(request) {
 	return response;
 }
 
-async function removeObsoleteBuildVariants(cache, files) {
-	const wanted = new Set(files.map((file) => new URL(file, self.location.href).href));
-	const requests = await cache.keys();
-
-	for (const request of requests) {
-		const url = new URL(request.url);
-		if (isUnityArtifact(url) && !wanted.has(url.href)) {
-			await cache.delete(request);
-		}
-	}
-}
-
 async function networkFirst(request) {
-	const requestUrl = new URL(request.url);
-	const cacheRequest = isUnityIndex(requestUrl)
-		? new Request(new URL(requestUrl.pathname, requestUrl.origin).href)
-		: request;
-
 	try {
 		const response = await fetch(request);
 		if (response.ok) {
 			const cache = await caches.open(CACHE_NAME);
-			cache.put(cacheRequest, response.clone());
+			cache.put(request, response.clone());
 		}
 		return response;
 	} catch {
-		const cached = await caches.match(cacheRequest);
+		const cached = await caches.match(request);
 		if (cached) {
 			return cached;
 		}
 		throw new Error("Offline and no cached response available.");
 	}
-}
-
-function isUnityIndex(url) {
-	return /\/build\/index\.html$/i.test(url.pathname);
 }

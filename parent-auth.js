@@ -1,23 +1,62 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3/+esm";
 
-const SUPABASE_URL = "https://vjvceitpecvztwfbovow.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_foYzyNCSn1PsTowu5E78rQ__0b9d3sI";
-const READER_CATALOG_URL = `${SUPABASE_URL}/functions/v1/reader-catalog`;
-const READER_CONTENT_CATALOG_URL = `${SUPABASE_URL}/functions/v1/reader-content-catalog`;
-const RUNTIME_CATALOG_CACHE_KEY = "maison-des-contes-runtime-catalog-v1";
-const supabase = createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY,
-  {
+let SUPABASE_URL = "";
+let SUPABASE_PUBLISHABLE_KEY = "";
+let READER_CATALOG_URL = "";
+let READER_CONTENT_CATALOG_URL = "";
+let supabase = null;
+let authSubscription = null;
+let activeSupabaseEnvironment = "";
+let RUNTIME_CATALOG_CACHE_KEY = "maison-des-contes-runtime-catalog-v3";
+
+function configureSupabaseEnvironment(environmentId, url, publishableKey) {
+  const normalizedEnvironmentId = String(environmentId || "").trim().toLowerCase();
+  const normalizedUrl = String(url || "").trim().replace(/\/+$/, "");
+  const normalizedKey = String(publishableKey || "").trim();
+  if (!["dev", "prod"].includes(normalizedEnvironmentId)
+    || !/^https?:\/\//i.test(normalizedUrl)
+    || !normalizedKey) {
+    console.error("Maison des Contes : environnement Supabase invalide.");
+    return false;
+  }
+
+  if (activeSupabaseEnvironment === normalizedEnvironmentId
+    && SUPABASE_URL === normalizedUrl
+    && SUPABASE_PUBLISHABLE_KEY === normalizedKey) {
+    return true;
+  }
+
+  authSubscription?.unsubscribe();
+  authStateRequestSequence += 1;
+  SUPABASE_URL = normalizedUrl;
+  SUPABASE_PUBLISHABLE_KEY = normalizedKey;
+  READER_CATALOG_URL = SUPABASE_URL + "/functions/v1/reader-catalog";
+  READER_CONTENT_CATALOG_URL = SUPABASE_URL + "/functions/v1/reader-content-catalog";
+  RUNTIME_CATALOG_CACHE_KEY = "maison-des-contes-runtime-catalog-v3-" + normalizedEnvironmentId;
+  activeSupabaseEnvironment = normalizedEnvironmentId;
+
+  supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
     auth: {
       flowType: "pkce",
       detectSessionInUrl: true,
       persistSession: true,
       autoRefreshToken: true,
-      storageKey: "maison-des-contes-parent-auth"
+      storageKey: "maison-des-contes-parent-auth-" + normalizedEnvironmentId
     }
-  }
-);
+  });
+
+  cachedAccessState = null;
+  cachedAccessStateUserId = "";
+  cachedAccessStateAt = 0;
+  accessStatePromise = null;
+  accessStatePromiseUserId = "";
+  publicCatalogCache = null;
+  publicCatalogCacheAt = 0;
+  publicCatalogPromise = null;
+  latestState = { state: "loading" };
+  authSubscription = supabase.auth.onAuthStateChange(handleSupabaseAuthStateChange).data.subscription;
+  return true;
+}
 
 let receiverName = window.MaisonDesContesPendingReceiver || "";
 let latestState = { state: "signed_out" };
@@ -32,6 +71,9 @@ let accessStatePromiseUserId = "";
 let publicCatalogCache = null;
 let publicCatalogCacheAt = 0;
 let publicCatalogPromise = null;
+// Le catalogue reste local entre les relances. Une vérification distante
+// explicite peut toujours être demandée par Unity pour récupérer les mises à jour.
+const RUNTIME_CATALOG_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 let catalogFilter = "all";
 let catalogNotice = "";
 let authMode = "sign_in";
@@ -147,17 +189,6 @@ function sendToUnity(state) {
   const unity = window.unityInstance;
   if (!receiverName || !unity || typeof unity.SendMessage !== "function") return;
   unity.SendMessage(receiverName, "OnParentAuthState", JSON.stringify(state));
-}
-
-function sendAuthUiResult(success, message = "", error = "", close = false) {
-  const unity = window.unityInstance;
-  if (!receiverName || !unity || typeof unity.SendMessage !== "function") return;
-  unity.SendMessage(receiverName, "OnParentAuthUiResult", JSON.stringify({
-    success: success === true,
-    close: close === true,
-    message: String(message || ""),
-    error: String(error || "")
-  }));
 }
 
 function getGameRedirectUrl() {
@@ -308,10 +339,8 @@ async function signInWithGoogle() {
   if (error) {
     setAuthBusy(false);
     sendToUnity({ ...previousState, state: "error", error: error.message, visibleCollectionItemIds: [] });
-    const message = authErrorMessage(error.message);
-    setAuthStatus(message, "error");
-    setCatalogNotice(message);
-    sendAuthUiResult(false, message, error.message);
+    setAuthStatus(authErrorMessage(error.message), "error");
+    setCatalogNotice(authErrorMessage(error.message));
   }
 }
 
@@ -321,26 +350,21 @@ async function signInWithEmail() {
     setAuthStatus(validationError, "error");
     return;
   }
-  await signInWithCredentials(authUi.email.value, authUi.password.value);
-  if (latestState?.state === "signed_in") closeAuthModal();
-}
-
-async function signInWithCredentials(email, password) {
   const previousState = latestState;
   setAuthBusy(true);
   sendToUnity({ state: "loading" });
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { error } = await supabase.auth.signInWithPassword({
+    email: authUi.email.value,
+    password: authUi.password.value
+  });
   if (error) {
-    const message = authErrorMessage(error.message);
     setAuthBusy(false);
     sendToUnity({ ...previousState, state: "error", error: error.message, visibleCollectionItemIds: [] });
-    setAuthStatus(message, "error");
-    sendAuthUiResult(false, message, error.message);
+    setAuthStatus(authErrorMessage(error.message), "error");
     return;
   }
+  closeAuthModal();
   await refresh(true);
-  setAuthBusy(false);
-  sendAuthUiResult(true, "Connexion réussie.", "", true);
 }
 
 async function signUpWithEmail() {
@@ -349,42 +373,26 @@ async function signUpWithEmail() {
     setAuthStatus(validationError, "error");
     return;
   }
-  const result = await signUpWithCredentials(authUi.email.value, authUi.password.value);
-  if (!result) return;
-  const { data } = result;
+  setAuthBusy(true);
+  const { data, error } = await supabase.auth.signUp({
+    email: authUi.email.value,
+    password: authUi.password.value,
+    options: { emailRedirectTo: getGameRedirectUrl() }
+  });
+  if (error) {
+    setAuthBusy(false);
+    setAuthStatus(authErrorMessage(error.message), "error");
+    return;
+  }
   authUi.password.value = "";
   authUi.confirmPassword.value = "";
   if (data?.session) {
     closeAuthModal();
+    await refresh(true);
     return;
   }
-  setAuthMode("sign_in", "Compte créé. Vérifiez votre boîte e-mail pour confirmer votre adresse, puis connectez-vous.", "success");
-}
-
-async function signUpWithCredentials(email, password) {
-  setAuthBusy(true);
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: { emailRedirectTo: getGameRedirectUrl() }
-  });
-  if (error) {
-    const message = authErrorMessage(error.message);
-    setAuthBusy(false);
-    setAuthStatus(message, "error");
-    sendAuthUiResult(false, message, error.message);
-    return null;
-  }
-  if (data?.session) {
-    await refresh(true);
-    setAuthBusy(false);
-    sendAuthUiResult(true, "Compte créé et connecté.", "", true);
-    return { data };
-  }
   setAuthBusy(false);
-  const message = "Compte créé. Vérifiez votre boîte e-mail pour confirmer votre adresse, puis connectez-vous.";
-  sendAuthUiResult(true, message);
-  return { data };
+  setAuthMode("sign_in", "Compte créé. Vérifiez votre boîte e-mail pour confirmer votre adresse, puis connectez-vous.", "success");
 }
 
 async function requestPasswordReset() {
@@ -393,24 +401,16 @@ async function requestPasswordReset() {
     setAuthStatus(validationError, "error");
     return;
   }
-  const success = await requestPasswordResetForEmail(authUi.email.value);
-  if (!success) return;
-  setAuthStatus("Si un compte correspond à cette adresse, un lien de réinitialisation vient d’être envoyé.", "success");
-}
-
-async function requestPasswordResetForEmail(email) {
   setAuthBusy(true);
-  const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: getGameRedirectUrl() });
+  const { error } = await supabase.auth.resetPasswordForEmail(authUi.email.value, {
+    redirectTo: getGameRedirectUrl()
+  });
   setAuthBusy(false);
   if (error) {
-    const message = authErrorMessage(error.message);
-    setAuthStatus(message, "error");
-    sendAuthUiResult(false, message, error.message);
-    return false;
+    setAuthStatus(authErrorMessage(error.message), "error");
+    return;
   }
-  const message = "Si un compte correspond à cette adresse, un lien de réinitialisation vient d’être envoyé.";
-  sendAuthUiResult(true, message);
-  return true;
+  setAuthStatus("Si un compte correspond à cette adresse, un lien de réinitialisation vient d’être envoyé.", "success");
 }
 
 async function updatePassword() {
@@ -926,20 +926,126 @@ async function fetchReaderCatalog(accessToken = "") {
   return catalog;
 }
 
-// Le jeu WebGL demande le catalogue complet par le bridge JavaScript afin de
+function parseRuntimeCatalogPayload(value) {
+  try {
+    const payload = typeof value === "string" ? JSON.parse(value) : value;
+    if (!payload || payload.catalog_loaded !== true || !Array.isArray(payload.stories)) return null;
+    return payload;
+  } catch (_error) {
+    return null;
+  }
+}
+
+function runtimeCatalogCacheKey(session = null) {
+  return String(
+    session?.user?.id
+      || window.MaisonDesContesRuntimeCatalogUserId
+      || latestState?.userId
+      || "anonymous"
+  );
+}
+
+function readRuntimeCatalogCacheStore() {
+  try {
+    const store = JSON.parse(window.localStorage.getItem(RUNTIME_CATALOG_CACHE_KEY) || "{}");
+    if (!store || store.version !== 2 || !store.entries || typeof store.entries !== "object") {
+      return { version: 2, entries: {} };
+    }
+    return store;
+  } catch (_error) {
+    return { version: 2, entries: {} };
+  }
+}
+
+function getRuntimeCatalogCacheEntry(cacheKey) {
+  if (!cacheKey) return null;
+  const store = readRuntimeCatalogCacheStore();
+  const entry = store.entries?.[cacheKey];
+  const payload = parseRuntimeCatalogPayload(entry?.payload);
+  if (!payload) return null;
+  return {
+    savedAt: Number(entry.savedAt) || 0,
+    payload
+  };
+}
+
+function sendRuntimeCatalogToUnity(methodName, payload) {
+  const unity = window.unityInstance;
+  if (!receiverName || !unity || typeof unity.SendMessage !== "function") return false;
+  try {
+    unity.SendMessage(receiverName, methodName, JSON.stringify(payload));
+    return true;
+  } catch (_error) {
+    // Unity peut être en train de fermer le lecteur.
+    return false;
+  }
+}
+
+async function loadRuntimeCatalogCache() {
+  let session = null;
+  try {
+    const { data } = await supabase.auth.getSession();
+    session = data?.session || null;
+  } catch (_error) {
+    // Le cache anonyme reste disponible même si Supabase est momentanément hors ligne.
+  }
+
+  const cacheKey = runtimeCatalogCacheKey(session);
+  if (session?.user?.id) window.MaisonDesContesRuntimeCatalogUserId = cacheKey;
+  const entry = getRuntimeCatalogCacheEntry(cacheKey);
+  if (!entry) return;
+
+  if (!sendRuntimeCatalogToUnity("OnCachedRuntimeCatalogJson", entry.payload)) {
+    window.MaisonDesContesPendingRuntimeCatalogCacheLoad = true;
+  }
+}
+
+function saveRuntimeCatalogCache(value) {
+  const payload = parseRuntimeCatalogPayload(value);
+  if (!payload) return;
+
+  try {
+    const store = readRuntimeCatalogCacheStore();
+    const cacheKey = runtimeCatalogCacheKey();
+    store.entries[cacheKey] = {
+      savedAt: Date.now(),
+      payload
+    };
+    window.localStorage.setItem(RUNTIME_CATALOG_CACHE_KEY, JSON.stringify(store));
+  } catch (_error) {
+    // Le jeu reste utilisable en ligne si le stockage local est indisponible.
+  }
+}
+
+// Le jeu WebGL demande le catalogue ou un conte par le bridge JavaScript afin de
 // garder le jeton Supabase dans le navigateur. Le C# ne reçoit que la réponse
 // JSON calculée par l'Edge Function, jamais les secrets ni le jeton.
-async function requestRuntimeCatalog(minimumStatus = "draft") {
+async function requestRuntimeCatalog(minimumStatus = "draft", force = false, includePages = false, storyId = "") {
   const unity = window.unityInstance;
   const status = String(minimumStatus || "draft");
+  const requestedStoryId = String(storyId || "").trim();
+  const isLightCatalog = !includePages && !requestedStoryId;
   if (!receiverName || !unity || typeof unity.SendMessage !== "function") {
     window.MaisonDesContesPendingRuntimeCatalog = status;
+    window.MaisonDesContesPendingRuntimeCatalogForce = force === true;
+    window.MaisonDesContesPendingRuntimeCatalogIncludePages = includePages === true;
+    window.MaisonDesContesPendingRuntimeCatalogStoryId = requestedStoryId;
     return;
   }
 
+  let cachedEntry = null;
   try {
     const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
     if (sessionError) throw sessionError;
+    const session = sessionData?.session || null;
+    window.MaisonDesContesRuntimeCatalogUserId = runtimeCatalogCacheKey(session);
+    if (isLightCatalog) cachedEntry = getRuntimeCatalogCacheEntry(window.MaisonDesContesRuntimeCatalogUserId);
+
+    if (!force && cachedEntry && cachedEntry.savedAt > 0
+      && Date.now() - cachedEntry.savedAt <= RUNTIME_CATALOG_CACHE_TTL_MS) {
+      sendRuntimeCatalogToUnity("OnRuntimeCatalogJson", cachedEntry.payload);
+      return;
+    }
 
     const requestHeaders = {
       apikey: SUPABASE_PUBLISHABLE_KEY,
@@ -950,14 +1056,18 @@ async function requestRuntimeCatalog(minimumStatus = "draft") {
     }
 
     const response = await fetch(
-      `${READER_CONTENT_CATALOG_URL}?minimum_status=${encodeURIComponent(status)}`,
+      `${READER_CONTENT_CATALOG_URL}?minimum_status=${encodeURIComponent(status)}&include_pages=${includePages ? "true" : "false"}${requestedStoryId ? `&story_id=${encodeURIComponent(requestedStoryId)}` : ""}`,
       { headers: requestHeaders, cache: "no-store" }
     );
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(payload.error || "Catalogue de contenu indisponible.");
-    saveRuntimeCatalogCache(JSON.stringify(payload));
-    unity.SendMessage(receiverName, "OnRuntimeCatalogJson", JSON.stringify(payload));
+    if (isLightCatalog) saveRuntimeCatalogCache(payload);
+    sendRuntimeCatalogToUnity("OnRuntimeCatalogJson", payload);
   } catch (error) {
+    // En cas de coupure, conserver le dernier catalogue utilisable hors ligne.
+    if (cachedEntry?.payload && sendRuntimeCatalogToUnity("OnRuntimeCatalogJson", cachedEntry.payload)) {
+      return;
+    }
     try {
       unity.SendMessage(receiverName, "OnRuntimeCatalogJson", JSON.stringify({
         version: 1,
@@ -970,28 +1080,6 @@ async function requestRuntimeCatalog(minimumStatus = "draft") {
       // Unity peut être en train de fermer le lecteur.
     }
   }
-}
-
-function saveRuntimeCatalogCache(json) {
-  if (!json) return;
-  try {
-    window.localStorage.setItem(RUNTIME_CATALOG_CACHE_KEY, json);
-  } catch (_error) {
-    // L'application reste fonctionnelle sans persistance navigateur.
-  }
-}
-
-function loadRuntimeCatalogCache() {
-  const unity = window.unityInstance;
-  if (!receiverName || !unity || typeof unity.SendMessage !== "function") {
-    window.MaisonDesContesPendingRuntimeCatalogCacheLoad = true;
-    return;
-  }
-
-  let json = "";
-  try { json = window.localStorage.getItem(RUNTIME_CATALOG_CACHE_KEY) || ""; }
-  catch (_error) { }
-  unity.SendMessage(receiverName, "OnCachedRuntimeCatalogJson", json);
 }
 
 async function fetchPublicCatalog(force = false) {
@@ -1102,6 +1190,7 @@ async function stateFromUser(user, accessToken = "", force = false) {
 }
 
 async function refresh(force = false) {
+  if (!supabase) return;
   const requestSequence = ++authStateRequestSequence;
   const previousState = latestState;
   sendToUnity({ state: "loading" });
@@ -1175,11 +1264,6 @@ async function refresh(force = false) {
 }
 
 function signIn() {
-  const unity = window.unityInstance;
-  if (receiverName && unity && typeof unity.SendMessage === "function") {
-    unity.SendMessage(receiverName, "OpenUnityAuthModal", "");
-    return;
-  }
   openAuthModal("sign_in");
 }
 
@@ -1215,38 +1299,19 @@ async function reportStoryProgress(storyId, lastPageNumber, completed = false) {
 
 function sendPageViewResult(requestId, success) {
   const unity = window.unityInstance;
-  if (!requestId || !receiverName || !unity || typeof unity.SendMessage !== "function") {
-    console.warn("[MaisonDesContes PageView] Impossible de renvoyer le résultat à Unity.", {
-      requestId,
-      success: success === true,
-      hasReceiver: Boolean(receiverName),
-      hasUnity: Boolean(unity)
-    });
-    return;
-  }
+  if (!requestId || !receiverName || !unity || typeof unity.SendMessage !== "function") return;
   try {
     unity.SendMessage(receiverName, "OnParentPageViewResult", JSON.stringify({
       requestId,
       success: success === true
     }));
-    console.info(`[MaisonDesContes PageView] Résultat renvoyé à Unity — requête=${requestId}, succès=${success === true}.`);
   } catch (_error) {
-    console.warn(`[MaisonDesContes PageView] Unity n'a pas pu recevoir le résultat — requête=${requestId}.`);
+    // Unity peut etre en train de fermer le lecteur ; la file locale gerera le prochain essai.
   }
 }
 
 async function reportPageView(storyId, pageNumber, durationSeconds, viewedAt, requestId) {
-  const normalizedPageNumber = Math.max(1, Number(pageNumber) || 1);
-  const normalizedDurationSeconds = Math.max(1, Number(durationSeconds) || 1);
-  console.info("[MaisonDesContes PageView] Demande de comptage reçue", {
-    requestId,
-    storyId,
-    pageNumber: normalizedPageNumber,
-    durationSeconds: normalizedDurationSeconds
-  });
-
   if (!storyId || !requestId) {
-    console.warn("[MaisonDesContes PageView] Demande invalide : vue non comptée.", { requestId, storyId });
     sendPageViewResult(requestId, false);
     return;
   }
@@ -1254,10 +1319,6 @@ async function reportPageView(storyId, pageNumber, durationSeconds, viewedAt, re
   try {
     const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
     if (sessionError || !sessionData.session) {
-      console.warn("[MaisonDesContes PageView] Session absente ou invalide : vue non comptée.", {
-        requestId,
-        error: sessionError?.message || "no_session"
-      });
       sendPageViewResult(requestId, false);
       return;
     }
@@ -1266,33 +1327,15 @@ async function reportPageView(storyId, pageNumber, durationSeconds, viewedAt, re
       body: {
         story_id: String(storyId),
         action: "page_view",
-        page_number: normalizedPageNumber,
-        duration_seconds: normalizedDurationSeconds,
+        page_number: Math.max(1, Number(pageNumber) || 1),
+        duration_seconds: Math.max(1, Number(durationSeconds) || 1),
         viewed_at: viewedAt || new Date().toISOString()
       }
     });
-    if (error) {
-      console.warn("[MaisonDesContes PageView] Supabase a refusé/enregistré en erreur la vue.", {
-        requestId,
-        storyId,
-        pageNumber: normalizedPageNumber,
-        error: error.message || String(error)
-      });
-    } else {
-      console.info("[MaisonDesContes PageView] ✓ Supabase a accepté la vue.", {
-        requestId,
-        storyId,
-        pageNumber: normalizedPageNumber,
-        durationSeconds: normalizedDurationSeconds
-      });
-    }
+    if (error) console.warn("Vue de page non enregistrée.", error);
     sendPageViewResult(requestId, !error);
   } catch (error) {
-    console.warn("[MaisonDesContes PageView] Exception pendant l'envoi : vue non comptée.", {
-      requestId,
-      storyId,
-      error: error?.message || String(error)
-    });
+    console.warn("Synchronisation de la vue de page impossible.", error);
     sendPageViewResult(requestId, false);
   }
 }
@@ -1378,7 +1421,7 @@ function startSubscription() {
   return startCheckout("subscription");
 }
 
-supabase.auth.onAuthStateChange((event, session) => {
+function handleSupabaseAuthStateChange(event, session) {
   if (event === "PASSWORD_RECOVERY") {
     openAuthModal("reset_password", "Choisissez votre nouveau mot de passe.");
   } else if (event === "SIGNED_IN" && authMode !== "reset_password") {
@@ -1416,17 +1459,25 @@ supabase.auth.onAuthStateChange((event, session) => {
     if (requestSequence !== authStateRequestSequence) return;
     sendToUnity(state);
   }, 0);
-});
-
+}
 window.MaisonDesContesAuth = {
+  setSupabaseEnvironment(environmentId, url, publishableKey) {
+    return configureSupabaseEnvironment(environmentId, url, publishableKey);
+  },
   setReceiver(name) {
     receiverName = name;
     window.MaisonDesContesPendingReceiver = name;
     sendToUnity(latestState);
     if (window.MaisonDesContesPendingRuntimeCatalog) {
       const pendingStatus = window.MaisonDesContesPendingRuntimeCatalog;
+      const pendingForce = window.MaisonDesContesPendingRuntimeCatalogForce === true;
+      const pendingIncludePages = window.MaisonDesContesPendingRuntimeCatalogIncludePages === true;
+      const pendingStoryId = window.MaisonDesContesPendingRuntimeCatalogStoryId || "";
       delete window.MaisonDesContesPendingRuntimeCatalog;
-      requestRuntimeCatalog(pendingStatus);
+      delete window.MaisonDesContesPendingRuntimeCatalogForce;
+      delete window.MaisonDesContesPendingRuntimeCatalogIncludePages;
+      delete window.MaisonDesContesPendingRuntimeCatalogStoryId;
+      requestRuntimeCatalog(pendingStatus, pendingForce, pendingIncludePages, pendingStoryId);
     }
     if (window.MaisonDesContesPendingRuntimeCatalogCacheLoad) {
       delete window.MaisonDesContesPendingRuntimeCatalogCacheLoad;
@@ -1437,11 +1488,8 @@ window.MaisonDesContesAuth = {
   signIn,
   signInWithGoogle,
   signInWithEmail,
-  signInWithCredentials,
   signUpWithEmail,
-  signUpWithCredentials,
   requestPasswordReset,
-  requestPasswordResetForEmail,
   updatePassword,
   signOut,
   startPurchase,
@@ -1450,21 +1498,38 @@ window.MaisonDesContesAuth = {
   reportPageView,
   showCatalogMessage,
   requestRuntimeCatalog,
-  saveRuntimeCatalogCache,
-  loadRuntimeCatalogCache
+  loadRuntimeCatalogCache,
+  saveRuntimeCatalogCache
 };
+
+if (window.MaisonDesContesPendingSupabaseEnvironment) {
+  const pendingEnvironment = window.MaisonDesContesPendingSupabaseEnvironment;
+  delete window.MaisonDesContesPendingSupabaseEnvironment;
+  window.MaisonDesContesAuth.setSupabaseEnvironment(
+    pendingEnvironment.environmentId,
+    pendingEnvironment.url,
+    pendingEnvironment.publishableKey
+  );
+}
 
 // Le C# peut appeler le bridge dès le démarrage du player, avant que le module
 // d'authentification n'ait fini son initialisation.
 if (window.MaisonDesContesPendingRuntimeCatalog) {
   const pendingStatus = window.MaisonDesContesPendingRuntimeCatalog;
+  const pendingForce = window.MaisonDesContesPendingRuntimeCatalogForce === true;
+  const pendingIncludePages = window.MaisonDesContesPendingRuntimeCatalogIncludePages === true;
+  const pendingStoryId = window.MaisonDesContesPendingRuntimeCatalogStoryId || "";
   delete window.MaisonDesContesPendingRuntimeCatalog;
-  requestRuntimeCatalog(pendingStatus);
+  delete window.MaisonDesContesPendingRuntimeCatalogForce;
+  delete window.MaisonDesContesPendingRuntimeCatalogIncludePages;
+  delete window.MaisonDesContesPendingRuntimeCatalogStoryId;
+  requestRuntimeCatalog(pendingStatus, pendingForce, pendingIncludePages, pendingStoryId);
 }
 
 if (window.MaisonDesContesPendingRuntimeCatalogCache) {
-  saveRuntimeCatalogCache(window.MaisonDesContesPendingRuntimeCatalogCache);
+  const pendingCatalog = window.MaisonDesContesPendingRuntimeCatalogCache;
   delete window.MaisonDesContesPendingRuntimeCatalogCache;
+  saveRuntimeCatalogCache(pendingCatalog);
 }
 
 if (window.MaisonDesContesPendingRuntimeCatalogCacheLoad) {

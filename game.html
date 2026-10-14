@@ -17,7 +17,76 @@
 <body class="game-page">
 	<main class="game-shell">
 		<div class="game-frame" id="gameFrame">
-			<canvas id="unityCanvas" tabindex="-1"></canvas>
+			<canvas id="unityCanvas" width="960" height="600" tabindex="-1"></canvas>
+			<button class="catalog-open-button" id="catalogOpenButton" type="button" hidden>
+				<span aria-hidden="true">✦</span> Catalogue
+			</button>
+			<section class="reader-catalog-panel" id="readerCatalogPanel" hidden role="dialog" aria-modal="true" aria-labelledby="readerCatalogTitle">
+				<div class="reader-catalog-card">
+					<header class="reader-catalog-header">
+						<div>
+							<p class="reader-catalog-kicker">La Maison des Contes</p>
+							<h1 id="readerCatalogTitle">Le catalogue</h1>
+							<p id="readerCatalogSummary">Les contes disponibles pour vous.</p>
+						</div>
+						<div class="reader-catalog-header-actions">
+							<div class="reader-account-actions">
+								<span class="reader-account-label" id="readerAccountLabel">Visiteur</span>
+								<button class="reader-account-button" id="readerAccountButton" type="button">Se connecter</button>
+							</div>
+							<button class="catalog-refresh-button" id="catalogRefreshButton" type="button">Actualiser</button>
+							<button class="catalog-close-button" id="catalogCloseButton" type="button" aria-label="Fermer le catalogue">×</button>
+						</div>
+					</header>
+					<div class="reader-catalog-status" id="readerCatalogStatus" role="status" aria-live="polite"></div>
+					<p class="reader-payment-mode" id="readerPaymentMode" hidden>
+						<span id="readerPaymentModeText">Mode test local : aucun paiement réel ne sera effectué.</span>
+						<button class="reader-demo-reset-button" id="readerDemoResetButton" type="button" hidden>Réinitialiser les accès test</button>
+					</p>
+					<nav class="reader-catalog-filters" aria-label="Filtrer les contes">
+						<button type="button" class="reader-catalog-filter is-active" data-catalog-filter="all" aria-pressed="true">Tous</button>
+						<button type="button" class="reader-catalog-filter" data-catalog-filter="owned" aria-pressed="false">Mes contes</button>
+						<button type="button" class="reader-catalog-filter" data-catalog-filter="available" aria-pressed="false">À découvrir</button>
+					</nav>
+					<div class="reader-catalog-grid" id="readerCatalogGrid"></div>
+				</div>
+			</section>
+			<dialog class="reader-auth-modal" id="readerAuthModal" aria-labelledby="readerAuthTitle" aria-describedby="readerAuthDescription">
+				<div class="reader-auth-card">
+					<button class="reader-auth-close" id="readerAuthCloseButton" type="button" aria-label="Fermer la fenêtre de connexion">×</button>
+					<header class="reader-auth-header">
+						<p class="reader-catalog-kicker">La Maison des Contes</p>
+						<h1 id="readerAuthTitle">Connexion client</h1>
+						<p id="readerAuthDescription">Retrouvez vos contes et vos accès sur tous vos appareils.</p>
+					</header>
+					<button class="reader-auth-google-button" id="readerAuthGoogleButton" type="button">
+						<span class="reader-auth-google-mark" aria-hidden="true">G</span>
+						<span>Continuer avec Google</span>
+					</button>
+					<div class="reader-auth-divider" id="readerAuthDivider" aria-hidden="true"><span>ou</span></div>
+					<form class="reader-auth-form" id="readerAuthForm" novalidate>
+						<div class="reader-auth-field" id="readerAuthEmailField">
+							<label for="readerAuthEmail">Adresse e-mail</label>
+							<input id="readerAuthEmail" name="email" type="email" autocomplete="email" inputmode="email" required>
+						</div>
+						<div class="reader-auth-field" id="readerAuthPasswordField">
+							<label for="readerAuthPassword">Mot de passe</label>
+							<input id="readerAuthPassword" name="password" type="password" autocomplete="current-password" minlength="6" required>
+						</div>
+						<div class="reader-auth-field" id="readerAuthConfirmPasswordField" hidden>
+							<label for="readerAuthConfirmPassword">Confirmer le mot de passe</label>
+							<input id="readerAuthConfirmPassword" name="confirmPassword" type="password" autocomplete="new-password" minlength="6">
+						</div>
+						<button class="reader-auth-submit" id="readerAuthSubmitButton" type="submit">Se connecter</button>
+					</form>
+					<p class="reader-auth-status" id="readerAuthStatus" role="status" aria-live="polite"></p>
+					<div class="reader-auth-links">
+						<button class="reader-auth-link" id="readerAuthForgotButton" type="button">Mot de passe oublié ?</button>
+						<button class="reader-auth-link" id="readerAuthModeButton" type="button">Créer un compte</button>
+					</div>
+					<p class="reader-auth-privacy" id="readerAuthPrivacy">En créant un compte, vous acceptez de recevoir les e-mails nécessaires à la sécurité de votre compte.</p>
+				</div>
+			</dialog>
 			<div class="loading-panel" id="loadingPanel">
 				<img class="loading-cover" src="assets/images/loading-cover.png" alt="La Maison des Contes">
 				<div class="loading-content">
@@ -30,7 +99,7 @@
 		</div>
 	</main>
 
-	<script type="module" src="parent-auth.js?build=20260909-2"></script>
-	<script src="app.js?build=20260909-2" defer></script>
+	<script type="module" src="parent-auth.js?build=20260910-1"></script>
+	<script src="app.js?build=20260910-1" defer></script>
 </body>
 </html>

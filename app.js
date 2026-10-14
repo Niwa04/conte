@@ -1,6 +1,9 @@
-// Le build Unity est généré directement dans le dossier build de ce site.
-const UNITY_BUILD_ROOTS = ["build", "Build"];
+const UNITY_BUILD_ROOTS = ["build", "Build", "PWA/build", "PWA/Build"];
+// À mettre à jour après chaque nouveau build Unity pour invalider à la fois
+// le cache du service worker et le cache IndexedDB interne du loader WebGL.
+const UNITY_BUILD_VERSION = "20260910-1";
 const GAME_REVEAL_DELAY_MS = 3000;
+const PARENT_AUTH_BRIDGE_TIMEOUT_MS = 20000;
 const LOADING_MESSAGE = "Ouverture de la Maison des Contes...";
 const UNITY_LOADER_NAMES = [
 	"Build.loader.js",
@@ -15,6 +18,7 @@ const progressFill = document.getElementById("progressFill");
 const loadingPanel = document.getElementById("loadingPanel");
 const unityCanvas = document.getElementById("unityCanvas");
 let lastCheckedUnityLoaderUrl = "";
+let unityBuildAssetUrls = null;
 
 registerServiceWorker();
 initUnity();
@@ -24,6 +28,20 @@ window.addEventListener("resize", syncViewportSize);
 window.addEventListener("orientationchange", syncViewportSize);
 
 function registerServiceWorker() {
+	if (isLocalPreview()) {
+		// Le lanceur local doit toujours tester les fichiers fraîchement générés.
+		// On retire un ancien worker/caches éventuels sans toucher la production.
+		if ("serviceWorker" in navigator) {
+			navigator.serviceWorker.getRegistrations().then((registrations) =>
+				Promise.all(registrations.map((registration) => registration.unregister()))
+			).catch(() => {});
+		}
+		if ("caches" in window) {
+			caches.keys().then((keys) => Promise.all(keys.map((key) => caches.delete(key)))).catch(() => {});
+		}
+		return;
+	}
+
 	if ("serviceWorker" in navigator) {
 		window.addEventListener("load", () => {
 			navigator.serviceWorker.register("service-worker.js").catch(() => {
@@ -33,11 +51,8 @@ function registerServiceWorker() {
 	}
 }
 
-async function precacheGameForOffline(files) {
-	if (!("serviceWorker" in navigator)) {
-		return;
-	}
-	if (!Array.isArray(files) || files.length === 0) {
+async function precacheGameForOffline(files = []) {
+	if (isLocalPreview() || !("serviceWorker" in navigator)) {
 		return;
 	}
 
@@ -52,25 +67,20 @@ async function precacheGameForOffline(files) {
 	}
 }
 
+function isLocalPreview() {
+	return ["localhost", "127.0.0.1"].includes(window.location.hostname);
+}
+
 async function initUnity() {
 	setStatus(LOADING_MESSAGE);
 
-	const unityBuild = await findUnityBuild();
-	if (!unityBuild) {
+	const loaderUrl = await findUnityLoader();
+	if (!loaderUrl) {
 		setMissingBuildState();
 		return;
 	}
 
-	const loaderUrl = unityBuild.loaderUrl;
-	const buildVersion = unityBuild.version || buildVersionFromUrl(loaderUrl);
-
-	try {
-		await loadScript(withBuildVersion(loaderUrl, buildVersion));
-	} catch (error) {
-		console.error("Impossible de charger le loader Unity.", error);
-		setStatus(`Loader Unity introuvable ou impossible à charger : ${loaderUrl}`);
-		return;
-	}
+	await loadScript(loaderUrl);
 
 	if (typeof createUnityInstance !== "function") {
 		setStatus("Le loader Unity est present, mais createUnityInstance est introuvable.");
@@ -79,36 +89,18 @@ async function initUnity() {
 
 	const buildBasePath = loaderUrl.slice(0, loaderUrl.lastIndexOf("/"));
 	const buildName = loaderUrl.split("/").pop().replace(".loader.js", "");
-	const dataUrl = unityBuild.dataUrl || await findExistingUnityFile(buildBasePath, buildName, "data");
-	const frameworkUrl = unityBuild.frameworkUrl || await findExistingUnityFile(buildBasePath, buildName, "framework.js");
-	const codeUrl = unityBuild.codeUrl || await findExistingUnityFile(buildBasePath, buildName, "wasm");
-	const missingFiles = [
-		["data", dataUrl],
-		["framework.js", frameworkUrl],
-		["wasm", codeUrl]
-	].filter(([, url]) => !url);
-
-	if (missingFiles.length > 0) {
-		const missingLabels = missingFiles.map(([label]) => label).join(", ");
-		setStatus(`Fichier(s) du build Unity introuvable(s) : ${missingLabels}. Vérifie le dossier build/Build.`);
-		return;
-	}
-
-	const buildFiles = [loaderUrl, dataUrl, frameworkUrl, codeUrl]
-		.filter(Boolean)
-		.map((url) => withBuildVersion(url, buildVersion));
-	precacheGameForOffline(buildFiles);
-
 	const config = {
-		dataUrl: withBuildVersion(dataUrl, buildVersion),
-		frameworkUrl: withBuildVersion(frameworkUrl, buildVersion),
-		codeUrl: withBuildVersion(codeUrl, buildVersion),
-		streamingAssetsUrl: "StreamingAssets",
-		companyName: "StoryBook",
-		productName: "StoryBook",
-		productVersion: "1.0",
+		arguments: [],
+		dataUrl: unityBuildAssetUrls?.dataUrl || await findExistingUnityFile(buildBasePath, buildName, "data"),
+		frameworkUrl: unityBuildAssetUrls?.frameworkUrl || await findExistingUnityFile(buildBasePath, buildName, "framework.js"),
+		codeUrl: unityBuildAssetUrls?.codeUrl || await findExistingUnityFile(buildBasePath, buildName, "wasm"),
+		streamingAssetsUrl: "build/StreamingAssets",
+		companyName: "DefaultCompany",
+		productName: "Maison des contes",
+		productVersion: "0.1.0",
 		autoSyncPersistentDataPath: true
 	};
+	precacheGameForOffline([loaderUrl, config.dataUrl, config.frameworkUrl, config.codeUrl]);
 
 	setStatus(LOADING_MESSAGE);
 	createUnityInstance(unityCanvas, config, (progress) => {
@@ -116,12 +108,7 @@ async function initUnity() {
 	}).then(async (unityInstance) => {
 		window.unityInstance = unityInstance;
 		window.dispatchEvent(new Event("MaisonDesContesUnityReady"));
-		// Unity doit être prêt avant de restaurer le catalogue téléchargé.
-		// Le bridge garde la demande en attente si son receiver n'est pas
-		// encore enregistré au moment exact où le player devient disponible.
-		if (window.MaisonDesContesAuth && typeof window.MaisonDesContesAuth.loadRuntimeCatalogCache === "function") {
-			window.MaisonDesContesAuth.loadRuntimeCatalogCache();
-		}
+		scheduleParentAuthBridgeCheck(unityInstance);
 		progressFill.style.width = "100%";
 		setStatus(LOADING_MESSAGE);
 		await delay(GAME_REVEAL_DELAY_MS);
@@ -132,11 +119,28 @@ async function initUnity() {
 	});
 }
 
+function scheduleParentAuthBridgeCheck(unityInstance) {
+	window.setTimeout(() => {
+		if (window.unityInstance !== unityInstance || window.MaisonDesContesAuth || !window.MaisonDesContesPendingReceiver) {
+			return;
+		}
+
+		unityInstance.SendMessage(
+			window.MaisonDesContesPendingReceiver,
+			"OnParentAuthState",
+			JSON.stringify({
+				state: "error",
+				error: "Le service de connexion n’a pas pu être chargé. Vérifiez votre connexion puis rechargez l’application."
+			})
+		);
+	}, PARENT_AUTH_BRIDGE_TIMEOUT_MS);
+}
+
 async function findExistingUnityFile(buildBasePath, buildName, extension) {
 	const candidates = [
-		`${buildBasePath}/${buildName}.${extension}`,
 		`${buildBasePath}/${buildName}.${extension}.br`,
-		`${buildBasePath}/${buildName}.${extension}.gz`
+		`${buildBasePath}/${buildName}.${extension}.gz`,
+		`${buildBasePath}/${buildName}.${extension}`
 	];
 
 	for (const candidate of candidates) {
@@ -153,34 +157,30 @@ async function findExistingUnityFile(buildBasePath, buildName, extension) {
 		}
 	}
 
-	return null;
+	return candidates[0];
 }
 
-async function findUnityBuild() {
+async function findUnityLoader() {
+	// L'index Unity 6 contient les hash independants du loader, du framework,
+	// des donnees et du wasm. Il doit etre lu avant toute detection directe.
+	const loaderFromUnityIndex = await findLoaderFromUnityIndex();
+	if (loaderFromUnityIndex) {
+		return loaderFromUnityIndex;
+	}
+
 	const candidates = buildUnityLoaderCandidates();
 
 	for (const candidate of candidates) {
 		try {
 			const response = await fetch(candidate, { method: "HEAD", cache: "no-store" });
 			if (response.ok) {
-				return {
-					loaderUrl: candidate,
-					version: buildVersionFromUrl(candidate)
-				};
+				return candidate;
 			}
 		} catch {
 			if (await hasCachedResponse(candidate)) {
-				return {
-					loaderUrl: candidate,
-					version: buildVersionFromUrl(candidate)
-				};
+				return candidate;
 			}
 		}
-	}
-
-	const buildFromUnityIndex = await findBuildFromUnityIndex();
-	if (buildFromUnityIndex) {
-		return buildFromUnityIndex;
 	}
 
 	return null;
@@ -199,36 +199,30 @@ function buildUnityLoaderCandidates() {
 	return [...new Set(candidates)];
 }
 
-async function findBuildFromUnityIndex() {
+async function findLoaderFromUnityIndex() {
 	for (const root of UNITY_BUILD_ROOTS) {
-		const indexUrl = new URL(`${root}/index.html`, location.href);
-		indexUrl.searchParams.set("pwa", Date.now().toString());
-		lastCheckedUnityLoaderUrl = indexUrl.href;
+		const indexUrl = `${root}/index.html`;
+		lastCheckedUnityLoaderUrl = new URL(indexUrl, location.href).href;
 
 		try {
-			const response = await fetch(indexUrl.href, { cache: "no-store" });
+			const response = await fetch(indexUrl, { cache: "no-store" });
 			if (!response.ok) {
 				continue;
 			}
 
 			const html = await response.text();
 			const buildUrl = readUnityTemplateVariable(html, "buildUrl") || "Build";
-			const loaderPath = readUnityBuildPath(html, "loaderUrl", buildUrl);
-			const dataPath = readUnityBuildPath(html, "dataUrl", buildUrl);
-			const frameworkPath = readUnityBuildPath(html, "frameworkUrl", buildUrl);
-			const codePath = readUnityBuildPath(html, "codeUrl", buildUrl);
-			if (!loaderPath) {
-				continue;
-			}
-
+			const loaderUrl = readUnityLoaderUrl(html, buildUrl) || `${buildUrl}/Build.loader.js`;
 			const rootUrl = new URL(`${root}/`, location.href);
-			return {
-				loaderUrl: new URL(loaderPath, rootUrl).href,
-				dataUrl: dataPath ? new URL(dataPath, rootUrl).href : null,
-				frameworkUrl: frameworkPath ? new URL(frameworkPath, rootUrl).href : null,
-				codeUrl: codePath ? new URL(codePath, rootUrl).href : null,
-				version: fingerprintText(html)
+			const dataUrl = readUnityBuildAssetUrl(html, "dataUrl", buildUrl);
+			const frameworkUrl = readUnityBuildAssetUrl(html, "frameworkUrl", buildUrl);
+			const codeUrl = readUnityBuildAssetUrl(html, "codeUrl", buildUrl);
+			unityBuildAssetUrls = {
+				dataUrl: dataUrl ? new URL(dataUrl, rootUrl).href : null,
+				frameworkUrl: frameworkUrl ? new URL(frameworkUrl, rootUrl).href : null,
+				codeUrl: codeUrl ? new URL(codeUrl, rootUrl).href : null
 			};
+			return new URL(loaderUrl, rootUrl).href;
 		} catch {
 			// Continue to the next possible Unity build index.
 		}
@@ -243,17 +237,26 @@ function readUnityTemplateVariable(html, variableName) {
 	return match ? match[1] : null;
 }
 
-function readUnityBuildPath(html, variableName, buildUrl) {
-	const literalPath = readUnityTemplateVariable(html, variableName);
-	if (literalPath) {
-		return literalPath;
+function readUnityLoaderUrl(html, buildUrl) {
+	// Unity 6 emits: var loaderUrl = buildUrl + "/<hash>.loader.js";
+	const relativeLoader = html.match(/var\s+loaderUrl\s*=\s*buildUrl\s*\+\s*["']([^"']+\.loader\.js)["']/);
+	if (relativeLoader) {
+		return `${buildUrl}/${relativeLoader[1]}`;
 	}
 
-	// Les templates Unity récents utilisent :
-	// var loaderUrl = buildUrl + "/<hash>.loader.js";
-	const expressionPattern = new RegExp(`(?:var\\s+${variableName}\\s*=|${variableName}\\s*:)\\s*buildUrl\\s*\\+\\s*["']([^"']+)["']`);
-	const expressionMatch = html.match(expressionPattern);
-	return expressionMatch ? `${buildUrl}${expressionMatch[1]}` : null;
+	// Keep compatibility with templates that use a literal loader URL.
+	const literalLoader = html.match(/var\s+loaderUrl\s*=\s*["']([^"']+\.loader\.js)["']/);
+	return literalLoader ? literalLoader[1] : null;
+}
+
+function readUnityBuildAssetUrl(html, variableName, buildUrl) {
+	const relativeAsset = html.match(new RegExp(`${variableName}\\s*:\\s*buildUrl\\s*\\+\\s*["']([^"']+)["']`));
+	if (relativeAsset) {
+		return `${buildUrl}/${relativeAsset[1]}`;
+	}
+
+	const literalAsset = html.match(new RegExp(`${variableName}\\s*:\\s*["']([^"']+)["']`));
+	return literalAsset ? literalAsset[1] : null;
 }
 
 async function hasCachedResponse(url) {
@@ -276,32 +279,15 @@ function loadScript(src) {
 	});
 }
 
-function buildVersionFromUrl(url) {
-	const pathname = new URL(url, location.href).pathname;
-	const filename = pathname.slice(pathname.lastIndexOf("/") + 1);
-	return filename.replace(/\.loader\.js$/i, "") || "unity";
-}
-
-function fingerprintText(value) {
-	let hash = 2166136261;
-
-	for (let index = 0; index < value.length; index++) {
-		hash ^= value.charCodeAt(index);
-		hash = Math.imul(hash, 16777619);
-	}
-
-	return `index-${(hash >>> 0).toString(16)}`;
-}
-
-function withBuildVersion(url, buildVersion = "unity") {
+function withBuildVersion(url) {
 	const versionedUrl = new URL(url, location.href);
-	versionedUrl.searchParams.set("build", buildVersion);
+	versionedUrl.searchParams.set("build", UNITY_BUILD_VERSION);
 	return versionedUrl.href;
 }
 
 function setMissingBuildState() {
 	progressFill.style.width = "0%";
-	setStatus(`Build WebGL manquant. Fichier attendu dans build/Build. Dernier test : ${lastCheckedUnityLoaderUrl}`);
+	setStatus(`Build WebGL manquant. Fichier attendu: ${new URL("build/Build/Build.loader.js", location.href).href}. Dernier test: ${lastCheckedUnityLoaderUrl}`);
 }
 
 function setStatus(message) {
