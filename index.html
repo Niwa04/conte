@@ -1,66 +1,133 @@
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#06111f">
-  <meta name="description" content="Des histoires illustrées, racontées et mises en musique pour transformer chaque lecture en moment magique.">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="icons/maison-des-contes-192.png" type="image/png">
-  <link rel="stylesheet" href="styles.css">
-  <title>La Maison des Contes — Des histoires qui prennent vie</title>
-</head>
-<body>
-  <div class="stars" aria-hidden="true"></div>
-  <header class="site-header">
-    <a class="brand" href="#accueil"><img class="brand-logo" src="assets/images/header-logo.png" alt="">La Maison des Contes</a>
-    <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
-    <nav id="main-nav" class="main-nav"><a class="active" href="#accueil">Accueil</a><a href="#contes">Nos contes</a><a href="#experience">L’expérience</a><a href="#familles">Familles</a><a href="#ecoles">Écoles</a><a class="nav-cta install-button" href="#telecharger">↓ Télécharger</a></nav>
-  </header>
-
-  <main>
-    <section id="accueil" class="hero">
-      <div class="hero-backdrop"></div><div class="fireflies" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-      <div class="hero-inner section-shell"><div class="hero-copy reveal">
-        <p class="eyebrow">La lecture devient magie</p>
-        <h1>Ce soir, allumez<br><span>l’imaginaire.</span></h1>
-        <p class="hero-text">Des histoires illustrées, racontées et mises en musique pour transformer le coucher en un moment magique.</p>
-        <div class="hero-actions"><a class="button button-primary" href="#demo">✦ Découvrir gratuitement</a><button class="button button-secondary install-button">↓ Télécharger l’application</button></div>
-      </div></div>
-    </section>
-
-    <section class="proof-strip" aria-label="Les avantages"><div><strong>100 %</strong><span>pensé pour les enfants</span></div><div><strong>0 publicité</strong><span>pour une lecture sereine</span></div><div><strong>Partout</strong><span>même sans connexion</span></div><div><strong>En famille</strong><span>ou à l’école</span></div></section>
-
-    <section id="experience" class="section-shell compact-section">
-      <div class="section-intro reveal"><p class="eyebrow">Plus qu’un livre</p><div class="ornament-title"><span></span><h2>Une expérience féerique</h2><span></span></div><p>Chaque détail est pensé pour nourrir l’imaginaire sans surstimuler l’enfant.</p></div>
-      <div class="feature-grid"><article class="feature-card reveal" style="--img:url('assets/images/snow-white-scene.png')"><i>▣</i><div><h3>Des images qui émerveillent</h3><p>De grandes illustrations riches en détails invitent à observer, raconter et rêver.</p></div></article><article class="feature-card reveal" style="--img:url('assets/images/child-reading.png')"><i>♫</i><div><h3>Une bulle de douceur</h3><p>Voix chaleureuse, musique apaisante et rythme calme accompagnent chaque histoire.</p></div></article><article class="feature-card reveal" style="--img:url('assets/images/family-reading.png')"><i>✦</i><div><h3>Un monde vivant</h3><p>Les scènes prennent vie avec délicatesse pour placer l’enfant au cœur du récit.</p></div></article></div>
-      <div class="unity-demo reveal" id="essai-application">
-        <div class="unity-demo-copy"><span class="unity-demo-badge">Démo WebGL</span><p class="eyebrow">Essayez maintenant</p><h3>Une histoire à regarder, écouter et explorer</h3><p>La Maison des Contes transforme la lecture en aventure vivante. Entrez dans une bibliothèque enchantée, choisissez un livre et laissez les illustrations, la narration et la musique guider l’imagination.</p><ul><li><span>✦</span> Des livres illustrés qui prennent vie</li><li><span>♫</span> Une narration douce et immersive</li><li><span>⌂</span> Une bibliothèque pensée pour les enfants</li></ul><p class="unity-demo-invitation">Essayez-la ici, sans téléchargement. Cliquez sur la couverture puis passez en grand écran pour profiter pleinement de l’expérience.</p></div>
-        <div class="unity-demo-stage">
-          <div class="unity-demo-frame">
-            <div class="unity-demo-controls"><button class="unity-demo-expand" type="button" aria-label="Afficher la démo en grand écran">⛶ Grand écran</button><button class="unity-demo-close" type="button" aria-label="Fermer le grand écran">× Fermer</button></div>
-            <div class="unity-demo-poster"><img src="assets/images/loading-cover.png" alt="La Maison des Contes"><div><button class="button button-primary unity-demo-launch" type="button">✦ Lancer la démo</button><small>Le premier chargement peut prendre quelques instants.</small></div></div>
-            <iframe class="unity-demo-iframe" title="Démo interactive de La Maison des Contes" allow="fullscreen; autoplay" allowfullscreen></iframe>
-          </div>
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity Web Player | Maison des contes</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+  </head>
+  <body>
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
+      <div id="unity-loading-bar">
+        <div id="unity-logo"></div>
+        <div id="unity-progress-bar-empty">
+          <div id="unity-progress-bar-full"></div>
         </div>
       </div>
-    </section>
+      <div id="unity-warning"> </div>
+      <div id="unity-footer">
+        <div id="unity-logo-title-footer"></div>
+        <div id="unity-fullscreen-button"></div>
+        <div id="unity-build-title">Maison des contes</div>
+      </div>
+    </div>
+    <script>
+      var canvas = document.querySelector("#unity-canvas");
 
-    <section id="contes" class="section-shell compact-section">
-      <div class="section-intro reveal"><p class="eyebrow">La bibliothèque enchantée</p><div class="ornament-title"><span></span><h2>Choisissez votre prochaine aventure</h2><span></span></div><p>Des classiques réinventés avec tendresse, mystère et émerveillement.</p></div>
-      <div class="story-grid"><article class="story-card reveal"><div class="story-visual"><img src="assets/images/cover-snow-white.png" alt="Blanche-Neige"><span>Dès 4 ans</span></div><div><h3>Blanche-Neige</h3><p>Une forêt mystérieuse, une amitié inattendue et une pomme ensorcelée.</p><small>◷ Environ 12 minutes</small><a href="#demo">Découvrir ce conte →</a></div></article><article class="story-card reveal"><div class="story-visual"><img src="assets/images/cover-cinderella.png" alt="Cendrillon"><span>Dès 3 ans</span></div><div><h3>Cendrillon</h3><p>Une nuit magique qui célèbre l’espoir, le courage et la liberté.</p><small>◷ Environ 10 minutes</small><a href="#demo">Découvrir ce conte →</a></div></article><article class="story-card reveal"><div class="story-visual"><img src="assets/images/cover-poucet.png" alt="Le Petit Poucet"><span>Dès 5 ans</span></div><div><h3>Le Petit Poucet</h3><p>Un petit héros, une grande forêt et beaucoup d’ingéniosité.</p><small>◷ Environ 14 minutes</small><a href="#demo">Découvrir ce conte →</a></div></article></div>
-    </section>
+      // Shows a temporary message banner/ribbon for a few seconds, or
+      // a permanent error message on top of the canvas if type=='error'.
+      // If type=='warning', a yellow highlight color is used.
+      // Modify or remove this function to customize the visually presented
+      // way that non-critical warnings and error messages are presented to the
+      // user.
+      function unityShowBanner(msg, type) {
+        var warningBanner = document.querySelector("#unity-warning");
+        function updateBannerVisibility() {
+          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+        }
+        var div = document.createElement('div');
+        div.innerHTML = msg;
+        warningBanner.appendChild(div);
+        if (type == 'error') div.style = 'background: red; padding: 10px;';
+        else {
+          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+          setTimeout(function() {
+            warningBanner.removeChild(div);
+            updateBannerVisibility();
+          }, 5000);
+        }
+        updateBannerVisibility();
+      }
 
-    <section id="demo" class="demo-section compact-section"><div class="section-shell">
-      <div class="section-intro reveal"><p class="eyebrow">À vous de choisir</p><div class="ornament-title"><span></span><h2>Découvrez la magie en action</h2><span></span></div><p>Explorez les trois dimensions qui rendent chaque lecture inoubliable.</p></div>
-      <div class="interactive-demo reveal"><div class="demo-tabs" role="tablist"><button class="active" role="tab" aria-selected="true" data-demo="read">▣ <span>Lire<small>De grandes pages illustrées</small></span></button><button role="tab" aria-selected="false" data-demo="listen">♫ <span>Écouter<small>Une narration douce</small></span></button><button role="tab" aria-selected="false" data-demo="explore">✦ <span>Explorer<small>Des décors qui prennent vie</small></span></button></div><div class="demo-screen"><div class="demo-device"><img id="demo-image" src="assets/images/app-screen-2.jpg" alt="Aperçu de la lecture illustrée"><span class="demo-shine"></span></div><p id="demo-caption">Tournez les pages et laissez les illustrations raconter leur propre histoire.</p></div></div>
-    </div></section>
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/f2d2b708d72e571219d9dcd0b1a2f1c1.loader.js";
+      var config = {
+        arguments: [],
+        dataUrl: buildUrl + "/0058406b1842ad1463e7407cff270288.data.gz",
+        frameworkUrl: buildUrl + "/55393495c87c56d34aefe4f5c26ea022.framework.js.gz",
+        codeUrl: buildUrl + "/a4cb3c1a18daa6930cbe3caebb77ea5e.wasm.gz",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "Maison des contes",
+        productVersion: "0.1.0",
+        showBanner: unityShowBanner,
+        // errorHandler: function(err, url, line) {
+        //    alert("error " + err + " occurred at line " + line);
+        //    // Return 'true' if you handled this error and don't want Unity
+        //    // to process it further, 'false' otherwise.
+        //    return true;
+        // },
+      };
 
-    <section id="familles" class="section-shell compact-section"><div class="section-intro reveal"><p class="eyebrow">À chaque moment son histoire</p><div class="ornament-title"><span></span><h2>Des souvenirs à partager</h2><span></span></div></div><div class="moment-grid"><article class="moment-card reveal"><img src="assets/images/family-reading.png" alt="Lecture en famille"><div><h3>♥ En famille</h3><p>Des instants complices pour rêver et grandir ensemble.</p></div></article><article class="moment-card reveal"><img src="assets/images/child-reading.png" alt="Lecture avant le coucher"><div><h3>☾ Avant le coucher</h3><p>Un rituel doux pour ralentir et préparer une belle nuit.</p></div></article><article id="ecoles" class="moment-card reveal"><img src="assets/images/school-reading.png" alt="Lecture à l’école"><div><h3>⌂ À l’école</h3><p>Un support vivant pour écouter, observer et échanger.</p></div></article></div></section>
+      // By default, Unity keeps WebGL canvas render target size matched with
+      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+      // Set this to false if you want to decouple this synchronization from
+      // happening inside the engine, and you would instead like to size up
+      // the canvas DOM size and WebGL render target sizes yourself.
+      // config.matchWebGLToCanvasSize = false;
 
-    <section id="telecharger" class="final-cta section-shell reveal"><img src="assets/images/hero-book.png" alt="Livre féerique"><div><p class="eyebrow">La prochaine histoire vous attend</p><h2>Ce soir, n’éteignez pas seulement la lumière.</h2><p>Allumez l’imaginaire et partagez un moment que votre enfant n’oubliera pas.</p></div><div class="hero-actions"><a class="button button-primary" href="#demo">✦ Commencer notre histoire</a><button class="button button-secondary install-button">↓ Télécharger l’application</button></div></section>
-  </main>
+      // If you would like all file writes inside Unity Application.persistentDataPath
+      // directory to automatically persist so that the contents are remembered when
+      // the user revisits the site the next time, uncomment the following line:
+      // config.autoSyncPersistentDataPath = true;
+      // This autosyncing is currently not the default behavior to avoid regressing
+      // existing user projects that might rely on the earlier manual
+      // JS_FileSystem_Sync() behavior, but in future Unity version, this will be
+      // expected to change.
 
-  <footer><div class="footer-inner"><div><strong><span class="brand-mark mini"><span>⌂</span><i>✦</i></span> La Maison des Contes</strong><p>Ouvrez un livre. Entrez dans un monde.</p></div><div><strong>Découvrir</strong><a href="#contes">Nos contes</a><a href="#experience">L’expérience</a><a href="#demo">Démonstration</a></div><div><strong>Pour tous</strong><a href="#familles">Familles</a><a href="#ecoles">Écoles</a></div><div><strong>Informations</strong><a href="#">À propos</a><a href="#">Confidentialité</a><a href="#">Nous contacter</a></div></div><p class="copyright">© 2026 La Maison des Contes · Tous droits réservés.</p></footer>
-  <dialog id="lightbox"><button class="lightbox-close" aria-label="Fermer">×</button><img alt="Aperçu agrandi"></dialog><div id="toast" role="status" aria-live="polite"></div><script src="script.js"></script>
-</body></html>
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
+
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+        document.querySelector("#unity-container").className = "unity-mobile";
+        canvas.className = "unity-mobile";
+
+        // To lower canvas resolution on mobile devices to gain some
+        // performance, uncomment the following line:
+        // config.devicePixelRatio = 1;
+
+
+      } else {
+        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
+        canvas.style.width = "960px";
+        canvas.style.height = "600px";
+      }
+
+      document.querySelector("#unity-loading-bar").style.display = "block";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
+              }).then((unityInstance) => {
+                document.querySelector("#unity-loading-bar").style.display = "none";
+                document.querySelector("#unity-fullscreen-button").onclick = () => {
+                  unityInstance.SetFullscreen(1);
+                };
+
+              }).catch((message) => {
+                alert(message);
+              });
+            };
+
+      document.body.appendChild(script);
+
+    </script>
+  </body>
+</html>

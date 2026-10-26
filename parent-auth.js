@@ -191,6 +191,40 @@ function sendToUnity(state) {
   unity.SendMessage(receiverName, "OnParentAuthState", JSON.stringify(state));
 }
 
+async function requestPublicWebpAsPng(requestId, imageUrl) {
+  const sendResult = (result) => {
+    const unity = window.unityInstance;
+    if (receiverName && unity && typeof unity.SendMessage === "function") {
+      unity.SendMessage(receiverName, "OnParentPublicImage", JSON.stringify({ requestId, ...result }));
+    }
+  };
+  try {
+    const image = new URL(imageUrl);
+    if (image.origin !== new URL(SUPABASE_URL).origin
+      || !image.pathname.startsWith("/storage/v1/object/public/story-images/")
+      || !image.pathname.toLowerCase().endsWith(".webp")) {
+      throw new Error("URL d’image publique invalide.");
+    }
+    const response = await fetch(image.href, { cache: "force-cache" });
+    if (!response.ok) throw new Error("Image originale indisponible.");
+    const bitmap = await createImageBitmap(await response.blob());
+    try {
+      const canvas = document.createElement("canvas");
+      canvas.width = bitmap.width;
+      canvas.height = bitmap.height;
+      const context = canvas.getContext("2d");
+      if (!context) throw new Error("Décodage de l’image indisponible.");
+      context.drawImage(bitmap, 0, 0);
+      sendResult({ pngBase64: canvas.toDataURL("image/png").split(",")[1] });
+      canvas.width = canvas.height = 0;
+    } finally {
+      bitmap.close();
+    }
+  } catch (error) {
+    sendResult({ error: error instanceof Error ? error.message : "Image illisible." });
+  }
+}
+
 function getGameRedirectUrl() {
   return new URL("game.html", window.location.href).href;
 }
@@ -1495,6 +1529,7 @@ window.MaisonDesContesAuth = {
   startPurchase,
   startSubscription,
   reportStoryProgress,
+  requestPublicWebpAsPng,
   reportPageView,
   showCatalogMessage,
   requestRuntimeCatalog,
