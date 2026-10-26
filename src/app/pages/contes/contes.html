@@ -1,0 +1,61 @@
+<header class="entete">
+  <div class="entete__interieur">
+    <a class="marque" routerLink="/" aria-label="La Maison des Contes, accueil">
+      <img class="marque__badge" src="assets/badge-maison-des-contes.webp" alt="La Maison des Contes" width="277" height="352">
+    </a>
+    <nav class="navigation" aria-label="Principale">
+      <a routerLink="/">← Retour au site</a>
+      <a routerLink="/connexion">Se connecter</a>
+      <button type="button" class="bouton" (click)="installer()">Télécharger l’app</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="liste">
+    <app-lucioles [nombre]="26" [graine]="7" />
+    <div class="liste__interieur">
+      <h1 class="sr-only">Nos contes</h1>
+
+      @if (catalogue.chargement() && !catalogue.charge()) {
+        <p class="message" role="status">Chargement des contes…</p>
+      } @else if (catalogue.erreur()) {
+        <p class="message message--erreur" role="alert">{{ catalogue.erreur() }}</p>
+      } @else if (!catalogue.contes().length) {
+        <p class="message">Aucun conte à afficher pour le moment.</p>
+      } @else {
+        @for (section of sections(); track section.cle) {
+          <section class="categorie" [attr.aria-labelledby]="'categorie-' + section.cle">
+            <h2 [id]="'categorie-' + section.cle">{{ section.titre }}</h2>
+            <ul class="cartes">
+            @for (c of section.contes; track c.id) {
+              <li class="carte">
+                @if (c.presentation_url; as url) {
+                  @if (estInterne(url)) {
+                    <a class="carte__lien" [routerLink]="url" [attr.aria-label]="c.title">
+                      <img [src]="c.cover_url" [alt]="'Couverture de ' + c.title" loading="lazy">
+                    </a>
+                  } @else {
+                    <a class="carte__lien" [href]="url" target="_blank" rel="noopener noreferrer" [attr.aria-label]="c.title + ' (nouvel onglet)'">
+                      <img [src]="c.cover_url" [alt]="'Couverture de ' + c.title" loading="lazy">
+                    </a>
+                  }
+                } @else {
+                  <div class="carte__lien carte__lien--inactif">
+                    <img [src]="c.cover_url" [alt]="'Couverture de ' + c.title" loading="lazy">
+                  </div>
+                }
+              </li>
+            }
+          </ul>
+          </section>
+        }
+      }
+    </div>
+  </section>
+</main>
+
+<footer class="pied">
+  <p>© La Maison des Contes</p>
+  <a routerLink="/">Retour à l’accueil</a>
+</footer>

@@ -1,0 +1,166 @@
+<main class="ham">
+  <!-- Ouverture : Hameln, ses colombages, son drapeau -->
+  <section class="ouverture" [style.--fond]="fond(13)">
+    <div class="poutres" aria-hidden="true"></div>
+    <div class="ouverture__interieur">
+      <div class="ouverture__texte">
+        <p class="lieu"><span lang="de">Hameln</span> · Basse-Saxe · sur la Weser</p>
+        <h1>{{ conte().titre }}</h1>
+        <p class="ouverture__accroche">{{ conte().accroche }}</p>
+        <p class="ouverture__origine">{{ conte().mentionOrigine }}</p>
+        <ul class="pastilles">
+          @for (e of conte().etiquettes; track e) { <li>{{ e }}</li> }
+        </ul>
+        <div class="ouverture__actions">
+          <a class="bouton bouton--vert bouton--brille" [href]="appUrl">Lire dans l’application</a>
+          <a class="lien-doux" href="#melodie">Écouter la flûte ↓</a>
+        </div>
+      </div>
+
+      <div class="ouverture__visuel">
+        <figure class="couverture">
+          <img [src]="conte().couverture" [alt]="conte().couvertureAlt" width="1400" height="788" fetchpriority="high">
+        </figure>
+        <div class="drapeau" aria-hidden="true">
+          <span class="drapeau__mat"></span>
+          <img [src]="conte().drapeau.src" alt="" width="300" height="200">
+        </div>
+      </div>
+    </div>
+    <div class="silhouette" aria-hidden="true"></div>
+  </section>
+
+  <!-- La ville : l'Allemagne, Hamelin -->
+  <section class="ville" aria-labelledby="titre-ville" [style.--fond]="fond(6)">
+    <div class="ville__interieur">
+      <div class="ville__carte">
+        <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+        <p class="ville__nom">Allemagne</p>
+        <p class="ville__natif" lang="de">Deutschland</p>
+        <p class="ville__ou">Légende de Hameln, Basse-Saxe</p>
+      </div>
+      <div class="ville__texte">
+        <p class="etiquette">Une légende venue d’Allemagne</p>
+        <h2 id="titre-ville">Hamelin, ville de colombages et de rivière</h2>
+        <p class="ville__intro">Hamelin, en allemand Hameln, est une ville de Basse-Saxe construite au bord de la Weser. Elle est connue pour ses maisons à colombages et, bien sûr, pour sa légende.</p>
+        <p class="mots-titre">Trois mots allemands</p>
+        <ul class="mots">
+          @for (m of mots; track m.allemand) {
+            <li appApparition>
+              <span class="mots__de" lang="de">{{ m.allemand }}</span>
+              <span class="mots__sens">{{ m.sens }}</span>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+    <div class="riviere" aria-hidden="true"></div>
+  </section>
+
+  <!-- L'histoire -->
+  <section class="histoire" id="histoire">
+    <div class="histoire__interieur">
+      <div class="histoire__texte">
+        <p class="etiquette">L’histoire</p>
+        <h2>Une promesse, une mélodie</h2>
+        <blockquote appApparition class="citation"><p>{{ conte().citation }}</p></blockquote>
+        <p appApparition class="resume">{{ conte().resume }}</p>
+      </div>
+      <figure appApparition class="histoire__visuel">
+        <img [src]="conte().imageHistoire.src" [alt]="conte().imageHistoire.alt" loading="lazy" width="1400" height="788">
+        <figcaption>{{ conte().imageHistoire.legende }}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- La mélodie -->
+  <section class="melodie" id="melodie" aria-labelledby="titre-melodie" [style.--fond]="fond(11)">
+    <div class="melodie__interieur">
+      <p class="etiquette">La flûte du musicien</p>
+      <h2 id="titre-melodie">Écoute sa mélodie</h2>
+      <p class="chapeau">Chaque note de la flûte s’allume sur la partition quand elle résonne. Le son ne se lance que lorsque tu appuies sur le bouton.</p>
+
+      <div class="partition" [class.partition--joue]="musique()">
+        <svg viewBox="0 0 960 170" role="img" aria-label="Partition de la mélodie du joueur de flûte">
+          <g class="portee">
+            @for (y of [40, 60, 80, 100, 120]; track y) { <line x1="14" [attr.y1]="y" x2="946" [attr.y2]="y" /> }
+          </g>
+          @for (n of partition; track $index; let i = $index) {
+            <g class="note" [class.note--active]="i === noteCourante()">
+              <ellipse [attr.cx]="n.x" [attr.cy]="n.y" rx="10" ry="7.5" [attr.transform]="'rotate(-18 ' + n.x + ' ' + n.y + ')'" />
+              <line [attr.x1]="n.x + 9" [attr.y1]="n.y - 2" [attr.x2]="n.x + 9" [attr.y2]="n.y - 30" />
+            </g>
+          }
+        </svg>
+      </div>
+
+      <button type="button" class="flute" [class.flute--joue]="musique()" [attr.aria-pressed]="musique()" (click)="basculerMusique()">
+        <span class="flute__icone" aria-hidden="true">{{ musique() ? '❚❚' : '♪' }}</span>
+        <span>{{ musique() ? 'Faire taire la flûte' : 'Jouer la mélodie' }}</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Illustrations -->
+  <section class="galerie" id="illustrations" [style.--fond]="fond(7)">
+    <div class="galerie__interieur">
+      <p class="etiquette">Les illustrations</p>
+      <h2>Un conte à regarder autant qu’à lire</h2>
+      <ul class="fenetres">
+        @for (i of conte().illustrations; track i.src; let n = $index) {
+          <li appApparition class="fenetre" [style.transition-delay.ms]="n * 110">
+            <img [src]="i.src" [alt]="i.alt" loading="lazy" width="1400" height="788">
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Personnages et voix -->
+  <section class="gens" id="personnages" aria-labelledby="titre-gens" [style.--fond]="fond(2)">
+    <div class="gens__interieur">
+      <p class="etiquette">Les personnages</p>
+      <h2 id="titre-gens">Ceux de Hamelin</h2>
+      <p class="chapeau">Choisis un personnage pour le découvrir.</p>
+      <app-personnages-conte [personnages]="conte().personnages" idBase="ham" />
+    </div>
+  </section>
+
+  <!-- Origine : la frise -->
+  <section class="origine" [style.--fond]="fond(12)">
+    <div class="origine__interieur">
+      <p class="etiquette">La légende</p>
+      <h2>{{ conte().origine.titre }}</h2>
+      <ol class="frise">
+        @for (r of reperes; track r.annee; let n = $index) {
+          <li appApparition class="repere" [style.transition-delay.ms]="n * 120">
+            <span class="repere__annee">{{ r.annee }}</span>
+            <strong>{{ r.titre }}</strong>
+            <span>{{ r.texte }}</span>
+          </li>
+        }
+      </ol>
+      <div class="origine__colonnes">
+        @for (p of conte().origine.paragraphes; track p) {
+          <p appApparition>{{ p }}</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Fiche -->
+  <section class="fiche-section" id="fiche">
+    <div class="fiche-section__interieur">
+      <p class="etiquette">En un coup d’œil</p>
+      <h2>La fiche du conte</h2>
+      <app-fiche-conte [titre]="conte().titre" [infos]="conte().infos" />
+    </div>
+  </section>
+
+  <section class="appel" [style.--fond]="fond(10)">
+    <div class="poutres" aria-hidden="true"></div>
+    <h2>Prêt à écouter {{ conte().titre }} ?</h2>
+    <p>Ouvre l’application et découvre le conte en entier.</p>
+    <button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="installer.emit()">Télécharger l’application</button>
+  </section>
+</main>

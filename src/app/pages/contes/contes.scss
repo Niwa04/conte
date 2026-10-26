@@ -1,0 +1,143 @@
+:host { display: block; min-height: 100vh; color: #fff; background: radial-gradient(circle at 50% 0, #1a3fa6 0, var(--mdc-navy) 45%, var(--mdc-nuit) 100%); }
+
+/* ---------- En-tête (comme sur les pages de conte) ---------- */
+.entete {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: linear-gradient(#1f48b8, var(--mdc-navy));
+  border-bottom: 3px solid var(--mdc-gold);
+  box-shadow: 0 0 0 1px #0a1a52, 0 6px 18px rgb(0 0 0 / 0.35);
+
+  &__interieur {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.5rem 1.25rem;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+}
+
+.marque {
+  position: relative;
+  z-index: 3;
+  align-self: flex-start;
+  margin-bottom: -48px;
+
+  &__badge { display: block; height: 104px; width: auto; filter: drop-shadow(0 6px 8px rgb(0 0 0 / 0.45)); transition: transform 0.3s; }
+  &:hover &__badge { transform: rotate(-3deg) scale(1.05); }
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+
+  a {
+    color: var(--mdc-gold-clair);
+    font-weight: 700;
+    text-decoration: none;
+    &:hover { color: #fff; text-decoration: underline; text-underline-offset: 6px; }
+  }
+}
+
+.bouton {
+  padding: 0.55rem 1.1rem;
+  border: 2px solid var(--mdc-gold-fonce);
+  border-radius: 999px;
+  background: linear-gradient(var(--mdc-gold-clair), var(--mdc-gold));
+  color: var(--mdc-nuit);
+  font-weight: 700;
+  &:hover { filter: brightness(1.08); }
+}
+
+/* ---------- Liste ---------- */
+.liste {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 4.5rem 1.25rem 4rem;
+
+  &__interieur { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; text-align: center; }
+
+  h1 {
+    margin: 0.4rem 0 0.6rem;
+    font-family: var(--police-titre);
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    color: var(--mdc-cream);
+    text-shadow: 0 0 22px rgb(243 210 122 / 0.5), 0 3px 8px rgb(0 0 0 / 0.5);
+  }
+}
+
+.etiquette { margin: 0; color: var(--mdc-gold-clair); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.85rem; }
+.chapeau { max-width: 640px; margin: 0 auto 3rem; font-size: 1.15rem; line-height: 1.5; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.message { margin: 2rem 0; font-size: 1.15rem; &--erreur { color: #ffb4b4; } }
+
+.categorie { margin-top: 3rem; text-align: left; }
+.categorie h2 {
+  margin: 0;
+  padding-bottom: 0.7rem;
+  border-bottom: 2px solid rgb(243 210 122 / 0.45);
+  font-family: var(--police-titre);
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  color: var(--mdc-cream);
+  text-shadow: 0 0 18px rgb(243 210 122 / 0.4);
+}
+
+/* Uniquement les couvertures : chaque image est affichée en entier, sans texte ni cadre. */
+.cartes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  align-items: start;
+  gap: 1.6rem;
+  margin: 1.6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.carte {
+  &__lien {
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+    line-height: 0;
+    box-shadow: 0 12px 26px rgb(0 0 0 / 0.45);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    img { width: 100%; height: auto; }
+
+    &:not(&--inactif):hover, &:focus-visible { transform: translateY(-6px); box-shadow: 0 20px 34px rgb(0 0 0 / 0.55); }
+    &:focus-visible { outline: 3px solid var(--mdc-gold-clair); outline-offset: 3px; }
+    &--inactif { cursor: default; }
+  }
+}
+
+/* ---------- Pied de page ---------- */
+.pied {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2.5rem;
+  border-top: 1px solid rgb(243 210 122 / 0.3);
+
+  p { margin: 0; }
+  a { color: var(--mdc-gold-clair); font-weight: 700; }
+}
+
+@media (max-width: 700px) {
+  .navigation { gap: 0.8rem; font-size: 0.9rem; }
+  .liste { padding-top: 4.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carte__lien, .carte__image img { transition: none; }
+}

@@ -1,0 +1,184 @@
+<main class="momo">
+  <!-- Ouverture : le soleil rouge, le livre, le drapeau -->
+  <section class="ouverture" [style.--fond]="'url(' + conte().fond + ')'">
+    <div class="petales" aria-hidden="true">
+      @for (p of petales; track $index) {
+        <span class="petale" [style.left.%]="p.gauche" [style.animation-delay.s]="p.delai" [style.animation-duration.s]="p.duree" [style.--t.px]="p.taille" [style.--dx.px]="p.deriveX"></span>
+      }
+    </div>
+
+    <div class="ouverture__interieur">
+      <div class="ouverture__texte">
+        <div class="pays-badge">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <span><strong>Japon</strong> <span lang="ja">日本</span></span>
+        </div>
+        <p class="kanji" lang="ja" aria-hidden="true">桃太郎</p>
+        <h1>{{ conte().titre }}</h1>
+        <p class="ouverture__accroche">{{ conte().accroche }}</p>
+        <p class="ouverture__origine">{{ conte().mentionOrigine }}</p>
+        <ul class="pastilles">
+          @for (e of conte().etiquettes; track e) { <li>{{ e }}</li> }
+        </ul>
+        <div class="ouverture__actions">
+          <a class="bouton bouton--vert bouton--brille" [href]="appUrl">Lire dans l’application</a>
+        </div>
+      </div>
+      <div class="ouverture__livre">
+        <span class="soleil" aria-hidden="true"></span>
+        <img [src]="conte().couverture" [alt]="conte().couvertureAlt" width="1400" height="788" fetchpriority="high">
+      </div>
+    </div>
+  </section>
+
+  <!-- Le pays : le Japon -->
+  <section class="pays" aria-labelledby="titre-pays" [style.--fond]="fond(8)">
+    <div class="pays__interieur">
+      <div class="pays__carte">
+        <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+        <p class="pays__nom">Japon</p>
+        <p class="pays__natif" lang="ja">日本 · Nihon</p>
+        <p class="pays__ou">Conte populaire · région d’Okayama</p>
+      </div>
+      <div class="pays__texte">
+        <p class="etiquette">Un conte venu du Japon</p>
+        <h2 id="titre-pays">Entre cerisiers, rizières et montagnes</h2>
+        <p class="pays__intro">Momotarō vient du Japon, un archipel de montagnes, de rizières et de cerisiers. La tradition place le conte dans la région d’Okayama, dans l’ouest de l’île de Honshū.</p>
+        <p class="mots-titre">Trois mots à retenir</p>
+        <ul class="mots">
+          @for (m of mots; track m.romaji) {
+            <li appApparition>
+              <span class="mots__kanji" lang="ja">{{ m.kanji }}</span>
+              <span class="mots__romaji">{{ m.romaji }}</span>
+              <span class="mots__sens">{{ m.sens }}</span>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- L'histoire -->
+  <section class="histoire" id="histoire">
+    <div class="histoire__interieur">
+      <div class="histoire__texte">
+        <p class="etiquette">L’histoire</p>
+        <h2>Un voyage à quatre</h2>
+        <blockquote appApparition class="citation"><p>{{ conte().citation }}</p></blockquote>
+        <p appApparition class="resume">{{ conte().resume }}</p>
+      </div>
+      <figure appApparition class="histoire__visuel">
+        <img [src]="conte().imageHistoire.src" [alt]="conte().imageHistoire.alt" loading="lazy" width="1400" height="788">
+        <figcaption>{{ conte().imageHistoire.legende }}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- La table qui s'agrandit -->
+  <section class="table" aria-labelledby="titre-table">
+    <div class="table__interieur">
+      <div class="table__texte">
+        <p class="etiquette">Le cœur du conte</p>
+        <h2 id="titre-table">Une table qui devient trop petite</h2>
+        <p class="table__chapeau">Tout commence par une place vide. À chaque boulette partagée, quelqu’un s’assoit. Essaie.</p>
+
+        <div class="citation-table" aria-live="polite">
+          @if (etape() === 0) {
+            <p class="citation-table__titre">Deux bols, une place vide</p>
+            <p>Un couple, deux bols… et quelqu’un qui manque à leur table.</p>
+          } @else if (etape() <= convives.length) {
+            <p class="citation-table__titre">{{ convives[etape() - 1].titre }}</p>
+            <p>{{ convives[etape() - 1].phrase }}</p>
+          }
+          @if (etape() === convives.length) {
+            <p class="citation-table__fin">Six bols. La table n’a jamais paru si petite.</p>
+          }
+        </div>
+
+        <button type="button" class="bouton bouton--vert" (click)="partager()">
+          @if (etape() === 0) { Partager une boulette }
+          @else if (etape() < convives.length) { Partager encore }
+          @else { Recommencer }
+        </button>
+      </div>
+
+      <ul class="plan-table" [attr.aria-label]="'La table : ' + (2 + etape()) + ' bols'">
+        @for (p of parents; track p.nom) {
+          <li class="bol">
+            <img [src]="p.image" [alt]="p.nom" width="700" height="933" loading="lazy">
+            <span>{{ p.nom }}</span>
+          </li>
+        }
+        @for (c of convives; track c.nom; let n = $index) {
+          @if (n < etape()) {
+            <li class="bol bol--arrive">
+              <img [src]="c.image" [alt]="c.nom" width="700" height="933" loading="lazy">
+              <span>{{ c.nom }}</span>
+            </li>
+          }
+        }
+        @if (etape() === 0) {
+          <li class="bol bol--vide"><span>La place vide</span></li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Illustrations -->
+  <section class="galerie" id="illustrations" [style.--fond]="fond(5)">
+    <div class="galerie__interieur">
+      <p class="etiquette">Les illustrations</p>
+      <h2>Un conte à regarder autant qu’à lire</h2>
+      <ul class="estampes">
+        @for (i of conte().illustrations; track i.src; let n = $index) {
+          <li appApparition class="estampe" [style.transition-delay.ms]="n * 110">
+            <img [src]="i.src" [alt]="i.alt" loading="lazy" width="1400" height="788">
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Personnages et voix -->
+  <section class="gens" id="personnages" aria-labelledby="titre-gens" [style.--fond]="fond(10)">
+    <div class="gens__interieur">
+      <p class="etiquette">Les personnages</p>
+      <h2 id="titre-gens">Ceux qui prennent la route, et ceux qui attendent</h2>
+      <p class="chapeau">Choisis un personnage pour le découvrir.</p>
+      <app-personnages-conte [personnages]="conte().personnages" idBase="momo" />
+    </div>
+  </section>
+
+  <!-- Origine -->
+  <section class="origine" [style.--fond]="fond(1)">
+    <div class="origine__interieur">
+      <p class="etiquette">L’origine</p>
+      <h2>{{ conte().origine.titre }}</h2>
+      <aside class="oeuvre" appApparition>
+        <p class="oeuvre__etiquette">L’œuvre d’origine</p>
+        <p class="oeuvre__titre"><span lang="ja">桃太郎</span> · Momotarō</p>
+        <p class="oeuvre__auteur">Conte populaire japonais · version écrite d’Iwaya Sazanami (<span lang="ja">巌谷小波</span>), 1894</p>
+      </aside>
+      <div class="origine__colonnes">
+        @for (p of conte().origine.paragraphes; track p) {
+          <p appApparition>{{ p }}</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Fiche -->
+  <section class="fiche-section" id="fiche">
+    <div class="fiche-section__interieur">
+      <p class="etiquette">En un coup d’œil</p>
+      <h2>La fiche du conte</h2>
+      <app-fiche-conte [titre]="conte().titre" [infos]="conte().infos" />
+    </div>
+  </section>
+
+  <section class="appel" [style.--fond]="fond(11)">
+    <h2>Prêt à t’asseoir à la table de {{ conte().titre }} ?</h2>
+    <p>Ouvre l’application et découvre le conte en entier.</p>
+    <button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="installer.emit()">Télécharger l’application</button>
+  </section>
+</main>

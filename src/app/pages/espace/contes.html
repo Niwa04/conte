@@ -1,0 +1,42 @@
+<h1 class="espace-titre">Mes contes</h1>
+
+<div class="filtres" role="group" aria-label="Filtrer les contes">
+  @for (f of filtres; track f.id) {
+    <button type="button" class="filtre" [class.filtre--actif]="filtre() === f.id" [attr.aria-pressed]="filtre() === f.id" (click)="filtre.set(f.id)">
+      {{ f.libelle }}
+    </button>
+  }
+</div>
+
+@if (donnees.chargement() && !donnees.catalogue()) {
+  <p class="vide" role="status">Chargement de tes contes…</p>
+} @else if (donnees.contes().length === 0) {
+  <div class="vide">
+    <p><strong>Aucun conte n’est encore disponible.</strong></p>
+    <p>Dès que des contes seront publiés dans l’application, ils apparaîtront ici avec leur avancement.</p>
+  </div>
+} @else if (liste().length === 0) {
+  <p class="vide">Aucun conte dans cette catégorie.</p>
+} @else {
+  <ul class="grille">
+    @for (c of liste(); track c.id) {
+      <li class="conte" [class.conte--verrouille]="!c.has_full_access">
+        @if (c.cover_url) {
+          <img [src]="c.cover_url" [alt]="'Couverture du conte ' + c.title" loading="lazy" width="1280" height="720">
+        }
+        <div class="conte__corps">
+          <h2>{{ c.title }}</h2>
+          <p class="conte__meta">
+            @if (c.age_range) { <span>{{ c.age_range }}</span> }
+            @if (c.reading_minutes) { <span>{{ c.reading_minutes }} min</span> }
+          </p>
+          <div class="conte__etats">
+            <span class="pastille-etat" [class.pastille-etat--ok]="c.has_full_access">{{ acces(c) }}</span>
+            @if (avancement(c); as a) { <span class="pastille-etat pastille-etat--progres">{{ a }}</span> }
+          </div>
+        </div>
+      </li>
+    }
+  </ul>
+  <p class="aide">Pour lire un conte, ouvre l’application : <a [href]="appUrl">Ouvrir l’application</a></p>
+}

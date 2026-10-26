@@ -1,0 +1,222 @@
+<header class="entete">
+  <div class="entete__interieur">
+    <a class="marque" href="#accueil" aria-label="La Maison des Contes, accueil">
+      <img class="marque__badge" src="assets/badge-maison-des-contes.webp" alt="La Maison des Contes" width="277" height="352">
+    </a>
+
+    <button type="button" class="burger" (click)="basculerMenu()" [attr.aria-expanded]="menuOuvert()" aria-controls="navigation" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav id="navigation" class="navigation" [class.navigation--ouverte]="menuOuvert()" aria-label="Principale">
+      <a href="#interactif" (click)="menuOuvert.set(false)">Lecture interactive</a>
+      <a href="#collection" (click)="menuOuvert.set(false)">Collection</a>
+      <a href="#test" (click)="menuOuvert.set(false)">Tester</a>
+      <a href="#bibliotheque" (click)="menuOuvert.set(false)">Bibliothèque</a>
+      <a routerLink="/contes" (click)="menuOuvert.set(false)">Nos contes</a>
+      <a href="#tarifs" (click)="menuOuvert.set(false)">Tarifs</a>
+      <a href="#faq" (click)="menuOuvert.set(false)">FAQ</a>
+      <a routerLink="/connexion" (click)="menuOuvert.set(false)">Se connecter</a>
+      <button type="button" class="bouton bouton--petit bouton--vert" (click)="installer()">Télécharger l’app</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Héro -->
+  <section id="accueil" class="hero">
+    <app-lucioles [nombre]="34" [graine]="1" />
+    <div class="lanternes" aria-hidden="true">
+      @for (l of [1, 2, 3]; track l) {
+        <span class="lanterne lanterne--{{ l }}">
+          <svg viewBox="0 0 40 90"><path d="M20 0v26" stroke="#d9a93a" stroke-width="2"/><path d="M12 26h16l4 8v26l-4 8H12l-4-8V34z" fill="#ffd36b" stroke="#9b6d14" stroke-width="3"/><path d="M20 34v34M12 46h16" stroke="#9b6d14" stroke-width="2"/><path d="M14 72h12l-3 8h-6z" fill="#9b6d14"/></svg>
+        </span>
+      }
+    </div>
+    <div class="hero__interieur">
+      <div class="hero__texte">
+        <p class="etiquette">Application de contes illustrés</p>
+        <h1>Entrez dans La Maison des Contes</h1>
+        <p class="hero__intro">Des contes illustrés, lus par de vrais comédiens, à feuilleter en famille.</p>
+        <div class="hero__actions">
+          <button type="button" class="bouton bouton--vert bouton--brille" (click)="installer()">Télécharger l’application</button>
+          <a class="bouton bouton--blanc" href="#interactif">Découvrir</a>
+          <a class="bouton bouton--blanc" routerLink="/contes">Voir nos contes</a>
+        </div>
+        <p class="hero__note">Gratuit pour essayer</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lecture interactive : voix, pages, 3D -->
+  <section id="interactif" class="section section--jouets">
+    <app-lucioles [nombre]="22" [graine]="3" />
+    <div class="conteneur">
+      <p class="etiquette">Lecture interactive</p>
+      <h2>Des contes qui prennent vie</h2>
+      <p class="chapeau chapeau--clair">Ici, on ne fait pas que lire : on écoute, on tourne les pages et on explore.</p>
+
+      <ul class="volets">
+        @for (v of volets; track v.titre; let i = $index) {
+          <li appApparition class="volet" [style.transition-delay.ms]="i * 120">
+            <span class="volet__icone" aria-hidden="true">
+              @switch (v.icone) {
+                @case ('voix') {
+                  <svg viewBox="0 0 64 64"><rect x="24" y="6" width="16" height="30" rx="8"/><path d="M14 30c0 11 8 18 18 18s18-7 18-18M32 48v10M22 58h20"/></svg>
+                }
+                @case ('pages') {
+                  <svg viewBox="0 0 64 64"><path d="M32 14c-6-5-16-6-24-4v38c8-2 18-1 24 4 6-5 16-6 24-4V10c-8-2-18-1-24 4zM32 14v38"/><path d="M40 24c5-1 9-1 12 0M40 32c5-1 9-1 12 0"/></svg>
+                }
+                @case ('3d') {
+                  <svg viewBox="0 0 64 64"><path d="M32 6 54 18v28L32 58 10 46V18zM10 18l22 12 22-12M32 30v28"/></svg>
+                }
+              }
+            </span>
+            <h3>{{ v.titre }}</h3>
+            <p>{{ v.texte }}</p>
+          </li>
+        }
+      </ul>
+
+      <div class="captures">
+        @for (c of captures; track c.src) {
+          <img appApparition [src]="c.src" [alt]="c.alt" loading="lazy" width="1500" height="840">
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Collection : cartes et objets -->
+  <section id="collection" class="section section--nuit">
+    <app-lucioles [nombre]="30" [graine]="4" />
+    <app-lucioles [nombre]="40" type="etoiles" [graine]="5" />
+    <div class="conteneur conteneur--etroit">
+      <p class="etiquette">Collection</p>
+      <h2>Des cartes et des objets à collectionner</h2>
+      <p class="chapeau chapeau--clair">Cartes, objets : chacun se constitue sa propre collection.</p>
+
+      <ul class="collections">
+        @for (c of collections; track c.titre; let i = $index) {
+          <li appApparition class="collection" [style.transition-delay.ms]="i * 150">
+            <span class="volet__icone" aria-hidden="true">
+              @switch (c.icone) {
+                @case ('cartes') {
+                  <svg viewBox="0 0 64 64"><rect x="8" y="16" width="30" height="42" rx="4" transform="rotate(-10 23 37)"/><rect x="26" y="8" width="30" height="42" rx="4" transform="rotate(8 41 29)"/><path d="M41 22l3 7 7 1-5 5 1 7-6-4-6 4 1-7-5-5 7-1z"/></svg>
+                }
+                @case ('objets') {
+                  <svg viewBox="0 0 64 64"><path d="M8 28h48v28H8zM8 28c0-12 10-20 24-20s24 8 24 20M28 36h8v8h-8z"/><path d="M8 40h48"/></svg>
+                }
+              }
+            </span>
+            <h3>{{ c.titre }}</h3>
+            <p>{{ c.texte }}</p>
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Test de l'application en WebGL -->
+  <section id="test" class="section section--test">
+    <app-lucioles [nombre]="22" type="etoiles" [graine]="8" />
+    <div class="conteneur conteneur--etroit centre">
+      <p class="etiquette">Version d’essai</p>
+      <h2>Tester l’application dans votre navigateur</h2>
+      <p class="chapeau">Aucune installation : lancez l’application ici même, en WebGL.</p>
+
+      @if (testLance()) {
+        <div class="test-cadre">
+          <iframe #cadreTest [src]="urlTest" title="Application La Maison des Contes (WebGL)" allow="fullscreen; autoplay" allowfullscreen></iframe>
+        </div>
+        <p class="test-actions">
+          <button type="button" class="bouton bouton--blanc bouton--petit" (click)="pleinEcran(cadreTest)">Plein écran</button>
+          <button type="button" class="bouton bouton--bleu bouton--petit" (click)="arreterTest()">Arrêter</button>
+        </p>
+      } @else if (testDisponible() === true) {
+        <button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="lancerTest()">Lancer le test</button>
+      } @else if (testDisponible() === false) {
+        <p class="test-vide" role="status">Aucun build WebGL n’a encore été déposé. Place-le dans le dossier <code>public/webgl-build</code> : il apparaîtra ici automatiquement.</p>
+      } @else {
+        <p class="test-vide" role="status">Vérification du build…</p>
+      }
+    </div>
+  </section>
+
+  <!-- Une histoire pour chaque âge -->
+  <section id="bibliotheque" class="section section--ages">
+    <div class="conteneur">
+      <p class="etiquette etiquette--bleu">Pour chaque âge</p>
+      <h2>Une histoire pour chaque âge</h2>
+      <ul class="ages">
+        @for (a of ages; track a.tranche; let i = $index) {
+          <li appApparition class="age" [style.transition-delay.ms]="i * 120">
+            <p class="age__tranche">{{ a.tranche }}</p>
+            <img [src]="a.image" [alt]="'Couverture du conte ' + a.exemple" loading="lazy" width="1280" height="720">
+            <p class="age__exemple">{{ a.exemple }}</p>
+          </li>
+        }
+      </ul>
+      <p class="centre"><a class="bouton bouton--vert" routerLink="/contes">Voir tous nos contes</a></p>
+    </div>
+  </section>
+
+  <!-- Tarifs -->
+  <section id="tarifs" class="section section--tarifs">
+    <app-lucioles [nombre]="16" type="etoiles" [graine]="6" />
+    <div class="conteneur conteneur--etroit">
+      <p class="etiquette">Tarifs</p>
+      <h2>Essayer d’abord, s’abonner ensuite</h2>
+      <div class="formules">
+        @for (f of formules; track f.nom) {
+          <article appApparition class="formule" [class.formule--avant]="f.mise_en_avant">
+            <h3>{{ f.nom }}</h3>
+            <p class="formule__prix">{{ f.prix }}</p>
+            @if (f.prixAnnuel) {
+              <p class="formule__annuel">ou {{ f.prixAnnuel }}</p>
+            }
+            <ul>
+              @for (p of f.points; track p) {
+                <li>{{ p }}</li>
+              }
+            </ul>
+            <a class="bouton" [class.bouton--vert]="f.mise_en_avant" [class.bouton--brille]="f.mise_en_avant" [class.bouton--blanc]="!f.mise_en_avant" [href]="appUrl">Commencer</a>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section section--creme">
+    <div class="conteneur conteneur--etroit">
+      <p class="etiquette etiquette--bleu">FAQ</p>
+      <h2>Les questions des parents</h2>
+      @for (q of faq; track q.question) {
+        <details appApparition class="question">
+          <summary>{{ q.question }}</summary>
+          <p>{{ q.reponse }}</p>
+        </details>
+      }
+    </div>
+  </section>
+
+  <!-- Appel final -->
+  <section id="rejoindre" class="section section--prairie">
+    <app-lucioles [nombre]="26" [graine]="7" />
+    <div class="conteneur conteneur--etroit centre">
+      <h2>Votre histoire commence ici</h2>
+      <p class="chapeau">Ouvrez l’application et commencez à lire dès aujourd’hui.</p>
+      <p><button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="installer()">Télécharger l’application</button></p>
+    </div>
+  </section>
+</main>
+
+<footer class="pied">
+  <p class="pied__marque"><img src="assets/badge-maison-des-contes.webp" alt="" width="277" height="352"> © La Maison des Contes</p>
+  <nav aria-label="Pied de page">
+    <a href="#interactif">Lecture interactive</a>
+    <a routerLink="/contes">Nos contes</a>
+    <a href="#faq">FAQ</a>
+    <button type="button" class="bouton bouton--petit bouton--vert" (click)="installer()">Télécharger l’app</button>
+  </nav>
+</footer>

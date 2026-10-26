@@ -1,0 +1,222 @@
+/* Hamelin (Allemagne) : colombages, ardoise, brique, or, et les couleurs du drapeau allemand. */
+:host {
+  --platre: #efe3c6;
+  --platre-fonce: #e3d3ab;
+  --bois: #3a2616;
+  --ardoise: #243044;
+  --ardoise-claire: #34445e;
+  --brique: #9c3a2a;
+  --or: #d9a93a;
+  --creme: #fff6e3;
+  display: block;
+  color: var(--bois);
+}
+
+.ham h1, .ham h2, .ham h3 { font-family: var(--police-titre); letter-spacing: 0.01em; }
+.ham h2 { margin: 0.4rem 0 1.2rem; font-size: clamp(1.7rem, 3.2vw, 2.5rem); line-height: 1.15; }
+.etiquette { display: block; margin: 0; padding: 0; background: none; box-shadow: none; border-radius: 0; text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.85rem; font-weight: 700; color: var(--brique); }
+.chapeau { margin: 0 0 1.6rem; font-size: 1.15rem; line-height: 1.5; }
+section { position: relative; }
+
+/* Colombages (Fachwerk) : poutres, poteaux et croix de Saint-André */
+.poutres {
+  height: 44px;
+  background:
+    linear-gradient(var(--bois) 6px, transparent 6px) 0 0 / 100% 100% no-repeat,
+    linear-gradient(transparent calc(100% - 6px), var(--bois) calc(100% - 6px)) 0 0 / 100% 100% no-repeat,
+    linear-gradient(90deg, var(--bois) 6px, transparent 6px) 0 0 / 88px 100%,
+    linear-gradient(135deg, transparent calc(50% - 3px), var(--bois) calc(50% - 3px) calc(50% + 3px), transparent calc(50% + 3px)) 0 0 / 88px 100%,
+    linear-gradient(45deg, transparent calc(50% - 3px), var(--bois) calc(50% - 3px) calc(50% + 3px), transparent calc(50% + 3px)) 44px 0 / 88px 100%,
+    var(--platre);
+}
+
+/* ---------- Ouverture ---------- */
+.ouverture {
+  background:
+    radial-gradient(70% 60% at 85% 0%, rgb(255 246 227 / 0.9), transparent 70%),
+    linear-gradient(rgb(239 227 198 / 0.9), rgb(239 227 198 / 0.84)),
+    var(--fond) center / cover,
+    var(--platre);
+  padding-bottom: 5rem;
+
+  &__interieur { max-width: 1200px; margin: 0 auto; padding: 3rem 1.25rem 0; display: grid; grid-template-columns: 1fr 1.15fr; gap: 2.5rem; align-items: center; position: relative; z-index: 2; }
+  h1 { margin: 0 0 0.8rem; font-size: clamp(2.2rem, 4.8vw, 3.7rem); line-height: 1.05; color: var(--bois); }
+  &__accroche { margin: 0 0 1rem; font-size: 1.25rem; line-height: 1.5; max-width: 34ch; }
+  &__origine { margin: 0 0 1.2rem; font-style: italic; color: #5a4128; line-height: 1.45; max-width: 46ch; }
+  &__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.4rem; margin-top: 1.4rem; }
+}
+.lieu {
+  display: inline-block; margin: 0 0 1rem; padding: 0.35rem 1rem;
+  background: var(--bois); color: var(--creme); border-radius: 3px;
+  font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.85rem;
+  border-bottom: 4px solid var(--brique);
+}
+.pastilles {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0; padding: 0; list-style: none;
+  li { padding: 0.3rem 0.85rem; border: 2px solid var(--bois); border-radius: 3px; font-size: 0.9rem; font-weight: 700; background: rgb(255 255 255 / 0.5); }
+}
+.lien-doux { color: var(--bois); font-weight: 700; text-decoration: underline; text-underline-offset: 6px; &:hover { color: var(--brique); } }
+
+.ouverture__visuel { position: relative; }
+.couverture {
+  margin: 0; padding: 12px; background: var(--bois);
+  box-shadow: 0 0 0 3px var(--or), 0 24px 40px rgb(58 38 22 / 0.5);
+  img { display: block; width: 100%; height: auto; }
+}
+/* Drapeau allemand sur son mât */
+.drapeau {
+  position: absolute; top: -36px; right: -6px; width: 118px; height: 150px;
+  &__mat { position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: linear-gradient(90deg, #6b4a2a, #3a2616); border-radius: 3px; }
+  img { position: absolute; left: 6px; top: 8px; width: 108px; height: auto; border: 1px solid rgb(0 0 0 / 0.3); transform-origin: left center; animation: flotte 5s ease-in-out infinite; box-shadow: 0 8px 12px rgb(0 0 0 / 0.3); }
+}
+@keyframes flotte { 0%, 100% { transform: skewY(-3deg) scaleX(1); } 50% { transform: skewY(3deg) scaleX(0.96); } }
+
+/* Silhouette de Hamelin : pignons à gradins et flèche d'église */
+.silhouette {
+  position: absolute; left: 0; right: 0; bottom: -1px; height: 90px; z-index: 1;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='90' viewBox='0 0 360 90'><g fill='%23243044'><path d='M0 90V52h18V40h16V28h16V16h16v12h16v12h16v12h18v38z'/><path d='M130 90V45h10L158 0l18 45h10v45z'/><path d='M200 90V58h14V46h14V34h14v12h14v12h14v32z'/><path d='M280 90V50l30-30 30 30v40z'/></g></svg>") repeat-x left bottom / 360px 90px;
+}
+
+/* ---------- La ville ---------- */
+.ville {
+  padding: 4rem 1.25rem 6rem; color: #fff;
+  background: linear-gradient(rgb(36 48 68 / 0.68), rgb(36 48 68 / 0.88)), var(--fond) center / cover, var(--ardoise);
+  &__interieur { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 340px 1fr; gap: 3rem; align-items: start; }
+  .etiquette { color: #f0b9a8; }
+  h2 { color: var(--creme); }
+
+  &__carte {
+    text-align: center; padding: 1.6rem 1.4rem 1.8rem; background: var(--platre); color: var(--bois); border-radius: 4px;
+    box-shadow: 0 0 0 3px var(--or), 0 0 0 7px var(--bois), 0 20px 34px rgb(0 0 0 / 0.5);
+    img { width: 78%; height: auto; border: 1px solid rgb(0 0 0 / 0.3); box-shadow: 0 8px 14px rgb(0 0 0 / 0.25); }
+  }
+  &__nom { margin: 1rem 0 0; font-family: var(--police-titre); font-size: 2.3rem; font-weight: 700; line-height: 1; }
+  &__natif { margin: 0.3rem 0 0.8rem; font-size: 1.2rem; color: var(--brique); letter-spacing: 0.1em; font-style: italic; }
+  &__ou { margin: 0; font-size: 0.95rem; opacity: 0.85; }
+}
+.ville__intro { margin: 0 0 1.6rem; font-size: 1.15rem; line-height: 1.6; }
+.mots-titre { margin: 0 0 0.7rem; font-weight: 700; color: var(--or); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem; }
+.mots {
+  list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0.8rem;
+  li { display: grid; gap: 0.2rem; padding: 0.8rem 0.9rem; border: 2px solid rgb(255 246 227 / 0.35); border-radius: 4px; background: rgb(255 255 255 / 0.05); }
+  &__de { font-family: var(--police-titre); font-size: 1.3rem; font-weight: 700; color: var(--creme); }
+  &__sens { font-size: 0.88rem; opacity: 0.85; line-height: 1.4; }
+}
+/* La Weser */
+.riviere {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 36px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='36' viewBox='0 0 120 36'><path d='M0 18c15-12 30-12 45 0s30 12 45 0 22-9 30-3v21H0z' fill='%23efe3c6'/></svg>") repeat-x left bottom / 120px 36px;
+  opacity: 0.95;
+}
+
+/* ---------- L'histoire ---------- */
+.histoire {
+  padding: 5rem 1.25rem; background: linear-gradient(var(--platre), var(--platre-fonce));
+  &__interieur { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; align-items: center; }
+  &__visuel { margin: 0; img { display: block; width: 100%; height: auto; padding: 10px; background: var(--bois); box-shadow: 0 0 0 2px var(--or), 0 18px 30px rgb(58 38 22 / 0.4); } figcaption { margin-top: 0.8rem; text-align: center; font-style: italic; } }
+}
+.citation { margin: 0 0 1.6rem; padding: 0.9rem 1.2rem; border-left: 6px solid var(--brique); background: #fff; border-radius: 3px; box-shadow: 0 8px 18px rgb(58 38 22 / 0.18); p { margin: 0; font-size: 1.2rem; line-height: 1.5; font-style: italic; } }
+.resume { margin: 0; font-size: 1.2rem; line-height: 1.8; }
+
+/* ---------- La mélodie ---------- */
+.melodie {
+  padding: 5rem 1.25rem; text-align: center; color: var(--creme);
+  background: radial-gradient(60% 50% at 50% 0%, rgb(61 82 120 / 0.55), transparent 70%), linear-gradient(rgb(27 37 53 / 0.62), rgb(16 23 34 / 0.86)), var(--fond) center / cover, #101722;
+  &__interieur { max-width: 1050px; margin: 0 auto; }
+  .etiquette { color: #f0b9a8; }
+  .chapeau { max-width: 56ch; margin-inline: auto; }
+}
+.partition {
+  margin: 0 0 1.8rem; padding: 1rem 0.5rem; background: var(--platre); border-radius: 4px; box-shadow: 0 0 0 3px var(--or), 0 18px 30px rgb(0 0 0 / 0.5);
+  svg { display: block; width: 100%; height: auto; }
+  .portee line { stroke: var(--bois); stroke-width: 1.5; opacity: 0.6; }
+  .note { fill: var(--bois); stroke: var(--bois); stroke-width: 2; transition: fill 0.2s; }
+  .note ellipse { stroke: none; }
+  .note--active { fill: var(--brique); stroke: var(--brique); }
+  .note--active ellipse { filter: drop-shadow(0 0 6px rgb(217 169 58 / 0.9)); transform-box: fill-box; transform-origin: center; animation: pulse 0.42s ease-out; }
+}
+@keyframes pulse { 0% { transform: scale(1.8); } 100% { transform: scale(1); } }
+
+.flute {
+  display: inline-flex; align-items: center; gap: 0.7rem; padding: 0.85rem 1.8rem; border: 3px solid var(--creme); border-radius: 999px;
+  background: linear-gradient(#35c3b7, #167d76); color: #fff; font: inherit; font-weight: 700; font-size: 1.1rem; cursor: pointer;
+  box-shadow: 0 5px 0 #0d4f4a, 0 12px 20px rgb(0 0 0 / 0.3); transition: transform 0.12s;
+  &:hover { transform: translateY(-3px) scale(1.03); }
+  &:focus-visible { outline: 3px solid var(--or); outline-offset: 3px; }
+  &__icone { font-size: 1.5rem; line-height: 1; }
+  &--joue { background: linear-gradient(#ee6a4f, #b2321c); box-shadow: 0 5px 0 #6e1d10, 0 12px 20px rgb(0 0 0 / 0.3); }
+}
+
+/* ---------- Illustrations : fenêtres à colombages ---------- */
+.galerie {
+  padding: 5rem 1.25rem; color: var(--creme);
+  background: linear-gradient(rgb(74 51 32 / 0.6), rgb(58 38 22 / 0.84)), var(--fond) center / cover, var(--bois);
+  &__interieur { max-width: 1200px; margin: 0 auto; }
+  .etiquette { color: var(--or); }
+  h2 { color: var(--creme); }
+}
+.fenetres { list-style: none; margin: 1.6rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
+.fenetre {
+  padding: 14px; background: var(--platre); box-shadow: 0 0 0 3px var(--or), 0 16px 28px rgb(0 0 0 / 0.5);
+  /* croisillons de la fenêtre */
+  position: relative;
+  img { display: block; width: 100%; height: auto; border: 6px solid var(--bois); }
+  &::after { content: ''; position: absolute; inset: 14px; border: 6px solid transparent; pointer-events: none; background: linear-gradient(90deg, transparent calc(50% - 2px), rgb(58 38 22 / 0.55) calc(50% - 2px) calc(50% + 2px), transparent calc(50% + 2px)), linear-gradient(transparent calc(50% - 2px), rgb(58 38 22 / 0.55) calc(50% - 2px) calc(50% + 2px), transparent calc(50% + 2px)); }
+}
+
+/* ---------- Personnages ---------- */
+.gens {
+  padding: 5rem 1.25rem;
+  background: linear-gradient(rgb(239 227 198 / 0.9), rgb(239 227 198 / 0.95)), var(--fond) center / cover, var(--platre);
+  &__interieur { max-width: 1200px; margin: 0 auto; text-align: center; }
+  app-personnages-conte {
+    --pc-fond: #fff; --pc-texte: var(--bois); --pc-accent: var(--brique); --pc-bord: var(--bois); --pc-rayon: 4px; --pc-vignette: 6px;
+    text-align: left;
+  }
+}
+
+/* ---------- Origine : la frise ---------- */
+.origine {
+  padding: 5rem 1.25rem; color: #fff;
+  background: linear-gradient(rgb(36 48 68 / 0.7), rgb(36 48 68 / 0.9)), var(--fond) center / cover, var(--ardoise);
+  &__interieur { max-width: 1100px; margin: 0 auto; }
+  .etiquette { color: #f0b9a8; }
+  h2 { color: var(--creme); }
+  &__colonnes { margin-top: 2.4rem; columns: 2 320px; column-gap: 3rem; p { margin: 0 0 1.2rem; line-height: 1.7; font-size: 1.08rem; break-inside: avoid; } }
+}
+.frise {
+  list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem;
+  position: relative;
+  .repere { display: grid; gap: 0.3rem; padding: 1rem; border-top: 5px solid var(--or); background: rgb(255 255 255 / 0.07); border-radius: 0 0 4px 4px; }
+  .repere__annee { font-family: var(--police-titre); font-size: 2rem; font-weight: 700; color: var(--or); line-height: 1; }
+  strong { font-size: 1.05rem; }
+  span:last-child { line-height: 1.5; font-size: 0.95rem; opacity: 0.9; }
+}
+
+.fiche-section {
+  padding: 5rem 1.25rem; text-align: center; background: linear-gradient(var(--platre), var(--platre-fonce));
+  &__interieur { max-width: 680px; margin: 0 auto; }
+  app-fiche-conte { --fc-fond: var(--platre); --fc-texte: var(--bois); --fc-accent: var(--bois); --fc-accent-texte: var(--brique); --fc-liseré: rgb(58 38 22 / 0.4); text-align: left; }
+}
+
+.appel {
+  padding: 0 1.25rem 7rem; text-align: center; color: var(--creme);
+  background: linear-gradient(rgb(74 51 32 / 0.5), rgb(58 38 22 / 0.8)), var(--fond) center / cover, var(--bois);
+  .poutres { margin: 0 -1.25rem 4.5rem; }
+  h2 { font-size: clamp(1.7rem, 3.4vw, 2.6rem); margin: 0 auto 0.6rem; max-width: 24ch; }
+  p { margin: 0 0 1.6rem; font-size: 1.15rem; }
+}
+
+@media (max-width: 860px) {
+  .ouverture__interieur, .ville__interieur, .histoire__interieur { grid-template-columns: 1fr; gap: 2rem; }
+  .drapeau { right: 0; top: -44px; }
+}
+@media (max-width: 600px) { .fenetres { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) {
+  .drapeau img { animation: none; }
+  .note--active ellipse { animation: none; }
+}
+
+/* Apparition au défilement (directive appApparition) */
+.apparition { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); &--visible { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .apparition { opacity: 1; transform: none; transition: none; } }
