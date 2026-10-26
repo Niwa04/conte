@@ -1,0 +1,29 @@
+<h1 class="espace-titre">Ma collection</h1>
+
+@if (donnees.chargement() && !donnees.catalogue()) {
+  <p class="vide" role="status">Chargement de ta collection…</p>
+} @else if (donnees.cartes().length === 0) {
+  <div class="vide">
+    <p><strong>Ta collection est vide pour l’instant.</strong></p>
+    <p>Certaines cartes se gagnent en terminant un conte dans l’application.</p>
+  </div>
+} @else {
+  <p class="compte">{{ donnees.cartes().length }} {{ donnees.cartes().length > 1 ? 'cartes' : 'carte' }}</p>
+  <ul class="grille">
+    @for (c of donnees.cartes(); track c.item_id) {
+      <li class="carte">
+        <div class="carte__image">
+          @if (images()[c.item_id]; as src) {
+            <img [src]="src" [alt]="'Carte ' + c.name" width="384" height="576">
+          } @else if (echecs()[c.item_id]) {
+            <span class="carte__vide">Image indisponible</span>
+          } @else {
+            <span class="carte__vide">…</span>
+          }
+        </div>
+        <p class="carte__nom">{{ c.name }}</p>
+        @if (date(c)) { <p class="carte__date">Obtenue le {{ date(c) }}</p> }
+      </li>
+    }
+  </ul>
+}
