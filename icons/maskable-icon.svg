@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="StoryBook">
+	<rect width="512" height="512" fill="#f2b84b"/>
+	<circle cx="256" cy="256" r="212" fill="#101820"/>
+	<path d="M132 144c0-20 16-36 36-36h176c20 0 36 16 36 36v224c0 20-16 36-36 36H168c-20 0-36-16-36-36V144Z" fill="#f7f4ea"/>
+	<path d="M256 108h88c20 0 36 16 36 36v224c0 20-16 36-36 36h-88V108Z" fill="#d6efe9"/>
+	<path d="M256 126v260M172 184h48M172 232h48M172 280h48M296 184h44M296 232h44M296 280h44" stroke="#101820" stroke-width="16" stroke-linecap="round"/>
+</svg>
