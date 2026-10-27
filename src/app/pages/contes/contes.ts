@@ -50,8 +50,14 @@ export class Contes implements OnInit {
   }
 
   /** Chemin du site (/contes/…) : navigation interne ; sinon lien externe, ouvert dans un nouvel onglet. */
+  /** Route de l'application (/contes/momotaro) : navigation Angular, sans rechargement. */
   protected estInterne(url: string): boolean {
-    return url.startsWith('/');
+    return url.startsWith('/') && !this.estFichier(url);
+  }
+
+  /** Fichier statique du site (/archibald_complete.html) : ce n'est pas une route Angular, il faut un vrai lien. */
+  protected estFichier(url: string): boolean {
+    return url.startsWith('/') && /\.[a-z0-9]+(?:[?#].*)?$/i.test(url);
   }
 
   /** Installe l'application (PWA) ; elle s'ouvre ensuite directement sur le jeu. */

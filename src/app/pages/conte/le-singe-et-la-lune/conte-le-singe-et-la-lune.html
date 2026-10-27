@@ -1,0 +1,183 @@
+<main class="sl" [style.--madhubani]="deco('motif')" [style.--bagru]="deco('tuile')">
+  <!-- Ouverture : le grand banian -->
+  <section class="ouverture" [style.--fond]="deco('village')">
+    <div class="ouverture__interieur">
+      <div class="ouverture__texte">
+        <div class="pays-badge">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <span><strong>Inde</strong> · भारत</span>
+        </div>
+        <h1>{{ conte().titre }}</h1>
+        <p class="ouverture__accroche">{{ conte().accroche }}</p>
+        <p class="ouverture__origine">{{ conte().mentionOrigine }}</p>
+        <ul class="pastilles">
+          @for (e of conte().etiquettes; track e) { <li>{{ e }}</li> }
+        </ul>
+        <div class="ouverture__actions">
+          <a class="bouton bouton--vert bouton--brille" [href]="appUrl">Lire dans l’application</a>
+        </div>
+      </div>
+      <div class="ouverture__livre">
+        <img [src]="conte().couverture" [alt]="conte().couvertureAlt" width="1400" height="788" fetchpriority="high">
+      </div>
+    </div>
+    <div class="guirlande" aria-hidden="true"></div>
+  </section>
+
+  <!-- Le pays : une page de miniature, trois soucis en fleur -->
+  <section class="pays section" aria-labelledby="titre-pays" [style.--fond]="deco('miniature')">
+    <div class="interieur pays__grille">
+      <div class="jharokha">
+        <div class="jharokha__arc">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <p class="jharokha__nom">Inde</p>
+          <p class="jharokha__natif" lang="hi">भारत · Bhārat</p>
+          <p class="jharokha__ou">Fable ancienne</p>
+        </div>
+      </div>
+      <div class="pays__texte">
+        <p class="etiquette">Un conte venu d’Inde</p>
+        <h2 id="titre-pays">Un village, un banian et un puits</h2>
+        <p class="pays__intro">En Inde, les fables mettent souvent en scène des animaux. Celle-ci se passe au bord d’un village, sous un banian immense dont les branches ressemblent à une petite ville.</p>
+        <ul class="soucis">
+          @for (m of mots; track m.roman) {
+            <li appApparition>
+              <span class="souci__fleur" aria-hidden="true"></span>
+              <span class="souci__coeur">
+                <span class="souci__hindi" lang="hi">{{ m.hindi }}</span>
+                <span class="souci__roman">{{ m.roman }}</span>
+                <span class="souci__sens">{{ m.sens }}</span>
+                <span class="souci__prononce">{{ m.prononce }}</span>
+              </span>
+            </li>
+          }
+        </ul>
+        <p class="mots-titre">Trois mots hindi à retenir</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- L'histoire : une page de livre de miniatures, cadre de peinture madhubani -->
+  <section class="histoire section" id="histoire" [style.--fond]="deco('miniature')">
+    <div class="interieur">
+      <div class="page-madhubani">
+        <div class="page-madhubani__interieur">
+          <figure appApparition class="histoire__visuel">
+            <div class="fenetre-jharokha">
+              <img [src]="conte().imageHistoire.src" [alt]="conte().imageHistoire.alt" loading="lazy" width="1400" height="788">
+            </div>
+            <figcaption>{{ conte().imageHistoire.legende }}</figcaption>
+          </figure>
+          <div class="histoire__texte">
+            <p class="etiquette">L’histoire</p>
+            <h2>La Lune est tombée dans le puits !</h2>
+            <blockquote appApparition class="citation"><p>{{ conte().citation }}</p></blockquote>
+            <p appApparition class="resume">{{ conte().resume }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- La chaîne de singes -->
+  <section class="chaine section" aria-labelledby="titre-chaine" [style.--fond]="deco('etang')">
+    <div class="interieur">
+      <p class="etiquette">À toi d’aider</p>
+      <h2 id="titre-chaine">Fais la chaîne jusqu’à la Lune</h2>
+
+      <div class="defi">
+        <div class="decor" [attr.data-etat]="etat()" role="img" aria-label="Une chaîne de singes suspendus à une branche au-dessus d’un puits">
+          <div class="decor__ciel"></div>
+          <span class="lune-ciel"></span>
+          <div class="branche" [style.--pente]="inclinaison() + 'deg'"></div>
+          <ul class="chaine__files">
+            @for (i of liste(); track i) {
+              <li class="maillon" [style.--i]="i">
+                <img [src]="chemin(i === 0 ? 'personnages/dadi-t.webp' : (i % 2 === 1 ? 'personnages/petit-singe-t.webp' : 'personnages/bholu-t.webp'))" alt="" width="120" height="200">
+              </li>
+            }
+          </ul>
+          <div class="puits">
+            <span class="puits__eau"></span>
+            <span class="puits__reflet"></span>
+          </div>
+          <span class="crac" aria-hidden="true">Crac !</span>
+        </div>
+
+        <div class="commande">
+          <p class="commande__msg" aria-live="polite">{{ message() }}</p>
+          <div class="commande__boutons">
+            @if (etat() === 'chaine') {
+              <button type="button" class="ajout" (click)="ajouter()">Ajouter un singe ({{ maillons() }} / {{ maximum }})</button>
+            } @else {
+              <button type="button" class="ajout ajout--clair" (click)="recommencer()">Rejouer</button>
+            }
+          </div>
+          @if (etat() === 'ciel') {
+            <p class="morale">Avant de s’inquiéter, on lève la tête.</p>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Illustrations -->
+  <section class="galerie section" id="illustrations" [style.--fond]="fond(5)">
+    <div class="interieur">
+      <p class="etiquette">Les illustrations</p>
+      <h2>Un conte à regarder autant qu’à lire</h2>
+      <ul class="galerie-trois">
+        @for (i of conte().illustrations; track i.src; let n = $index) {
+          <li appApparition class="cadre" [style.transition-delay.ms]="n * 120">
+            <img [src]="i.src" [alt]="i.alt" loading="lazy" width="1400" height="788">
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Personnages -->
+  <section class="gens section" id="personnages" aria-labelledby="titre-gens" [style.--fond]="fond(9)">
+    <div class="interieur">
+      <p class="etiquette">Les personnages</p>
+      <h2 id="titre-gens">La troupe du banian</h2>
+      <p class="chapeau">Choisis un personnage pour le découvrir.</p>
+      <app-personnages-conte [personnages]="conte().personnages" idBase="singe-lune" />
+    </div>
+  </section>
+
+  <!-- Origine -->
+  <section class="origine section" [style.--rangoli]="deco('rangoli')">
+    <div class="interieur">
+      <p class="etiquette">L’origine</p>
+      <h2>{{ conte().origine.titre }}</h2>
+      <aside class="oeuvre" appApparition>
+        <p class="oeuvre__etiquette">Les recueils d’où vient le motif</p>
+        <p class="oeuvre__titre">Panchatantra · Jataka</p>
+        <p class="oeuvre__auteur">Fables de l’Inde ancienne · rattachement exact à vérifier</p>
+      </aside>
+      <div class="origine__colonnes">
+        @for (p of conte().origine.paragraphes; track p) {
+          <p appApparition>{{ p }}</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Fiche -->
+  <section class="fiche-section section" id="fiche">
+    <div class="interieur centre">
+      <p class="etiquette">En un coup d’œil</p>
+      <h2>La fiche du conte</h2>
+      <app-fiche-conte [titre]="conte().titre" [infos]="conte().infos" />
+    </div>
+  </section>
+
+  <section class="appel section" [style.--fond]="fond(8)">
+    <div class="interieur centre">
+      <h2>Prêt à lever la tête ?</h2>
+      <p>Ouvre l’application et lis l’histoire en entier.</p>
+      <button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="installer()">Télécharger l’application</button>
+    </div>
+  </section>
+</main>

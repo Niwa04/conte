@@ -1,0 +1,160 @@
+<main class="au" [style.--branches]="deco('motif')" [style.--gravure]="deco('tuile')">
+  <!-- Ouverture : la forêt dans la brume -->
+  <section class="ouverture" [style.--fond]="deco('foret')">
+    <div class="brume-fil" aria-hidden="true"></div>
+    <div class="ouverture__interieur">
+      <div class="ouverture__texte">
+        <div class="pays-badge">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <span><strong>Allemagne</strong> · Deutschland</span>
+        </div>
+        <h1>{{ conte().titre }}</h1>
+        <p class="ouverture__accroche">{{ conte().accroche }}</p>
+        <p class="ouverture__origine">{{ conte().mentionOrigine }}</p>
+        <ul class="pastilles">
+          @for (e of conte().etiquettes; track e) { <li>{{ e }}</li> }
+        </ul>
+        <div class="ouverture__actions">
+          <a class="bouton bouton--vert bouton--brille" [href]="appUrl">Lire dans l’application</a>
+        </div>
+      </div>
+      <div class="ouverture__livre">
+        <img [src]="conte().couverture" [alt]="conte().couvertureAlt" width="1400" height="788" fetchpriority="high">
+      </div>
+    </div>
+  </section>
+
+  <!-- Le pays : une page de ballade imprimée, un cartouche gravé et un index de trois mots -->
+  <section class="pays section" aria-labelledby="titre-pays" [style.--fond]="deco('route')">
+    <div class="interieur pays__page">
+      <div class="cartouche">
+        <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+        <div>
+          <p class="cartouche__nom">Allemagne</p>
+          <p class="cartouche__natif">Deutschland · Ballade romantique</p>
+        </div>
+      </div>
+      <p class="etiquette">Une ballade venue d’Allemagne</p>
+      <h2 id="titre-pays">Au pays des forêts sombres</h2>
+      <p class="pays__intro">En Allemagne, la forêt est un lieu de légendes. Cette ballade se passe une nuit d’automne, sur un chemin entre les arbres, loin de la ville.</p>
+      <dl class="index">
+        @for (m of mots; track m.allemand) {
+          <div appApparition>
+            <dt lang="de">{{ m.allemand }}</dt>
+            <dd class="index__points" aria-hidden="true"></dd>
+            <dd class="index__sens">{{ m.sens }} <em>· {{ m.prononce }}</em></dd>
+          </div>
+        }
+      </dl>
+      <p class="mots-note">Trois mots allemands à retenir.</p>
+    </div>
+  </section>
+
+  <!-- L'histoire : l'image se dissout dans la brume, le texte l'enjambe -->
+  <section class="histoire" id="histoire">
+    <figure appApparition class="histoire__visuel">
+      <img [src]="conte().imageHistoire.src" [alt]="conte().imageHistoire.alt" loading="lazy" width="1400" height="788">
+      <figcaption>{{ conte().imageHistoire.legende }}</figcaption>
+    </figure>
+    <div class="section histoire__texte">
+      <div class="interieur histoire__colonne">
+        <p class="etiquette">L’histoire</p>
+        <h2>Ce que voit l’enfant, ce que voit le père</h2>
+        <blockquote appApparition class="citation"><p>{{ conte().citation }}</p></blockquote>
+        <p appApparition class="resume">{{ conte().resume }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deux regards -->
+  <section class="regards section" aria-labelledby="titre-regards" [style.--fond]="deco('aulnes')">
+    <div class="interieur">
+      <p class="etiquette">À toi de regarder</p>
+      <h2 id="titre-regards">Deux regards sur la même forêt</h2>
+      <p class="chapeau">Fais glisser le curseur : à gauche, ce que voit le père ; à droite, ce que voit l’enfant.</p>
+
+      <div class="comparateur" [style.--coupe]="coupe() + '%'">
+        <div class="comparateur__couche comparateur__couche--pere" [style.background-image]="deco('foret')"></div>
+        <div class="comparateur__couche comparateur__couche--enfant" [style.background-image]="deco('brume')"></div>
+        <span class="comparateur__trait" aria-hidden="true"></span>
+        <span class="etiq etiq--pere">Le père</span>
+        <span class="etiq etiq--enfant">L’enfant</span>
+      </div>
+      <label class="curseur">
+        <span class="sr-seul">Séparation entre le regard du père et celui de l’enfant</span>
+        <input type="range" min="0" max="100" step="1" [value]="coupe()" (input)="regler($event)">
+      </label>
+
+      <ol class="onglets" aria-label="Trois moments de la nuit">
+        @for (m of moments; track m.titre; let i = $index) {
+          <li><button type="button" class="onglet" [class.onglet--actif]="moment() === i" [attr.aria-current]="moment() === i ? 'true' : null" (click)="choisir(i)">{{ m.titre }}</button></li>
+        }
+      </ol>
+
+      <div class="voix" aria-live="polite">
+        <p class="voix__enfant"><span class="voix__qui">L’enfant</span>{{ courant().enfant }}</p>
+        <p class="voix__pere"><span class="voix__qui">Le père</span>{{ courant().pere }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Illustrations -->
+  <section class="galerie section" id="illustrations" [style.--fond]="fond(4)">
+    <div class="interieur">
+      <p class="etiquette">Les illustrations</p>
+      <h2>Un conte à regarder autant qu’à lire</h2>
+      <ul class="galerie-trois">
+        @for (i of conte().illustrations; track i.src; let n = $index) {
+          <li appApparition class="cadre" [style.transition-delay.ms]="n * 120">
+            <img [src]="i.src" [alt]="i.alt" loading="lazy" width="1400" height="788">
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Personnages -->
+  <section class="gens section" id="personnages" aria-labelledby="titre-gens" [style.--fond]="fond(9)">
+    <div class="interieur">
+      <p class="etiquette">Les personnages</p>
+      <h2 id="titre-gens">Ceux de la nuit</h2>
+      <p class="chapeau">Choisis un personnage pour le découvrir.</p>
+      <app-personnages-conte [personnages]="conte().personnages" idBase="aulnes" />
+    </div>
+  </section>
+
+  <!-- Origine -->
+  <section class="origine section">
+    <div class="interieur">
+      <p class="etiquette">L’origine</p>
+      <h2>{{ conte().origine.titre }}</h2>
+      <aside class="oeuvre" appApparition>
+        <p class="oeuvre__etiquette">L’œuvre d’origine</p>
+        <p class="oeuvre__titre"><span lang="de">Erlkönig</span></p>
+        <p class="oeuvre__auteur">Johann Wolfgang von Goethe · 1782 · mis en musique par Franz Schubert en 1815</p>
+      </aside>
+      <div class="origine__colonnes">
+        @for (p of conte().origine.paragraphes; track p) {
+          <p appApparition>{{ p }}</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Fiche -->
+  <section class="fiche-section section" id="fiche">
+    <div class="interieur centre">
+      <p class="etiquette">En un coup d’œil</p>
+      <h2>La fiche du conte</h2>
+      <app-fiche-conte [titre]="conte().titre" [infos]="conte().infos" />
+    </div>
+  </section>
+
+  <section class="appel section" [style.--fond]="fond(7)">
+    <div class="interieur centre">
+      <h2>Une lampe t’attend au bout du chemin</h2>
+      <p>Ouvre l’application et lis l’histoire en entier, accompagné.</p>
+      <button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="installer()">Télécharger l’application</button>
+    </div>
+  </section>
+</main>

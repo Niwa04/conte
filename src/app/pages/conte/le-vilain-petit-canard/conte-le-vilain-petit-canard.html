@@ -1,0 +1,179 @@
+<main class="vc" [style.--rosemaling]="deco('motif')" [style.--klip]="deco('tuile')">
+  <!-- Ouverture : l'étang d'été -->
+  <section class="ouverture" [style.--fond]="deco('etang')">
+    <div class="ouverture__interieur">
+      <div class="ouverture__texte">
+        <div class="pays-badge">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <span><strong>Danemark</strong> · Danmark</span>
+        </div>
+        <h1>{{ conte().titre }}</h1>
+        <p class="ouverture__accroche">{{ conte().accroche }}</p>
+        <p class="ouverture__origine">{{ conte().mentionOrigine }}</p>
+        <ul class="pastilles">
+          @for (e of conte().etiquettes; track e) { <li>{{ e }}</li> }
+        </ul>
+        <div class="ouverture__actions">
+          <a class="bouton bouton--vert bouton--brille" [href]="appUrl">Lire dans l’application</a>
+        </div>
+      </div>
+      <div class="ouverture__livre">
+        <img [src]="conte().couverture" [alt]="conte().couvertureAlt" width="1400" height="788" fetchpriority="high">
+      </div>
+    </div>
+    <div class="decoupage" aria-hidden="true"></div>
+  </section>
+
+  <!-- Le pays : un livre ouvert, trois cœurs tressés (julehjerter) -->
+  <section class="pays section" aria-labelledby="titre-pays" [style.--fond]="deco('ferme')">
+    <div class="interieur">
+      <div class="livre-ouvert">
+        <div class="livre-ouvert__page livre-ouvert__page--g">
+          <div class="rosace">
+            <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          </div>
+          <p class="livre-ouvert__nom">Danemark</p>
+          <p class="livre-ouvert__natif">Danmark · Pays d’Andersen</p>
+        </div>
+        <div class="livre-ouvert__page livre-ouvert__page--d">
+          <p class="etiquette">Un conte venu du Danemark</p>
+          <h2 id="titre-pays">Des étangs, des roseaux et de longs hivers</h2>
+          <p class="pays__intro">C’est un conte d’Andersen, l’écrivain danois. Il commence un été au bord d’un étang, sous les grandes feuilles de bardane.</p>
+        </div>
+      </div>
+      <ul class="coeurs">
+        @for (m of mots; track m.danois) {
+          <li appApparition>
+            <span class="coeur__papier">
+              <span class="coeur__natif" lang="da">{{ m.danois }}</span>
+              <span class="coeur__sens">{{ m.sens }}</span>
+              <span class="coeur__prononce">{{ m.prononce }}</span>
+            </span>
+          </li>
+        }
+      </ul>
+      <p class="mots-note">Trois mots danois, prononciation approximative.</p>
+    </div>
+  </section>
+
+  <!-- L'histoire : trois couches de papier découpé -->
+  <section class="histoire section" id="histoire" [style.--fond]="deco('etang')">
+    <div class="interieur histoire__grille">
+      <figure appApparition class="histoire__visuel">
+        <div class="couches">
+          <img [src]="conte().imageHistoire.src" [alt]="conte().imageHistoire.alt" loading="lazy" width="1400" height="788">
+        </div>
+        <figcaption>{{ conte().imageHistoire.legende }}</figcaption>
+      </figure>
+      <div class="feuille">
+        <p class="etiquette">L’histoire</p>
+        <h2>Le caneton qui n’était pas comme les autres</h2>
+        <blockquote appApparition class="citation"><p>{{ conte().citation }}</p></blockquote>
+        <p appApparition class="resume">{{ conte().resume }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Les quatre saisons -->
+  <section class="saisons section" aria-labelledby="titre-saisons">
+    <div class="fonds" aria-hidden="true">
+      @for (s of saisons; track s.decor; let i = $index) {
+        <div class="fonds__couche" [style.background-image]="deco(s.decor)" [class.fonds__couche--visible]="indice() === i"></div>
+      }
+    </div>
+    <div class="interieur">
+      <p class="etiquette">À toi de traverser l’année</p>
+      <h2 id="titre-saisons">Les quatre saisons de l’étang</h2>
+
+      <div class="rivage" [class.rivage--printemps]="printemps()" [class.rivage--regarde]="regarde()">
+        <div class="eau" aria-hidden="true"></div>
+        <img class="oiseau" [src]="chemin('personnages/petit-caneton-gris-t.webp')" [alt]="'Le caneton gris, en ' + saison().nom.toLowerCase()" width="300" height="400">
+        <img class="reflet reflet--cygne" [src]="chemin('personnages/cygnes-adultes-t.webp')" alt="" width="400" height="400">
+      </div>
+
+      <label class="curseur">
+        <span class="sr-seul">Saison</span>
+        <input type="range" min="0" max="3" step="1" [value]="indice()" (input)="regler($event)">
+      </label>
+      <ol class="noms" aria-label="Les saisons">
+        @for (s of saisons; track s.nom; let i = $index) {
+          <li><button type="button" class="nom" [class.nom--actif]="indice() === i" [attr.aria-current]="indice() === i ? 'true' : null" (click)="aller(i)">{{ s.nom }}</button></li>
+        }
+      </ol>
+
+      <article class="carnet" aria-live="polite">
+        <figure class="carnet__image"><img [src]="page(saison().page)" alt="" width="1400" height="788" loading="lazy"></figure>
+        <div class="carnet__texte">
+          <h3>{{ saison().nom }} · {{ saison().titre }}</h3>
+          <p>{{ saison().texte }}</p>
+          @if (printemps()) {
+            <button type="button" class="regard" (click)="basculer()">{{ regarde() ? 'Détourner les yeux' : 'Se pencher sur l’eau' }}</button>
+            @if (regarde()) {
+              <p class="revele">Le reflet n’est plus celui d’un vilain petit canard. C’est un grand cygne blanc.</p>
+            }
+          }
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Illustrations -->
+  <section class="galerie section" id="illustrations" [style.--fond]="fond(11)">
+    <div class="interieur">
+      <p class="etiquette">Les illustrations</p>
+      <h2>Un conte à regarder autant qu’à lire</h2>
+      <ul class="galerie-trois">
+        @for (i of conte().illustrations; track i.src; let n = $index) {
+          <li appApparition class="cadre" [style.transition-delay.ms]="n * 120">
+            <img [src]="i.src" [alt]="i.alt" loading="lazy" width="1400" height="788">
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Personnages -->
+  <section class="gens section" id="personnages" aria-labelledby="titre-gens" [style.--fond]="fond(4)">
+    <div class="interieur">
+      <p class="etiquette">Les personnages</p>
+      <h2 id="titre-gens">Ceux de l’étang</h2>
+      <p class="chapeau">Choisis un personnage pour le découvrir.</p>
+      <app-personnages-conte [personnages]="conte().personnages" idBase="canard" />
+    </div>
+  </section>
+
+  <!-- Origine -->
+  <section class="origine section">
+    <div class="interieur">
+      <p class="etiquette">L’origine</p>
+      <h2>{{ conte().origine.titre }}</h2>
+      <aside class="oeuvre" appApparition>
+        <p class="oeuvre__etiquette">L’œuvre d’origine</p>
+        <p class="oeuvre__titre"><span lang="da">Den grimme ælling</span></p>
+        <p class="oeuvre__auteur">Hans Christian Andersen · 1843 · contes d’un auteur, non d’un recueil populaire</p>
+      </aside>
+      <div class="origine__colonnes">
+        @for (p of conte().origine.paragraphes; track p) {
+          <p appApparition>{{ p }}</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Fiche -->
+  <section class="fiche-section section" id="fiche">
+    <div class="interieur centre">
+      <p class="etiquette">En un coup d’œil</p>
+      <h2>La fiche du conte</h2>
+      <app-fiche-conte [titre]="conte().titre" [infos]="conte().infos" />
+    </div>
+  </section>
+
+  <section class="appel section" [style.--fond]="fond(12)">
+    <div class="interieur centre">
+      <h2>Prêt à devenir cygne ?</h2>
+      <p>Ouvre l’application et lis l’histoire en entier.</p>
+      <button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="installer()">Télécharger l’application</button>
+    </div>
+  </section>
+</main>

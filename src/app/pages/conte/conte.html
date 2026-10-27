@@ -17,6 +17,10 @@
     <app-conte-momotaro [conte]="c" (installer)="installer()" />
   } @else if (c.gabarit === 'hamelin') {
     <app-conte-hamelin [conte]="c" (installer)="installer()" />
+  } @else if (aGabaritCharge(c)) {
+    @if (composant(); as page) {
+      <ng-container *ngComponentOutlet="page; inputs: { conte: c }" />
+    }
   } @else {
   <main>
     <!-- En-tête : le livre et l'essentiel -->

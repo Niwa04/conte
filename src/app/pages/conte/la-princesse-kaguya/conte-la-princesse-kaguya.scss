@@ -1,0 +1,219 @@
+@use '../../../shared/conte-monde' as cm;
+
+@include cm.base;
+@include cm.galerie-trois;
+
+:host {
+  --nuit: #0e1230;
+  --nuit-2: #1a2050;
+  --bambou: #4f9a43;
+  --bambou-clair: #cfe8a4;
+  --argent: #e9ecf8;
+  --or: #f1d57a;
+  --rouge: #c8382c;
+  color: var(--argent);
+  background: var(--nuit);
+}
+
+h1, h2, h3 { font-family: 'Hiragino Mincho ProN', 'Yu Mincho', Georgia, serif; }
+h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); color: #fff; }
+.etiquette { color: var(--or); }
+.sr-seul { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Bambou : tiges verticales à noeuds */
+$tige: repeating-linear-gradient(180deg, transparent 0 150px, rgb(207 232 164 / 0.55) 150px 156px);
+
+/* ---------- Ouverture ---------- */
+.ouverture {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 4.5rem 1.25rem 7rem;
+  background:
+    linear-gradient(180deg, rgb(14 18 48 / 0.35), rgb(14 18 48 / 0.88)),
+    var(--fond) center / cover;
+
+  &__interieur { position: relative; z-index: 1; max-width: 1150px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.1fr; gap: 3rem; align-items: center; }
+  &__texte h1 { margin: 0.5rem 0 0.7rem; font-size: clamp(2.6rem, 6.5vw, 4.6rem); line-height: 1.05; color: #fff; text-shadow: 0 4px 22px #000; }
+  &__accroche { font-size: 1.3rem; line-height: 1.5; color: #fff; text-shadow: 0 2px 8px #000; max-width: 28em; }
+  &__origine { margin-top: 0.9rem; font-size: 0.92rem; color: #dfe3f5; text-shadow: 0 1px 6px #000; max-width: 34em; }
+  &__actions { margin-top: 1.5rem; }
+  &__livre { position: relative; }
+  &__livre img { position: relative; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border: 4px solid var(--or); border-radius: 50px 6px 50px 6px; box-shadow: 0 22px 46px rgb(0 0 0 / 0.6); }
+}
+.halo { position: absolute; right: -40px; top: -50px; width: 150px; height: 150px; border-radius: 50%; background: radial-gradient(circle, #fffdf0 20%, rgb(255 246 200 / 0.6) 45%, rgb(255 246 200 / 0)); animation: respire 6s ease-in-out infinite alternate; }
+@keyframes respire { from { transform: scale(0.9); opacity: 0.75; } to { transform: scale(1.12); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .halo { animation: none; } }
+.tiges { position: absolute; z-index: 0; top: 0; bottom: 0; width: 70px; opacity: 0.8;
+  background: $tige, linear-gradient(90deg, #2a5a26, #5fae51 40%, #2a5a26);
+  &--g { left: 2%; box-shadow: 110px 0 0 -26px rgb(79 154 67 / 0.5); }
+  &--d { right: 2%; width: 50px; box-shadow: -90px 0 0 -18px rgb(79 154 67 / 0.5); } }
+.noeuds { position: absolute; left: 0; right: 0; bottom: 0; height: 44px; z-index: 1; border-top: 3px solid var(--bambou-clair);
+  background: repeating-linear-gradient(90deg, #3c7a35 0 140px, var(--bambou-clair) 140px 148px); }
+
+.pays-badge { padding: 0.35rem 1rem 0.35rem 0.5rem; border-radius: 999px; background: rgb(14 18 48 / 0.7); border: 1px solid var(--or); }
+.pastilles li { padding: 0.25rem 0.9rem; border-radius: 999px; background: rgb(14 18 48 / 0.75); border: 1px solid var(--or); color: #fff3c4; font-size: 0.9rem; }
+
+/* ---------- Pays : une porte-lune, trois bandes de poème verticales ---------- */
+.pays {
+  background: linear-gradient(rgb(14 18 48 / 0.82), rgb(14 18 48 / 0.92)), var(--asanoha) center / 300px 300px;
+  &__grille { display: grid; grid-template-columns: 330px 1fr; gap: 3rem; align-items: center; }
+  &__intro { margin: 0.8rem 0 1.6rem; font-size: 1.15rem; line-height: 1.65; max-width: 40em; }
+}
+.porte-lune {
+  &__anneau {
+    aspect-ratio: 1;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 38%, #323a86, var(--nuit-2) 72%);
+    border: 10px solid #101436;
+    box-shadow: 0 0 0 4px var(--or), 0 0 44px rgb(241 213 122 / 0.45), inset 0 0 40px rgb(0 0 0 / 0.5);
+  }
+  img { width: 62%; height: auto; border-radius: 3px; border: 2px solid #fff; }
+  &__nom { margin-top: 0.7rem; font-family: serif; font-size: 1.8rem; font-weight: 700; color: #fff; }
+  &__natif { font-size: 1.15rem; color: #fff3c4; }
+  &__ou { font-size: 0.85rem; color: #c9d0ee; }
+}
+.mots-titre { margin-top: 0.9rem; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--or); }
+.tanzaku { display: flex; flex-wrap: wrap; gap: 1.2rem; margin: 0; padding: 0; list-style: none; align-items: flex-start; }
+.tanzaku li {
+  display: grid;
+  justify-items: center;
+  gap: 0.2rem;
+  width: 112px;
+  padding: 1.4rem 0.4rem 1rem;
+  background: #fbf7e8;
+  color: #1c2040;
+  border-top: 14px solid #b7312a;
+  border-bottom: 3px solid #b7312a;
+  box-shadow: 0 12px 22px rgb(0 0 0 / 0.5);
+  &:nth-child(2) { margin-top: 28px; border-top-color: var(--bambou); border-bottom-color: var(--bambou); }
+  &:nth-child(3) { margin-top: 10px; border-top-color: #2e4a9c; border-bottom-color: #2e4a9c; }
+}
+.tanzaku__kanji { writing-mode: vertical-rl; font-size: 3rem; line-height: 1.1; color: #0e1230; }
+.tanzaku__romaji { font-weight: 700; font-size: 1.05rem; }
+.tanzaku__prononce { font-style: italic; font-size: 0.85rem; color: #4a4f78; }
+.tanzaku__sens { font-size: 0.9rem; text-align: center; }
+
+/* ---------- Histoire : couches de soie (kasane), papier washi et fenêtre shoji ---------- */
+.histoire { background: linear-gradient(rgb(14 18 48 / 0.35), rgb(14 18 48 / 0.55)), var(--kasane) center / 190px 190px; overflow: hidden; }
+.histoire__pile { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 0; align-items: center; }
+.histoire__papier {
+  position: relative;
+  z-index: 2;
+  margin-right: -3.5rem;
+  padding: 2.8rem clamp(1.6rem, 4vw, 3.2rem);
+  color: #1c2040;
+  background: #fbf7e8;
+  border-left: 14px solid #b7312a;
+  box-shadow: 0 24px 50px rgb(0 0 0 / 0.55);
+  h2 { color: #232a68; }
+  .etiquette { color: #8a5a10; }
+}
+.citation { margin: 1.2rem 0; padding: 0.4rem 0 0.4rem 1.2rem; border-left: 4px solid var(--bambou); font-family: serif; font-size: 1.35rem; font-style: italic; color: #2f3a86; }
+.resume { font-size: 1.15rem; line-height: 1.8; }
+.histoire__visuel { margin: 0; position: relative; z-index: 1; figcaption { margin-top: 0.6rem; text-align: center; font-style: italic; color: #f3f1e0; text-shadow: 0 1px 6px #000; } }
+.shoji { position: relative; border: 12px solid #2b1c10; border-radius: 3px; box-shadow: 0 22px 44px rgb(0 0 0 / 0.6);
+  img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+  &::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(90deg, transparent 0 calc(33.33% - 3px), rgb(43 28 16 / 0.8) calc(33.33% - 3px) 33.33%), repeating-linear-gradient(0deg, transparent 0 calc(50% - 3px), rgb(43 28 16 / 0.8) calc(50% - 3px) 50%); } }
+
+/* ---------- Les phases de la lune ---------- */
+.lune {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--fond) center / cover;
+  &::before { content: ''; position: absolute; inset: 0; z-index: -1; background: rgb(8 10 30 / 0.78); }
+  &__corps { display: grid; grid-template-columns: minmax(250px, 340px) 1fr; gap: 2.6rem; margin-top: 1.6rem; align-items: start; }
+  &__astre { text-align: center; }
+  &__nom { margin: 1rem 0 0.4rem; font-family: serif; font-size: 1.4rem; color: #fff3c4; }
+}
+.disque {
+  position: relative;
+  width: min(280px, 70vw);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  background: radial-gradient(circle at 36% 34%, #fffdf3, #f3e8b8 55%, #d6c78a);
+  box-shadow: 0 0 calc(10px + var(--p) * 70px) rgb(255 246 200 / calc(0.25 + var(--p) * 0.6));
+  &__ombre { position: absolute; inset: 0; border-radius: 50%; background: #070a22; box-shadow: inset 0 0 20px rgb(0 0 0 / 0.6); transform: translateX(calc(var(--p) * -100%)); transition: transform 0.2s linear; }
+}
+.curseur { display: block; margin: 0.6rem auto 0; max-width: 280px;
+  input { width: 100%; accent-color: var(--or); height: 28px; } }
+.phases { display: flex; justify-content: center; gap: 0.6rem; margin: 0.5rem 0 0; padding: 0; list-style: none; }
+.phase { width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--or); background: rgb(14 18 48 / 0.85); color: #fff3c4; font-weight: 700;
+  &:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+  &--actuelle { background: var(--or); color: var(--nuit); } }
+.moment {
+  padding: 1.4rem 1.5rem 1.5rem;
+  border-radius: 14px;
+  background: rgb(14 18 48 / 0.92);
+  border: 2px solid var(--or);
+  box-shadow: 0 18px 40px rgb(0 0 0 / 0.55);
+  h3 { margin: 0 0 0.8rem; font-size: 1.6rem; color: #fff3c4; }
+  &__image { margin: 0 0 1rem; }
+  &__image img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px; border: 2px solid var(--or); }
+  &__texte { font-size: 1.12rem; line-height: 1.65; min-height: 5em; }
+}
+
+/* ---------- Galerie ---------- */
+.galerie {
+  background: linear-gradient(rgb(14 18 48 / 0.84), rgb(14 18 48 / 0.92)), var(--fond) center / cover;
+  .cadre { position: relative; padding: 22px 0; background: #fbf7e8; border-inline: 3px solid #b7312a; box-shadow: 0 14px 28px rgb(0 0 0 / 0.6); }
+  .cadre::before, .cadre::after { content: ''; position: absolute; left: -10px; right: -10px; height: 14px; border-radius: 7px; background: linear-gradient(#6a4220, #2b1c10); }
+  .cadre::before { top: 4px; }
+  .cadre::after { bottom: 4px; }
+  .cadre img { border-block: 2px solid var(--or); }
+  .cadre:nth-child(2) { margin-top: 1.8rem; }
+}
+
+/* ---------- Personnages ---------- */
+.gens {
+  background: linear-gradient(rgb(14 18 48 / 0.86), rgb(14 18 48 / 0.93)), var(--fond) center / cover;
+  --pc-fond: rgb(14 18 48 / 0.88);
+  --pc-texte: #fff;
+  --pc-accent: var(--or);
+  --pc-bord: var(--or);
+  --pc-rayon: 18px;
+  --pc-vignette: 50%;
+}
+.chapeau { margin: 0.6rem 0 1.6rem; font-size: 1.1rem; }
+
+/* ---------- Origine (papier) ---------- */
+.origine {
+  color: #1c2040;
+  background: #f4f1e6;
+  border-top: 12px solid transparent;
+  border-image: repeating-linear-gradient(90deg, #3c7a35 0 140px, var(--bambou-clair) 140px 148px) 12 / 12px stretch;
+  h2 { color: #232a68; }
+  .etiquette { color: #7a6417; }
+}
+.oeuvre { margin: 1.4rem 0; padding: 1rem 1.3rem; background: #fff; border-left: 8px solid var(--bambou); border-radius: 6px; box-shadow: 0 8px 20px rgb(0 0 0 / 0.12); }
+.oeuvre__etiquette { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: #2f6b29; font-weight: 700; }
+.oeuvre__titre { font-family: serif; font-size: 1.4rem; font-weight: 700; margin: 0.2rem 0; }
+.origine__colonnes { columns: 2 22em; column-gap: 2.4rem; font-size: 1.08rem; line-height: 1.7; p { margin: 0 0 1rem; break-inside: avoid; } }
+
+/* ---------- Fiche ---------- */
+.fiche-section { background: #232a68; h2 { margin-bottom: 1.4rem; } --fc-fond: #f4f1e6; --fc-texte: #1c2040; --fc-accent: #4f9a43; --fc-accent-texte: #2f6b29; }
+
+/* ---------- Appel ---------- */
+.appel {
+  background: linear-gradient(rgb(14 18 48 / 0.55), rgb(14 18 48 / 0.85)), var(--fond) center / cover;
+  p { margin: 0.8rem 0 1.6rem; font-size: 1.2rem; text-shadow: 0 2px 8px #000; }
+}
+
+@media (max-width: 900px) {
+  .ouverture__interieur, .histoire__pile, .pays__grille, .lune__corps { grid-template-columns: 1fr; gap: 2rem; }
+  .histoire__papier { margin-right: 0; }
+  .porte-lune { max-width: 320px; margin: 0 auto; }
+  .ouverture__livre { order: -1; }
+  .tanzaku { justify-content: center; }
+  .tiges { opacity: 0.4; }
+}
+@media (max-width: 600px) { .section { padding: 3.5rem 1rem; } .tanzaku { gap: 0.6rem; } .tanzaku li { width: 96px; } .pays, .histoire { overflow: hidden; } }

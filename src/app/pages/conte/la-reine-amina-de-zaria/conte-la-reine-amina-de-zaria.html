@@ -1,0 +1,198 @@
+<main class="am" [style.--indigo-tissu]="deco('motif')" [style.--zana]="deco('tuile')">
+  <!-- Ouverture : la cité de terre au soleil -->
+  <section class="ouverture" [style.--fond]="deco('avant')">
+    <div class="ouverture__interieur">
+      <div class="ouverture__texte">
+        <div class="pays-badge">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <span><strong>Nigeria</strong> · Zazzau</span>
+        </div>
+        <h1>{{ conte().titre }}</h1>
+        <p class="ouverture__accroche">{{ conte().accroche }}</p>
+        <p class="ouverture__origine">{{ conte().mentionOrigine }}</p>
+        <ul class="pastilles">
+          @for (e of conte().etiquettes; track e) { <li>{{ e }}</li> }
+        </ul>
+        <div class="ouverture__actions">
+          <a class="bouton bouton--vert bouton--brille" [href]="appUrl">Lire dans l’application</a>
+        </div>
+      </div>
+      <div class="ouverture__livre">
+        <img [src]="conte().couverture" [alt]="conte().couvertureAlt" width="1400" height="788" fetchpriority="high">
+      </div>
+    </div>
+    <div class="bande-motifs" [style.background-image]="deco('motifs')" aria-hidden="true"></div>
+  </section>
+
+  <div class="creneaux" aria-hidden="true"></div>
+  <!-- Le pays : la porte de la cité et trois étendards d'indigo -->
+  <section class="pays section" aria-labelledby="titre-pays" [style.--fond]="deco('ville')">
+    <div class="interieur pays__grille">
+      <div class="porte-cite">
+        <div class="porte-cite__tour" aria-hidden="true"></div>
+        <div class="porte-cite__arc">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <p class="porte-cite__nom">Nigeria</p>
+          <p class="porte-cite__natif">Nijeriya · pays haoussa</p>
+          <p class="porte-cite__ou">Royaume de Zazzau</p>
+        </div>
+      </div>
+      <div class="pays__texte">
+        <p class="etiquette">Un récit venu du Nigeria</p>
+        <h2 id="titre-pays">Un royaume de terre ocre et d’étendards</h2>
+        <p class="pays__intro">L’histoire se passe à Zazzau, aujourd’hui Zaria, dans le nord du Nigeria. C’était un royaume du peuple haoussa, au bord de grandes routes commerciales.</p>
+        <ul class="etendards">
+          @for (m of mots; track m.hausa) {
+            <li appApparition>
+              <span class="etendard__natif">{{ m.hausa }}</span>
+              <span class="etendard__prononce">{{ m.prononce }}</span>
+              <span class="etendard__sens">{{ m.sens }}</span>
+            </li>
+          }
+        </ul>
+        <p class="mots-titre">Trois mots haoussa</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- L'histoire : le profil de la ville, un mur de terre, une fenêtre à arc -->
+  <section class="histoire" id="histoire">
+    <div class="histoire__ciel" [style.background-image]="deco('ville')" aria-hidden="true"></div>
+    <div class="section histoire__mur">
+      <div class="interieur histoire__grille">
+        <div class="histoire__texte">
+          <p class="etiquette">L’histoire</p>
+          <h2>Une reine qui sait écouter</h2>
+          <blockquote appApparition class="citation"><p>{{ conte().citation }}</p></blockquote>
+          <p appApparition class="resume">{{ conte().resume }}</p>
+        </div>
+        <figure appApparition class="histoire__visuel">
+          <div class="fenetre-arc">
+            <img [src]="conte().imageHistoire.src" [alt]="conte().imageHistoire.alt" loading="lazy" width="1400" height="788">
+          </div>
+          <figcaption>{{ conte().imageHistoire.legende }}</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- La carte des deux chemins -->
+  <section class="chemins section" aria-labelledby="titre-chemins" [style.--fond]="deco('cavalerie')">
+    <div class="interieur">
+      <p class="etiquette">À toi de commander</p>
+      <h2 id="titre-chemins">Deux chemins, un seul signal</h2>
+
+      <div class="chemins__corps">
+        <div class="carte" [class.carte--libre]="libre()">
+          <svg viewBox="0 0 400 320" role="img" aria-label="Carte : une route vers une ville, bloquée au milieu, avec un chemin à gauche et un à droite">
+            <rect width="400" height="320" fill="#e9c98f"/>
+            <path d="M200 320 V 60" stroke="#b2763a" stroke-width="34" stroke-linecap="round" fill="none"/>
+            <path d="M200 300 C 70 270, 60 120, 150 70" class="piste" [class.piste--prise]="gauche()"/>
+            <path d="M200 300 C 330 270, 340 120, 250 70" class="piste" [class.piste--prise]="droite()"/>
+            <!-- ville -->
+            <g class="ville">
+              <rect x="150" y="14" width="100" height="54" rx="4" fill="#a8532c"/>
+              <path d="M150 14h12v-8h12v8h12v-8h12v8h12v-8h12v8h12v-8h12v8h2" fill="#a8532c"/>
+              <path d="M186 68V40a14 14 0 0 1 28 0v28z" [attr.fill]="libre() ? '#ffd84a' : '#4a2410'"/>
+            </g>
+            <!-- adversaires -->
+            <g class="adversaires" [class.adversaires--partis]="libre()">
+              @for (x of [168, 188, 208, 228]; track x) {
+                <g [attr.transform]="'translate(' + x + ' 150)'">
+                  <circle cx="0" cy="-8" r="8" fill="#2b1a3d"/>
+                  <path d="M-9 14 L0 -2 L9 14Z" fill="#4a2c6e"/>
+                </g>
+              }
+            </g>
+            <text x="200" y="196" text-anchor="middle" class="etiquette-carte">{{ libre() ? 'Route libre' : 'Route barrée' }}</text>
+            <g class="cav cav--g" [class.cav--parti]="gauche()">
+              <circle r="13" fill="#17a0a8" stroke="#fff" stroke-width="3"/>
+              <path d="M-6 3 L0 -7 L6 3Z" fill="#fff"/>
+            </g>
+            <g class="cav cav--d" [class.cav--parti]="droite()">
+              <circle r="13" fill="#17a0a8" stroke="#fff" stroke-width="3"/>
+              <path d="M-6 3 L0 -7 L6 3Z" fill="#fff"/>
+            </g>
+          </svg>
+        </div>
+
+        <div class="commande">
+          <p class="commande__msg" aria-live="polite">{{ message() }}</p>
+          <div class="commande__boutons">
+            <button type="button" class="ordre" (click)="envoyer('gauche')" [disabled]="gauche()">← Colonne de gauche</button>
+            <button type="button" class="ordre" (click)="envoyer('droite')" [disabled]="droite()">Colonne de droite →</button>
+          </div>
+          @if (gauche() || droite()) {
+            <button type="button" class="reset" (click)="recommencer()">Recommencer</button>
+          }
+          @if (libre()) {
+            <figure class="victoire">
+              <img [src]="page(7)" alt="" width="1400" height="788" loading="lazy">
+            </figure>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Illustrations -->
+  <section class="galerie section" id="illustrations" [style.--fond]="fond(9)">
+    <div class="interieur">
+      <p class="etiquette">Les illustrations</p>
+      <h2>Un conte à regarder autant qu’à lire</h2>
+      <ul class="galerie-trois">
+        @for (i of conte().illustrations; track i.src; let n = $index) {
+          <li appApparition class="cadre" [style.transition-delay.ms]="n * 120">
+            <img [src]="i.src" [alt]="i.alt" loading="lazy" width="1400" height="788">
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <div class="creneaux" aria-hidden="true"></div>
+  <!-- Personnages -->
+  <section class="gens section" id="personnages" aria-labelledby="titre-gens" [style.--fond]="deco('apres')">
+    <div class="interieur">
+      <p class="etiquette">Les personnages</p>
+      <h2 id="titre-gens">Ceux de Zazzau</h2>
+      <p class="chapeau">Choisis un personnage pour le découvrir.</p>
+      <app-personnages-conte [personnages]="conte().personnages" idBase="amina" />
+    </div>
+  </section>
+
+  <!-- Origine -->
+  <section class="origine section">
+    <div class="interieur">
+      <p class="etiquette">L’origine</p>
+      <h2>{{ conte().origine.titre }}</h2>
+      <aside class="oeuvre" appApparition>
+        <p class="oeuvre__etiquette">Les sources</p>
+        <p class="oeuvre__titre">Infaq al-Maisur · Chronique de Kano</p>
+        <p class="oeuvre__auteur">Muhammad Bello, vers 1836 · chronique de Kano, fin du XIXe siècle · tradition orale haoussa</p>
+      </aside>
+      <div class="origine__colonnes">
+        @for (p of conte().origine.paragraphes; track p) {
+          <p appApparition>{{ p }}</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Fiche -->
+  <section class="fiche-section section" id="fiche">
+    <div class="interieur centre">
+      <p class="etiquette">En un coup d’œil</p>
+      <h2>La fiche du conte</h2>
+      <app-fiche-conte [titre]="conte().titre" [infos]="conte().infos" />
+    </div>
+  </section>
+
+  <section class="appel section" [style.--fond]="fond(12)">
+    <div class="interieur centre">
+      <h2>Prêt à chevaucher avec Amina ?</h2>
+      <p>Ouvre l’application et lis son histoire en entier.</p>
+      <button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="installer()">Télécharger l’application</button>
+    </div>
+  </section>
+</main>

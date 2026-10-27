@@ -1,0 +1,196 @@
+<main class="se" [style.--applique]="deco('motif')" [style.--cristaux]="deco('tuile')">
+  <!-- Ouverture : l'aurore sur la glace -->
+  <section class="ouverture" [style.--fond]="deco('aurore')">
+    <div class="ouverture__interieur">
+      <div class="ouverture__texte">
+        <div class="pays-badge">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <span><strong>Arctique</strong> · Inuit Nunangat</span>
+        </div>
+        <h1>{{ conte().titre }}</h1>
+        <p class="ouverture__accroche">{{ conte().accroche }}</p>
+        <p class="ouverture__origine">{{ conte().mentionOrigine }}</p>
+        <ul class="pastilles">
+          @for (e of conte().etiquettes; track e) { <li>{{ e }}</li> }
+        </ul>
+        <div class="ouverture__actions">
+          <a class="bouton bouton--vert bouton--brille" [href]="appUrl">Lire dans l’application</a>
+        </div>
+      </div>
+      <div class="ouverture__livre">
+        <img [src]="conte().couverture" [alt]="conte().couvertureAlt" width="1400" height="788" fetchpriority="high">
+      </div>
+    </div>
+    <div class="vagues-glace" aria-hidden="true"></div>
+  </section>
+
+  <!-- Le pays : des dalles de glace et trois galets de pierre à savon -->
+  <section class="pays section" aria-labelledby="titre-pays" [style.--fond]="deco('qamutik')">
+    <div class="interieur">
+      <div class="pays__banquise">
+        <div class="dalle dalle--pays">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <p class="dalle__nom">Arctique canadien</p>
+          <p class="dalle__natif" lang="iu">ᐃᓄᐃᑦ · Inuit</p>
+          <p class="dalle__ou">Légende de la mer</p>
+        </div>
+        <div class="pays__texte">
+          <p class="etiquette">Une légende venue du Grand Nord</p>
+          <h2 id="titre-pays">Des côtes de glace et de falaises noires</h2>
+          <p class="pays__intro">Cette légende est racontée par les Inuit, qui vivent depuis très longtemps sur les côtes de l’Arctique. Pour eux, la mer donne la nourriture et il faut en prendre soin.</p>
+        </div>
+      </div>
+      <ul class="galets">
+        @for (m of mots; track m.roman) {
+          <li appApparition>
+            <span class="galet__syllabes" lang="iu">{{ m.syllabes }}</span>
+            <span class="galet__roman">{{ m.roman }}</span>
+            <span class="galet__prononce">{{ m.prononce }}</span>
+            <span class="galet__sens">{{ m.sens }}</span>
+          </li>
+        }
+      </ul>
+      <p class="mots-note">Mots en inuktitut, avec leur écriture en syllabaire (à vérifier).</p>
+    </div>
+  </section>
+
+  <!-- L'histoire : deux dalles de glace qui se chevauchent -->
+  <section class="histoire section" id="histoire" [style.--fond]="deco('glace')">
+    <div class="interieur histoire__dalles">
+      <figure appApparition class="histoire__visuel">
+        <div class="dalle dalle--image">
+          <img [src]="conte().imageHistoire.src" [alt]="conte().imageHistoire.alt" loading="lazy" width="1400" height="788">
+        </div>
+        <figcaption>{{ conte().imageHistoire.legende }}</figcaption>
+      </figure>
+      <div class="dalle dalle--texte">
+        <p class="etiquette">L’histoire</p>
+        <h2>Celle qui veille sous la glace</h2>
+        <blockquote appApparition class="citation"><p>{{ conte().citation }}</p></blockquote>
+        <p appApparition class="resume">{{ conte().resume }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Le peigne -->
+  <section class="peigne section" aria-labelledby="titre-peigne" [style.--fond]="deco('abysse')">
+    <div class="interieur">
+      <p class="etiquette">À toi d’être doux</p>
+      <h2 id="titre-peigne">Défaire les nœuds, sans tirer</h2>
+      <p class="chapeau">Touche les nœuds l’un après l’autre, en laissant un petit moment entre chaque. Les animaux reviennent à chaque nœud défait.</p>
+
+      <div class="fond-marin">
+        <img class="sedna" [src]="chemin('personnages/sedna-marine-t.webp')" alt="Sedna sous la mer, la queue turquoise" width="400" height="700">
+
+        <svg class="scene" viewBox="0 0 800 450" aria-hidden="true">
+          <g class="cheveux" [class.cheveux--libres]="termine()">
+            <path d="M170 150 C 260 120, 310 230, 400 200 S 560 170, 780 260"/>
+            <path d="M170 170 C 270 190, 340 140, 450 230 S 620 300, 790 300"/>
+            <path d="M170 190 C 280 260, 380 200, 480 280 S 650 200, 790 220"/>
+          </g>
+          @for (n of noeuds; track n.animal; let i = $index) {
+            <g class="animal" [class.animal--revenu]="estDefait(i)" [attr.transform]="'translate(' + n.x + ' ' + (n.y - 150) + ')'">
+              @switch (n.animal) {
+                @case ('poisson') {
+                  <path d="M-30 0 C -15 -12 15 -12 30 0 C 15 12 -15 12 -30 0Z M30 0 L46 -11 L46 11Z" fill="#9fd4e8"/>
+                  <path d="M-72 14 C -57 2 -27 2 -12 14 C -27 26 -57 26 -72 14Z M-12 14 L4 3 L4 25Z" fill="#c4e6f2"/>
+                  <circle cx="-18" cy="-2" r="2.4" fill="#12304d"/>
+                }
+                @case ('phoque') {
+                  <ellipse cx="0" cy="0" rx="46" ry="19" fill="#8c98a8"/>
+                  <circle cx="-44" cy="-6" r="14" fill="#a0adbd"/>
+                  <circle cx="-48" cy="-9" r="2.4" fill="#12304d"/>
+                  <path d="M42 0 L66 -14 L66 14Z" fill="#8c98a8"/>
+                }
+                @case ('morse') {
+                  <ellipse cx="0" cy="0" rx="52" ry="24" fill="#a07a58"/>
+                  <circle cx="-50" cy="-4" r="17" fill="#b68e68"/>
+                  <path d="M-56 4 L-58 28 M-48 6 L-48 30" stroke="#fff4dc" stroke-width="4" stroke-linecap="round"/>
+                  <circle cx="-54" cy="-9" r="2.4" fill="#12304d"/>
+                }
+                @case ('baleine') {
+                  <path d="M-90 4 C -70 -30 20 -34 70 -6 C 86 2 100 -14 112 -32 C 112 -2 102 22 80 22 C 30 40 -70 40 -90 4Z" fill="#5d7a98"/>
+                  <circle cx="-62" cy="-2" r="2.6" fill="#12304d"/>
+                }
+              }
+            </g>
+          }
+        </svg>
+
+        @for (n of noeuds; track n.animal; let i = $index) {
+          <button type="button" class="noeud" [class.noeud--defait]="estDefait(i)" [style.left.%]="n.x / 8" [style.top.%]="n.y / 4.5" [attr.aria-label]="estDefait(i) ? 'Nœud défait' : 'Défaire le nœud ' + (i + 1)" [disabled]="estDefait(i)" (click)="defaire(i)"></button>
+        }
+
+        <span class="aurore-haut" [class.aurore-haut--vive]="termine()" [style.background-image]="deco('aurore')" aria-hidden="true"></span>
+      </div>
+
+      <div class="commande">
+        <p class="commande__msg" [class.commande__msg--stop]="doucement()" aria-live="polite">{{ message() }}</p>
+        <p class="compte">{{ defaits().length }} {{ defaits().length > 1 ? 'nœuds défaits' : 'nœud défait' }} sur {{ noeuds.length }}</p>
+        @if (defaits().length > 0) {
+          <button type="button" class="reset" (click)="recommencer()">Recommencer</button>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Illustrations -->
+  <section class="galerie section" id="illustrations" [style.--fond]="fond(8)">
+    <div class="interieur">
+      <p class="etiquette">Les illustrations</p>
+      <h2>Un conte à regarder autant qu’à lire</h2>
+      <ul class="galerie-trois">
+        @for (i of conte().illustrations; track i.src; let n = $index) {
+          <li appApparition class="cadre" [style.transition-delay.ms]="n * 120">
+            <img [src]="i.src" [alt]="i.alt" loading="lazy" width="1400" height="788">
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Personnages -->
+  <section class="gens section" id="personnages" aria-labelledby="titre-gens" [style.--fond]="fond(12)">
+    <div class="interieur">
+      <p class="etiquette">Les personnages</p>
+      <h2 id="titre-gens">Ceux de la côte et ceux de la mer</h2>
+      <p class="chapeau">Choisis un personnage pour le découvrir.</p>
+      <app-personnages-conte [personnages]="conte().personnages" idBase="sedna" />
+    </div>
+  </section>
+
+  <!-- Origine -->
+  <section class="origine section">
+    <div class="interieur">
+      <p class="etiquette">L’origine</p>
+      <h2>{{ conte().origine.titre }}</h2>
+      <aside class="oeuvre" appApparition>
+        <p class="oeuvre__etiquette">Les versions écrites</p>
+        <p class="oeuvre__titre">The Central Eskimo · Intellectual Culture of the Iglulik Eskimos</p>
+        <p class="oeuvre__auteur">Franz Boas · 1888 · Knud Rasmussen · 1929 · d’après la tradition orale inuit</p>
+      </aside>
+      <div class="origine__colonnes">
+        @for (p of conte().origine.paragraphes; track p) {
+          <p appApparition>{{ p }}</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Fiche -->
+  <section class="fiche-section section" id="fiche">
+    <div class="interieur centre">
+      <p class="etiquette">En un coup d’œil</p>
+      <h2>La fiche du conte</h2>
+      <app-fiche-conte [titre]="conte().titre" [infos]="conte().infos" />
+    </div>
+  </section>
+
+  <section class="appel section" [style.--fond]="deco('aurore')">
+    <div class="interieur centre">
+      <h2>Prêt à écouter la mer ?</h2>
+      <p>Ouvre l’application et lis la légende en entier, accompagné.</p>
+      <button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="installer()">Télécharger l’application</button>
+    </div>
+  </section>
+</main>

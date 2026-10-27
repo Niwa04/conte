@@ -1,0 +1,173 @@
+<main class="ka" [style.--asanoha]="deco('motif')" [style.--kasane]="deco('tuile')">
+  <!-- Ouverture : forêt de bambous sous la lune -->
+  <section class="ouverture" [style.--fond]="deco('bambou')">
+    <div class="tiges tiges--g" aria-hidden="true"></div>
+    <div class="tiges tiges--d" aria-hidden="true"></div>
+    <div class="ouverture__interieur">
+      <div class="ouverture__texte">
+        <div class="pays-badge">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <span><strong>Japon</strong> · 日本</span>
+        </div>
+        <h1>{{ conte().titre }}</h1>
+        <p class="ouverture__accroche">{{ conte().accroche }}</p>
+        <p class="ouverture__origine">{{ conte().mentionOrigine }}</p>
+        <ul class="pastilles">
+          @for (e of conte().etiquettes; track e) { <li>{{ e }}</li> }
+        </ul>
+        <div class="ouverture__actions">
+          <a class="bouton bouton--vert bouton--brille" [href]="appUrl">Lire dans l’application</a>
+        </div>
+      </div>
+      <div class="ouverture__livre">
+        <span class="halo" aria-hidden="true"></span>
+        <img [src]="conte().couverture" [alt]="conte().couvertureAlt" width="1400" height="788" fetchpriority="high">
+      </div>
+    </div>
+    <div class="noeuds" aria-hidden="true"></div>
+  </section>
+
+  <!-- Le pays : une porte-lune, trois bandes de poème (tanzaku) -->
+  <section class="pays section" aria-labelledby="titre-pays" [style.--fond]="deco('brume')">
+    <div class="interieur pays__grille">
+      <div class="porte-lune">
+        <div class="porte-lune__anneau">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <p class="porte-lune__nom">Japon</p>
+          <p class="porte-lune__natif" lang="ja">日本 · Nihon</p>
+          <p class="porte-lune__ou">Récit ancien de la cour</p>
+        </div>
+      </div>
+      <div class="pays__texte">
+        <p class="etiquette">Un conte venu du Japon</p>
+        <h2 id="titre-pays">Des collines couvertes de bambous</h2>
+        <p class="pays__intro">Cette histoire se passe dans un Japon d’autrefois, entre forêts de bambous et palais de l’Empereur. Au Japon, on dit que la lune cache un visage de princesse.</p>
+        <ul class="tanzaku">
+          @for (m of mots; track m.romaji) {
+            <li appApparition>
+              <span class="tanzaku__kanji" lang="ja">{{ m.kanji }}</span>
+              <span class="tanzaku__romaji">{{ m.romaji }}</span>
+              <span class="tanzaku__prononce">{{ m.prononce }}</span>
+              <span class="tanzaku__sens">{{ m.sens }}</span>
+            </li>
+          }
+        </ul>
+        <p class="mots-titre">Trois mots japonais, écrits en bandes de poème</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- L'histoire : couches de soie, panneau de papier, fenêtre à treillis -->
+  <section class="histoire section" id="histoire">
+    <div class="interieur histoire__pile">
+      <div class="histoire__papier">
+        <p class="etiquette">L’histoire</p>
+        <h2>La princesse qui brille</h2>
+        <blockquote appApparition class="citation"><p>{{ conte().citation }}</p></blockquote>
+        <p appApparition class="resume">{{ conte().resume }}</p>
+      </div>
+      <figure appApparition class="histoire__visuel">
+        <div class="shoji">
+          <img [src]="conte().imageHistoire.src" [alt]="conte().imageHistoire.alt" loading="lazy" width="1400" height="788">
+        </div>
+        <figcaption>{{ conte().imageHistoire.legende }}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Les phases de la lune -->
+  <section class="lune section" aria-labelledby="titre-lune" [style.--fond]="deco('lune')" [style.--p]="phase() / 100">
+    <div class="interieur">
+      <p class="etiquette">À toi de faire grandir la lune</p>
+      <h2 id="titre-lune">De la nouvelle lune à la pleine lune</h2>
+
+      <div class="lune__corps">
+        <div class="lune__astre">
+          <div class="disque" role="img" [attr.aria-label]="courante().nom">
+            <span class="disque__ombre"></span>
+          </div>
+          <p class="lune__nom">{{ courante().nom }}</p>
+          <label class="curseur">
+            <span class="sr-seul">Phase de la lune</span>
+            <input type="range" min="0" max="100" step="1" [value]="phase()" (input)="regler($event)">
+          </label>
+          <ol class="phases" aria-label="Les cinq moments du conte">
+            @for (ph of phases; track ph.seuil; let i = $index) {
+              <li>
+                <button type="button" class="phase" [class.phase--actuelle]="etape() === i" [attr.aria-current]="etape() === i ? 'step' : null" (click)="aller(i)">{{ i + 1 }}</button>
+              </li>
+            }
+          </ol>
+        </div>
+
+        <article class="moment" aria-live="polite">
+          <h3>{{ courante().titre }}</h3>
+          <figure class="moment__image">
+            <img [src]="page(courante().page)" alt="" width="1400" height="788" loading="lazy">
+          </figure>
+          <p class="moment__texte">{{ courante().texte }}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Illustrations -->
+  <section class="galerie section" id="illustrations" [style.--fond]="fond(4)">
+    <div class="interieur">
+      <p class="etiquette">Les illustrations</p>
+      <h2>Un conte à regarder autant qu’à lire</h2>
+      <ul class="galerie-trois">
+        @for (i of conte().illustrations; track i.src; let n = $index) {
+          <li appApparition class="cadre" [style.transition-delay.ms]="n * 120">
+            <img [src]="i.src" [alt]="i.alt" loading="lazy" width="1400" height="788">
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Personnages -->
+  <section class="gens section" id="personnages" aria-labelledby="titre-gens" [style.--fond]="deco('jardin')">
+    <div class="interieur">
+      <p class="etiquette">Les personnages</p>
+      <h2 id="titre-gens">Ceux de la maison de bambou, et celle de la Lune</h2>
+      <p class="chapeau">Choisis un personnage pour le découvrir.</p>
+      <app-personnages-conte [personnages]="conte().personnages" idBase="kaguya" />
+    </div>
+  </section>
+
+  <!-- Origine -->
+  <section class="origine section">
+    <div class="interieur">
+      <p class="etiquette">L’origine</p>
+      <h2>{{ conte().origine.titre }}</h2>
+      <aside class="oeuvre" appApparition>
+        <p class="oeuvre__etiquette">L’œuvre d’origine</p>
+        <p class="oeuvre__titre"><span lang="ja">竹取物語</span> · Taketori monogatari</p>
+        <p class="oeuvre__auteur">Le Conte du coupeur de bambou · auteur inconnu · fin du IXe ou début du Xe siècle (à vérifier)</p>
+      </aside>
+      <div class="origine__colonnes">
+        @for (p of conte().origine.paragraphes; track p) {
+          <p appApparition>{{ p }}</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Fiche -->
+  <section class="fiche-section section" id="fiche">
+    <div class="interieur centre">
+      <p class="etiquette">En un coup d’œil</p>
+      <h2>La fiche du conte</h2>
+      <app-fiche-conte [titre]="conte().titre" [infos]="conte().infos" />
+    </div>
+  </section>
+
+  <section class="appel section" [style.--fond]="fond(13)">
+    <div class="interieur centre">
+      <h2>Veux-tu retrouver Kaguya ?</h2>
+      <p>Ouvre l’application et lis l’histoire en entier.</p>
+      <button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="installer()">Télécharger l’application</button>
+    </div>
+  </section>
+</main>

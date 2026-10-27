@@ -1,4 +1,5 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { NgComponentOutlet } from '@angular/common';
+import { Component, OnInit, Type, inject, signal } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { type FicheConte, trouverConte } from '../../data/contes';
@@ -6,13 +7,14 @@ import { Apparition } from '../../shared/apparition';
 import { Lucioles } from '../../shared/lucioles';
 import { PwaService } from '../../core/pwa.service';
 import { APP_URL } from '../../site.config';
+import { GABARITS } from './gabarits';
 import { ConteHamelin } from './hamelin/conte-hamelin';
 import { ConteMomotaro } from './momotaro/conte-momotaro';
 
 /** Page de présentation d'un conte : pour que les familles voient s'il leur plaira. */
 @Component({
   selector: 'app-conte',
-  imports: [RouterLink, Lucioles, Apparition, ConteMomotaro, ConteHamelin],
+  imports: [RouterLink, Lucioles, Apparition, ConteMomotaro, ConteHamelin, NgComponentOutlet],
   templateUrl: './conte.html',
   styleUrl: './conte.scss'
 })
@@ -27,6 +29,8 @@ export class Conte implements OnInit {
   protected readonly appUrl = APP_URL;
   protected readonly conte = signal<FicheConte | null>(null);
   protected readonly choix = signal(0);
+  /** Page à design propre chargée à la demande (contes du monde). */
+  protected readonly composant = signal<Type<unknown> | null>(null);
 
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -40,8 +44,15 @@ export class Conte implements OnInit {
       return;
     }
     this.conte.set(fiche);
+    const charger = fiche.gabarit ? GABARITS[fiche.gabarit] : undefined;
+    if (charger) void charger().then((c) => this.composant.set(c));
     this.titre.setTitle(`${fiche.titre} · La Maison des Contes`);
     this.meta.updateTag({ name: 'description', content: `${fiche.accroche} Conte illustré, ${fiche.etiquettes.slice(2, 4).join(', ')}.` });
+  }
+
+  /** Vrai si le conte a une page à design propre chargée à la demande. */
+  protected aGabaritCharge(fiche: FicheConte): boolean {
+    return !!fiche.gabarit && !!GABARITS[fiche.gabarit];
   }
 
   protected choisir(index: number): void {

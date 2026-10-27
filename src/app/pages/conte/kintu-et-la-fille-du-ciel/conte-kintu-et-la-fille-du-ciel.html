@@ -1,0 +1,170 @@
+<main class="ki" [style.--ecorce]="deco('motif')" [style.--vannerie]="deco('tuile')">
+  <!-- Ouverture : la terre verte sous un grand ciel -->
+  <section class="ouverture">
+    <div class="ouverture__interieur">
+      <div class="ouverture__texte">
+        <div class="pays-badge">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <span><strong>Ouganda</strong> · Buganda</span>
+        </div>
+        <h1>{{ conte().titre }}</h1>
+        <p class="ouverture__accroche">{{ conte().accroche }}</p>
+        <p class="ouverture__origine">{{ conte().mentionOrigine }}</p>
+        <ul class="pastilles">
+          @for (e of conte().etiquettes; track e) { <li>{{ e }}</li> }
+        </ul>
+        <div class="ouverture__actions">
+          <a class="bouton bouton--vert bouton--brille" [href]="appUrl">Lire dans l’application</a>
+        </div>
+      </div>
+      <div class="ouverture__livre">
+        <span class="soleil" aria-hidden="true"></span>
+        <img [src]="conte().couverture" [alt]="conte().couvertureAlt" width="1400" height="788" fetchpriority="high">
+      </div>
+    </div>
+    <div class="bande-ecorce" aria-hidden="true"></div>
+  </section>
+
+  <!-- Le pays : le ruban d'écorce, le drapeau dans un cadre de vannerie, trois mots en lignes -->
+  <section class="pays section" aria-labelledby="titre-pays" [style.--fond]="deco('bananeraie')">
+    <div class="ruban" aria-hidden="true"></div>
+    <div class="interieur pays__grille">
+      <div class="pays__carte">
+        <div class="pays__vannerie"><img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200"></div>
+        <p class="pays__nom">Ouganda</p>
+        <p class="pays__natif">Uganda · royaume du Buganda</p>
+        <p class="pays__ou">Mythe de création</p>
+      </div>
+      <div class="pays__texte">
+        <p class="etiquette">Un conte venu d’Ouganda</p>
+        <h2 id="titre-pays">Des collines vertes autour d’un grand lac</h2>
+        <p class="pays__intro">Le conte vient du Buganda, un royaume du centre-sud de l’Ouganda, entre collines, bananeraies et grand lac. On y raconte comment les premiers hommes sont arrivés sur la terre.</p>
+        <ul class="mots">
+          @for (m of mots; track m.luganda) {
+            <li appApparition>
+              <span class="mots__natif" lang="lg">{{ m.luganda }}</span>
+              <span class="mots__prononce">{{ m.prononce }}</span>
+              <span class="mots__sens">{{ m.sens }}</span>
+            </li>
+          }
+        </ul>
+        <p class="mots-titre">Trois mots en luganda</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- L'histoire : l'image dans un soleil à rayons -->
+  <section class="histoire section" id="histoire">
+    <div class="interieur histoire__grille">
+      <figure appApparition class="histoire__visuel">
+        <span class="rayons" aria-hidden="true"></span>
+        <img [src]="conte().imageHistoire.src" [alt]="conte().imageHistoire.alt" loading="lazy" width="1400" height="788">
+        <figcaption>{{ conte().imageHistoire.legende }}</figcaption>
+      </figure>
+      <div class="histoire__texte">
+        <p class="etiquette">L’histoire</p>
+        <h2>Entre la terre et le Ciel</h2>
+        <blockquote appApparition class="citation"><p>{{ conte().citation }}</p></blockquote>
+        <p appApparition class="resume">{{ conte().resume }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- L'escalier de nuages -->
+  <section class="escalier section" aria-labelledby="titre-escalier">
+    <div class="paysages" aria-hidden="true">
+      <div class="paysage paysage--terre" [style.background-image]="deco('terre')"></div>
+      <div class="paysage paysage--ciel" [style.background-image]="deco('ciel')" [style.opacity]="altitude()"></div>
+    </div>
+    <div class="interieur">
+      <p class="etiquette">À toi de monter</p>
+      <h2 id="titre-escalier">Monte l’escalier, marche après marche</h2>
+
+      <div class="escalier__corps">
+        <ol class="marches" aria-label="Les étapes du voyage">
+          @for (m of marches; track m.titre; let i = $index) {
+            <li [style.margin-left.px]="i * 14">
+              <button type="button" class="marche" [class.marche--actuelle]="etape() === i" [class.marche--montee]="i < etape()" [attr.aria-current]="etape() === i ? 'step' : null" (click)="aller(i)">
+                <span class="marche__num">{{ i + 1 }}</span>
+                <span class="marche__titre">{{ m.titre }}</span>
+              </button>
+            </li>
+          }
+        </ol>
+
+        <article class="etape" aria-live="polite">
+          <p class="etape__niveau">{{ marche().niveau }}</p>
+          <h3>{{ marche().titre }}</h3>
+          <figure class="etape__image">
+            <img [src]="page(marche().page)" alt="" width="1400" height="788" loading="lazy">
+          </figure>
+          <p class="etape__texte">{{ marche().texte }}</p>
+          <div class="etape__nav">
+            <button type="button" class="nav-bouton" (click)="precedente()" [disabled]="etape() === 0">← Redescendre</button>
+            <button type="button" class="nav-bouton nav-bouton--haut" (click)="suivante()" [disabled]="etape() === marches.length - 1">Monter →</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Illustrations -->
+  <section class="galerie section" id="illustrations" [style.--fond]="fond(12)">
+    <div class="interieur">
+      <p class="etiquette">Les illustrations</p>
+      <h2>Un conte à regarder autant qu’à lire</h2>
+      <ul class="galerie-trois">
+        @for (i of conte().illustrations; track i.src; let n = $index) {
+          <li appApparition class="cadre" [style.transition-delay.ms]="n * 120">
+            <img [src]="i.src" [alt]="i.alt" loading="lazy" width="1400" height="788">
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Personnages et voix -->
+  <section class="gens section" id="personnages" aria-labelledby="titre-gens" [style.--fond]="fond(8)">
+    <div class="interieur">
+      <p class="etiquette">Les personnages</p>
+      <h2 id="titre-gens">Ceux de la terre, et ceux du Ciel</h2>
+      <p class="chapeau">Choisis un personnage pour le découvrir.</p>
+      <app-personnages-conte [personnages]="conte().personnages" idBase="kintu" />
+    </div>
+  </section>
+
+  <!-- Origine -->
+  <section class="origine section">
+    <div class="interieur">
+      <p class="etiquette">L’origine</p>
+      <h2>{{ conte().origine.titre }}</h2>
+      <aside class="oeuvre" appApparition>
+        <p class="oeuvre__etiquette">L’œuvre d’origine</p>
+        <p class="oeuvre__titre">Mythe de Kintu et Nambi · peuple Baganda</p>
+        <p class="oeuvre__auteur">Mis par écrit au début du XXe siècle : Apolo Kagwa, Premier ministre du royaume, et John Roscoe, <em>The Baganda</em> (1911)</p>
+      </aside>
+      <div class="origine__colonnes">
+        @for (p of conte().origine.paragraphes; track p) {
+          <p appApparition>{{ p }}</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Fiche -->
+  <section class="fiche-section section" id="fiche">
+    <div class="interieur centre">
+      <p class="etiquette">En un coup d’œil</p>
+      <h2>La fiche du conte</h2>
+      <app-fiche-conte [titre]="conte().titre" [infos]="conte().infos" />
+    </div>
+  </section>
+
+  <section class="appel section" [style.--fond]="deco('epreuves')">
+    <div class="interieur centre">
+      <h2>Prêt à monter au Ciel ?</h2>
+      <p>Ouvre l’application et découvre Kintu en entier.</p>
+      <button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="installer()">Télécharger l’application</button>
+    </div>
+  </section>
+</main>

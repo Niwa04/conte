@@ -1,0 +1,162 @@
+<main class="ma" [style.--kapa-img]="deco('motif')" [style.--lauhala]="deco('tuile')">
+  <!-- Ouverture : l'île sous le soleil -->
+  <section class="ouverture" [style.--fond]="deco('haleakala')">
+    <div class="ouverture__interieur">
+      <div class="ouverture__texte">
+        <div class="pays-badge">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <span><strong>Hawaï</strong> · Hawaiʻi</span>
+        </div>
+        <h1>{{ conte().titre }}</h1>
+        <p class="ouverture__accroche">{{ conte().accroche }}</p>
+        <p class="ouverture__origine">{{ conte().mentionOrigine }}</p>
+        <ul class="pastilles">
+          @for (e of conte().etiquettes; track e) { <li>{{ e }}</li> }
+        </ul>
+        <div class="ouverture__actions">
+          <a class="bouton bouton--vert bouton--brille" [href]="appUrl">Lire dans l’application</a>
+        </div>
+      </div>
+      <div class="ouverture__livre">
+        <img [src]="conte().couverture" [alt]="conte().couvertureAlt" width="1400" height="788" fetchpriority="high">
+      </div>
+    </div>
+    <div class="tapa-bande" aria-hidden="true"></div>
+  </section>
+
+  <!-- Le pays : une pirogue en bandeau, trois voiles en pince de crabe -->
+  <section class="pays" aria-labelledby="titre-pays">
+    <div class="pirogue" [style.background-image]="deco('pirogue')" role="img" aria-label="Une pirogue double à voiles en pince de crabe, au lever du jour">
+      <div class="medaillon-pays">
+        <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+        <p class="medaillon-pays__nom">Hawaï</p>
+        <p class="medaillon-pays__natif">Hawaiʻi · îles du Pacifique</p>
+        <p class="medaillon-pays__ou">Mythe polynésien</p>
+      </div>
+    </div>
+    <div class="section pays__corps" [style.--fond]="deco('vagues')">
+      <div class="interieur">
+        <p class="etiquette">Un mythe venu du Pacifique</p>
+        <h2 id="titre-pays">Des îles volcaniques au milieu de l’océan</h2>
+        <p class="pays__intro">L’histoire se passe à Hawaï, sur une île dominée par la montagne Haleakalā. Les Hawaïens y racontent que Maui est un demi-dieu farceur et généreux.</p>
+        <ul class="voiles">
+          @for (m of mots; track m.hawaien) {
+            <li appApparition>
+              <span class="voile__natif" lang="haw">{{ m.hawaien }}</span>
+              <span class="voile__prononce">{{ m.prononce }}</span>
+              <span class="voile__sens">{{ m.sens }}</span>
+            </li>
+          }
+        </ul>
+        <p class="mots-titre">Trois mots hawaïens, au vent d’une pirogue</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- L'histoire : une feuille de tapa, une image découpée par les vagues -->
+  <section class="histoire section" id="histoire">
+    <div class="interieur histoire__pile">
+      <figure appApparition class="histoire__visuel">
+        <img [src]="conte().imageHistoire.src" [alt]="conte().imageHistoire.alt" loading="lazy" width="1400" height="788">
+        <figcaption>{{ conte().imageHistoire.legende }}</figcaption>
+      </figure>
+      <div class="feuille-tapa">
+        <p class="etiquette">L’histoire</p>
+        <h2>Un marché avec le Soleil</h2>
+        <blockquote appApparition class="citation"><p>{{ conte().citation }}</p></blockquote>
+        <p appApparition class="resume">{{ conte().resume }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Le temps du soleil -->
+  <section class="temps section" aria-labelledby="titre-temps">
+    <div class="interieur">
+      <p class="etiquette">À toi d’observer</p>
+      <h2 id="titre-temps">Le tapa de Hina va-t-il sécher ?</h2>
+      <p class="chapeau">Choisis la journée, puis fais avancer le soleil dans le ciel.</p>
+
+      <div class="choix">
+        <button type="button" class="jour" [class.jour--actif]="!marche()" [attr.aria-pressed]="!marche()" (click)="choisir(false)">Avant le marché<small>Soleil pressé · 6 heures de jour</small></button>
+        <button type="button" class="jour" [class.jour--actif]="marche()" [attr.aria-pressed]="marche()" (click)="choisir(true)">Après le marché<small>Soleil patient · 12 heures de jour</small></button>
+      </div>
+
+      <div class="ciel" [class.ciel--soir]="avancee() > 80">
+        <svg class="arc" viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true"><path d="M6 38 Q 50 -22 94 38" fill="none"/></svg>
+        <img class="soleil" [src]="chemin('personnages/soleil-t.webp')" alt="" width="200" height="200" [style.left.%]="gauche()" [style.top.%]="haut()">
+        <div class="mer" aria-hidden="true"></div>
+        <div class="etendoir">
+          <div class="tapa" [style.--sec]="sec()" role="img" [attr.aria-label]="'Tapa sec à ' + sec100() + ' pour cent'"></div>
+        </div>
+        <span class="etiq-sec">{{ sec100() }} % sec</span>
+      </div>
+
+      <label class="curseur">
+        <span class="sr-seul">Avancée dans la journée</span>
+        <input type="range" min="0" max="100" step="1" [value]="avancee()" (input)="regler($event)">
+      </label>
+      <p class="heure">{{ heureEcoulee().toFixed(1).replace('.', ',') }} h de soleil sur {{ heuresDeJour() }} h</p>
+      <p class="verdict" aria-live="polite">{{ verdict() }}</p>
+    </div>
+  </section>
+
+  <!-- Illustrations -->
+  <section class="galerie section" id="illustrations" [style.--fond]="fond(5)">
+    <div class="interieur">
+      <p class="etiquette">Les illustrations</p>
+      <h2>Un conte à regarder autant qu’à lire</h2>
+      <ul class="galerie-trois">
+        @for (i of conte().illustrations; track i.src; let n = $index) {
+          <li appApparition class="cadre" [style.transition-delay.ms]="n * 120">
+            <img [src]="i.src" [alt]="i.alt" loading="lazy" width="1400" height="788">
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Personnages -->
+  <section class="gens section" id="personnages" aria-labelledby="titre-gens" [style.--fond]="deco('corde')">
+    <div class="interieur">
+      <p class="etiquette">Les personnages</p>
+      <h2 id="titre-gens">Ceux de l’île</h2>
+      <p class="chapeau">Choisis un personnage pour le découvrir.</p>
+      <app-personnages-conte [personnages]="conte().personnages" idBase="maui" />
+    </div>
+  </section>
+
+  <!-- Origine -->
+  <section class="origine section">
+    <div class="interieur">
+      <p class="etiquette">L’origine</p>
+      <h2>{{ conte().origine.titre }}</h2>
+      <aside class="oeuvre" appApparition>
+        <p class="oeuvre__etiquette">Les versions écrites</p>
+        <p class="oeuvre__titre">Legends of Maui</p>
+        <p class="oeuvre__auteur">W. D. Westervelt · 1910 · et Abraham Fornander, Collection of Hawaiian Antiquities and Folk-Lore · 1878-1885</p>
+      </aside>
+      <div class="origine__colonnes">
+        @for (p of conte().origine.paragraphes; track p) {
+          <p appApparition>{{ p }}</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Fiche -->
+  <section class="fiche-section section" id="fiche">
+    <div class="interieur centre">
+      <p class="etiquette">En un coup d’œil</p>
+      <h2>La fiche du conte</h2>
+      <app-fiche-conte [titre]="conte().titre" [infos]="conte().infos" />
+    </div>
+  </section>
+
+  <section class="appel section" [style.--fond]="fond(10)">
+    <div class="interieur centre">
+      <h2>Prêt à parler au Soleil ?</h2>
+      <p>Ouvre l’application et lis l’histoire en entier.</p>
+      <button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="installer()">Télécharger l’application</button>
+    </div>
+  </section>
+</main>

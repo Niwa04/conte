@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Le maître du dragon — Le conte complet</title>
+<meta name="description" content="Le maître du dragon : le lore, les personnages, les lieux et le texte à feuilleter page par page.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;line-height:1.7}
+img{display:block;max-width:100%}
+button{font:inherit;cursor:pointer;color:inherit}
+[hidden]{display:none!important}
+.voile{position:fixed;inset:0;background:#05080cee;display:grid;place-items:center;z-index:99;padding:22px;cursor:zoom-out}
+.voile figure{margin:0;max-width:min(1100px,100%);text-align:center}
+.voile img{max-height:80vh;width:auto;margin:auto;border-radius:12px;box-shadow:0 20px 70px #000a}
+.voile figcaption{color:#fff;margin-top:12px;font-size:1.05rem}
+img[data-z]{cursor:zoom-in}
+.texte hr{border:0;text-align:center;margin:1.1em 0}
+.texte hr::before{content:"✦  ✦  ✦";letter-spacing:.4em;opacity:.7}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+:root{--nuit:#081528;--glace:#12305e;--givre:#bfe3ff;--or:#e0b84e;--or-d:#8f6a14;--serp:#3f8a63;--braise:#ff6a2b;--parchemin:#efe5cf;--encre:#23211c;--t:0}
+body{background:var(--nuit);color:#e8f1ff;font-family:"Cormorant Garamond",Georgia,serif;font-size:1.2rem}
+/* ───── Ouverture : le palais sous la neige ───── */
+.palais{position:relative;overflow:hidden;min-height:600px;background:linear-gradient(180deg,#050d1c,#0e2750 55%,#1d4a85);isolation:isolate}
+.chaleur{position:absolute;inset:0;background:radial-gradient(700px 420px at 50% 100%,#ff6a2bcc,transparent 70%),linear-gradient(180deg,transparent,#7a1d0a66);opacity:calc(var(--t)/100);z-index:-1;transition:opacity .2s}
+.coupoles{position:absolute;left:0;right:0;bottom:0;height:300px;z-index:-1;background:
+ url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='300' viewBox='0 0 320 300'><g fill='%23061326'><rect x='20' y='170' width='60' height='130'/><path d='M20 170 Q50 90 80 170Z'/><rect x='46' y='110' width='8' height='30'/><rect x='110' y='130' width='100' height='170'/><path d='M110 130 Q160 20 210 130Z'/><rect x='156' y='8' width='8' height='40'/><rect x='240' y='190' width='60' height='110'/><path d='M240 190 Q270 120 300 190Z'/></g></svg>") repeat-x 0 100%/320px 300px;opacity:.95}
+.neige{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.flocon{position:absolute;top:-10px;width:var(--s);height:var(--s);border-radius:50%;background:#fff;opacity:.8;animation:neige var(--d) linear var(--r) infinite}
+@keyframes neige{to{transform:translate(var(--x),620px)}}
+.palais__in{position:relative;width:min(1100px,100% - 32px);margin:0 auto;padding:54px 0 130px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.sceau{display:inline-block;font-family:"Cinzel",serif;letter-spacing:.3em;font-size:.78rem;color:var(--or);border:1px solid #e0b84e88;padding:5px 16px}
+.palais h1{font-family:"Cinzel",serif;font-weight:700;font-size:clamp(2.2rem,5.2vw,4rem);line-height:1.08;margin:.3em 0 .25em;color:#f4f8ff;text-shadow:0 0 30px #7cc4ff66}
+.palais h1 em{font-style:normal;color:var(--or);text-shadow:0 0 24px #e0b84e88}
+.palais .accroche{font-style:italic;font-size:1.45rem;line-height:1.4;color:#d3e6ff;max-width:28em;margin:0 0 18px}
+.stats{display:flex;gap:10px;flex-wrap:wrap}.stats span{font-family:"Cinzel",serif;font-size:.72rem;letter-spacing:.14em;color:var(--givre);border:1px solid #bfe3ff55;padding:5px 14px}
+.medaillon-zone{display:flex;align-items:center;gap:16px;margin-top:26px;flex-wrap:wrap}
+.medaillon{width:92px;height:118px;flex:none;position:relative;border-radius:50% 50% 46% 46%/42% 42% 58% 58%;background:radial-gradient(circle at 35% 30%,color-mix(in srgb,#9fe3bf calc((1 - var(--t)/100)*100%),#ffd29a),color-mix(in srgb,var(--serp) calc((1 - var(--t)/100)*100%),#ff3b0a) 60%,#0d2b1f);border:5px solid var(--or);box-shadow:0 0 calc(10px + var(--t)*.5px) calc(var(--t)*.12px) color-mix(in srgb,#8fd8ff calc((1 - var(--t)/100)*100%),#ff6a2b),inset 0 0 18px #0008;transition:box-shadow .2s}
+.medaillon::before{content:"";position:absolute;left:50%;top:-34px;width:3px;height:30px;background:var(--or)}
+.curseur{flex:1;min-width:230px}
+.curseur label{display:block;font-family:"Cinzel",serif;font-size:.74rem;letter-spacing:.14em;color:var(--or);margin-bottom:6px}
+.curseur input{width:100%;accent-color:var(--or)}
+.curseur output{display:block;font-style:italic;color:#d3e6ff;font-size:1.1rem;min-height:1.4em}
+.blason{justify-self:center;width:min(440px,100%);padding:10px;background:linear-gradient(135deg,#f3d68a,var(--or) 40%,#fff1c2 55%,var(--or-d));box-shadow:0 30px 50px #000a}
+.blason img{width:100%;border:3px solid #0a1a33}
+/* onglets : deux étendards */
+.etendards{position:relative;z-index:4;display:flex;justify-content:center;gap:22px;margin-top:-62px;flex-wrap:wrap}
+.etendard{border:0;font-family:"Cinzel",serif;font-weight:700;letter-spacing:.14em;font-size:.88rem;color:#f4f8ff;padding:22px 30px 40px;background:linear-gradient(180deg,#1d4a85,#102c58);clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 18px),0 100%);box-shadow:0 10px 20px #0008}
+.etendard[aria-selected=true]{background:linear-gradient(180deg,var(--or),#b88a22);color:#1b1304;padding-bottom:50px}
+main{width:min(1080px,100% - 24px);margin:0 auto;padding:60px 0 80px}
+h2{font-family:"Cinzel",serif;font-weight:700;font-size:clamp(1.6rem,3.2vw,2.3rem);color:var(--or);margin:0 0 4px;text-align:center;letter-spacing:.06em}
+.mot{text-align:center;font-style:italic;color:#b9d4f2;margin:0 0 28px;font-size:1.25rem}
+/* armoiries */
+.barre{height:10px;background:linear-gradient(90deg,transparent,var(--or),transparent);margin:0 auto;max-width:760px;border-radius:5px}
+.armoiries{display:flex;justify-content:center;gap:clamp(10px,3vw,34px);flex-wrap:wrap;margin-bottom:34px}
+.banniere{position:relative;border:0;width:170px;padding:16px 10px 52px;text-align:center;color:#f4f8ff;background:linear-gradient(180deg,var(--b1),var(--b2));clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 28px),0 100%);transform-origin:50% 0;transition:transform .25s;box-shadow:0 10px 20px #0008}
+.banniere::before{content:"";position:absolute;inset:6px 6px 38px;border:1px solid #e0b84e88;pointer-events:none}
+.banniere .rond{display:block;width:104px;height:104px;margin:0 auto 8px;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 35%,#fff,#d6e3f5);border:3px solid var(--or)}
+.banniere .rond img{width:100%;height:100%;object-fit:cover;object-position:50% 8%;mix-blend-mode:multiply}
+.banniere b{font-family:"Cinzel",serif;font-size:.92rem;letter-spacing:.06em;line-height:1.2;display:block}
+.banniere:hover{transform:rotate(-2deg)}
+.banniere[aria-selected=true]{transform:translateY(8px) scale(1.06);filter:drop-shadow(0 0 16px #e0b84e)}
+.parchemin{background:linear-gradient(180deg,#f4ead2,#e6d7b6);color:var(--encre);padding:30px clamp(18px,4vw,46px) 34px;position:relative;box-shadow:0 20px 50px #000b;border-radius:3px}
+.parchemin::before,.parchemin::after{content:"";position:absolute;left:-10px;right:-10px;height:22px;border-radius:12px;background:linear-gradient(180deg,#7a5230,#4a2f16,#7a5230);box-shadow:0 6px 10px #0006}
+.parchemin::before{top:-12px}.parchemin::after{bottom:-12px}
+.parchemin h3{font-family:"Cinzel",serif;font-size:2rem;margin:0 0 8px;color:#16345f;letter-spacing:.05em}
+.parchemin p{margin:0 0 12px;font-size:1.28rem;line-height:1.55}
+.cortege{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:18px 0 0}
+.suivant{display:grid;grid-template-columns:70px 1fr;gap:12px;background:#0000000f;border-left:4px solid var(--or);padding:8px 14px 8px 8px}
+.suivant img{width:70px;height:84px;object-fit:contain;mix-blend-mode:multiply}
+.suivant b{font-family:"Cinzel",serif;font-size:1rem;color:#16345f}
+.suivant p{margin:2px 0 0!important;font-size:1.02rem!important;line-height:1.35!important}
+.etq{font-family:"Cinzel",serif;letter-spacing:.2em;font-size:.76rem;color:var(--or-d);margin:22px 0 10px;text-transform:uppercase}
+/* plan du palais */
+.plan{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:120px;gap:8px;padding:8px;background:#16345f;border:2px solid var(--or-d)}
+.piece{position:relative;border:0;padding:0;overflow:hidden;background:#000;border:2px solid #e0b84e}
+.piece img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85) brightness(.82);transition:filter .2s,transform .4s}
+.piece:hover img{filter:none;transform:scale(1.07)}
+.piece span{position:absolute;left:0;right:0;bottom:0;background:#071326cc;color:#fff4d4;font-family:"Cinzel",serif;font-size:.74rem;letter-spacing:.08em;padding:4px 8px;text-align:left}
+.piece:nth-child(1){grid-column:span 2;grid-row:span 2}.piece:nth-child(4){grid-column:span 2}
+.relique{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:10px}
+.joyau{margin:0;text-align:center;background:#102c58;border:2px solid var(--or);padding:8px}
+.joyau img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.joyau figcaption{font-family:"Cinzel",serif;font-size:.9rem;margin-top:6px;color:var(--or)}
+/* ───── Annales ───── */
+.annales{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:0;border:2px solid var(--or-d);background:#0b1f3d;box-shadow:0 30px 60px #000b}
+.fenetre{position:relative;padding:22px;background:linear-gradient(160deg,#10294f,#0a1a33)}
+.fenetre__arc{position:relative;border:6px solid var(--or);border-radius:200px 200px 6px 6px;overflow:hidden;box-shadow:0 0 0 3px #0a1a33,0 0 40px #e0b84e44}
+.fenetre__arc img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.rouleau{background:linear-gradient(90deg,#e8dbbb,#f4ead2 12%,#f4ead2 88%,#e0d2ae);color:var(--encre);padding:28px clamp(18px,3vw,38px) 22px;display:flex;flex-direction:column}
+.rouleau .num{font-family:"Cinzel",serif;letter-spacing:.2em;font-size:.76rem;color:var(--or-d)}
+.rouleau h3{font-family:"Cinzel",serif;font-size:1.5rem;margin:2px 0 14px;color:#16345f}
+.rouleau .texte{font-size:clamp(1.2rem,1.8vw,1.4rem);line-height:1.5;flex:1}
+.rouleau .texte p{margin:0 0 .6em}
+.rouleau .texte p:first-of-type::first-letter{font-family:"Cinzel",serif;float:left;font-size:3.8rem;line-height:.82;padding:4px 10px 0 0;color:#16345f;background:linear-gradient(180deg,#e0b84e,#8f6a14);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:700}
+.rouleau .texte p.d{padding-left:1em;text-indent:-1em;font-style:italic}
+.rouleau .texte hr::before{color:var(--or-d)}
+.sceaux{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:16px;flex-wrap:wrap}
+.cire{width:56px;height:56px;border-radius:50%;border:0;color:#fbe9d0;font-family:"Cinzel",serif;font-weight:700;background:radial-gradient(circle at 35% 30%,#e0584a,#8c1a10 70%);box-shadow:0 5px 0 #4a0c06,0 8px 14px #0006;font-size:1.3rem}
+.cire[disabled]{opacity:.3;pointer-events:none}
+.flocons{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:300px}
+.flocons button{width:11px;height:11px;border:0;padding:0;background:#b9c9dc;transform:rotate(45deg)}
+.flocons button.fait{background:#6f95c6}.flocons button[aria-current=true]{background:var(--or);transform:rotate(45deg) scale(1.6)}
+.pied{text-align:center;color:#6f8cb0;font-family:"Cinzel",serif;letter-spacing:.1em;font-size:.72rem;padding:0 16px 40px}
+@media(max-width:860px){.palais__in{grid-template-columns:1fr}.blason{order:-1;width:min(340px,86%)}.annales{grid-template-columns:1fr}.plan{grid-template-columns:repeat(2,1fr)}.piece:nth-child(1){grid-column:span 2}.piece:nth-child(4){grid-column:auto}}
+
+/*VISUEL*/
+.bandeau{height:clamp(90px,15vw,170px);border-radius:14px;margin:0 0 24px;background:linear-gradient(180deg,rgba(0,0,0,.10),rgba(0,0,0,.50)),var(--bandeau) center/cover;box-shadow:0 10px 24px rgba(0,0,0,.45)}
+.orn{height:clamp(70px,11vw,130px);width:min(1100px,100% - 24px);margin:0 auto 26px;border-radius:14px;background:var(--orn) center/cover;box-shadow:0 10px 24px rgba(0,0,0,.4)}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(var(--voile-h),var(--voile-b)),var(--bg-page) center/cover no-repeat}
+body[data-vue=lore]{--bg-page:var(--bg-lore)}body[data-vue=lire]{--bg-page:var(--bg-lire)}
+body{--voile-h:rgba(6,16,34,.86);--voile-b:rgba(6,16,34,.94)}
+:root{--orn:url(/assets/recueils/dragon/orn.webp);--bg-lore:url(/assets/recueils/dragon/lore.webp);--bg-lire:url(/assets/recueils/dragon/lire.webp)}
+.palais{background:linear-gradient(180deg,rgba(5,13,28,.72),rgba(14,39,80,.50) 55%,rgba(29,74,133,.72)),url(/assets/recueils/dragon/hero.webp) center/cover}
+.coupoles{opacity:.25}
+.palais .accroche{text-shadow:0 2px 10px #000;background:rgba(5,13,28,.4);border-radius:10px;padding:6px 14px}
+/* images de pages en 16:9, fenêtre en arc sur toute la largeur */
+.annales{grid-template-columns:1fr}
+.fenetre{padding:30px clamp(22px,6vw,86px) 14px}
+.fenetre__arc{border-radius:3px;outline:2px solid var(--or-d);outline-offset:7px}
+.fenetre__arc img{aspect-ratio:16/9}
+.rouleau{padding-top:22px}
+.plan{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));grid-auto-rows:auto}
+.piece{aspect-ratio:16/9}
+.piece:nth-child(1),.piece:nth-child(4){grid-column:auto;grid-row:auto}
+
+</style>
+</head>
+<body>
+<style>
+@font-face{font-family:'Contract';src:url('/fonts/ContractSans.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'Contract';src:url('/fonts/ContractSans-Bold.ttf') format('truetype');font-weight:700;font-display:swap}
+/* Copie de l'en-tête de l'accueil (home.scss) : même dégradé, même filet or, même badge suspendu */
+.entete{--mdc-royal:#1a3fa6;--mdc-navy:#12296f;--mdc-gold:#d9a93a;--mdc-gold-clair:#f3d27a;position:sticky;top:0;z-index:80;background:linear-gradient(#1f48b8,var(--mdc-navy));border-bottom:3px solid var(--mdc-gold);box-shadow:0 0 0 1px #0a1a52,0 6px 18px rgb(0 0 0/.35);font-family:'Contract','Segoe UI',system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+.entete *{box-sizing:border-box}
+.entete__interieur{max-width:1200px;margin:0 auto;padding:.5rem 1.25rem;min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.marque{position:relative;z-index:3;align-self:flex-start;margin-bottom:-48px;display:block}
+.marque__badge{display:block;height:104px;width:auto;max-width:none;filter:drop-shadow(0 6px 8px rgb(0 0 0/.45));transition:transform .3s}
+.marque:hover .marque__badge{transform:rotate(-3deg) scale(1.05)}
+.navigation{display:flex;align-items:center;gap:1.5rem}
+.navigation a:not(.bouton){color:var(--mdc-gold-clair);font-weight:700;text-decoration:none}
+.navigation a:not(.bouton):hover{color:#fff;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+.entete .bouton{position:relative;display:inline-block;overflow:hidden;padding:.5rem 1.2rem;border-radius:999px;border:3px solid var(--mdc-gold);background:linear-gradient(#f8dc8a,var(--mdc-gold) 55%,#b9831d);border-color:#fff3c9;color:#3b2606;text-shadow:0 1px 0 rgb(255 255 255/.5);font-weight:700;font-size:1rem;text-decoration:none;box-shadow:inset 0 0 0 2px rgb(255 255 255/.18),0 5px 0 #0a1a52,0 12px 20px rgb(0 0 0/.28);transition:transform .12s,box-shadow .12s}
+.entete .bouton:hover{transform:translateY(-3px) scale(1.03)}
+.entete .bouton:focus-visible{outline:3px solid var(--mdc-gold-clair);outline-offset:3px}
+.burger{display:none;width:44px;height:44px;border:2px solid var(--mdc-gold);border-radius:12px;background:var(--mdc-navy);padding:11px 9px;flex-direction:column;justify-content:space-between}
+.burger span{display:block;height:3px;border-radius:2px;background:var(--mdc-gold-clair)}
+@media(max-width:900px){
+  .marque__badge{height:84px}.marque{margin-bottom:-36px}.burger{display:flex}
+  .navigation{display:none;position:absolute;inset:100% 0 auto 0;flex-direction:column;align-items:stretch;padding:1rem 1.25rem 1.5rem;background:var(--mdc-navy);border-bottom:3px solid var(--mdc-gold);text-align:center}
+  .navigation.navigation--ouverte{display:flex}
+}
+</style>
+<header class="entete">
+  <div class="entete__interieur">
+    <a class="marque" href="/" aria-label="La Maison des Contes, accueil">
+      <img class="marque__badge" src="/assets/badge-maison-des-contes.webp" alt="La Maison des Contes" width="277" height="352">
+    </a>
+    <button type="button" class="burger" aria-expanded="false" aria-controls="navigation" aria-label="Menu" onclick="var n=document.getElementById('navigation');var o=n.classList.toggle('navigation--ouverte');this.setAttribute('aria-expanded',o)">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="navigation" class="navigation" aria-label="Principale">
+      <a href="/#interactif">Lecture interactive</a>
+      <a href="/#collection">Collection</a>
+      <a href="/#test">Tester</a>
+      <a href="/#bibliotheque">Bibliothèque</a>
+      <a href="/contes">Nos contes</a>
+      <a href="/#tarifs">Tarifs</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/connexion">Se connecter</a>
+      <a class="bouton" href="/webgl-build/game.html">Télécharger l’app</a>
+    </nav>
+  </div>
+</header>
+
+<header class="palais" id="palais">
+  <div class="chaleur"></div><div class="coupoles"></div><div class="neige" id="neige"></div>
+  <div class="palais__in">
+    <div>
+      <span class="sceau">ANNALES DE L’EMPIRE</span>
+      <h1>Le maître du <em>dragon</em></h1>
+      <p class="accroche">Dans ce recueil, découvre comment Léonid et ses frères et sœurs affrontent les dragons du palais pour devenir l’héritier de l’empire. Mais parfois, le courage ne ressemble pas à ce qu’on croit…</p>
+      <div class="stats"><span>23 pages illustrées</span></div>
+      <div class="medaillon-zone">
+        <div class="medaillon" aria-hidden="true"></div>
+        <div class="curseur"><label for="temp">LE MÉDAILLON DE SERPENTINE</label><input id="temp" type="range" min="0" max="100" value="0" aria-describedby="temp-txt"><output id="temp-txt">Froid comme la neige : aucun dragon à l’horizon.</output></div>
+      </div>
+    </div>
+    <div class="blason"><img src="https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/cover/c8c12caf-f3fc-43c5-846d-30ff55aa4315.png" alt="Couverture : Le maître du dragon"></div>
+  </div>
+</header>
+<div class="etendards" role="tablist" aria-label="Sections">
+  <button class="etendard" role="tab" data-top="lore">LA COUR</button>
+  <button class="etendard" role="tab" data-top="lire">LES ANNALES</button>
+</div>
+<main>
+  <div class="bandeau" id="bandeau"></div>
+  <section id="p-lore" hidden>
+    <h2>L’empire et ses dragons</h2>
+    <p class="mot">Choisis une bannière pour entrer dans la salle du trône.</p>
+    <div class="armoiries" id="armoiries" role="tablist"></div>
+    <div class="barre"></div><div style="height:30px"></div>
+    <div id="fiche"></div>
+    <div id="reliques"></div>
+  </section>
+  <section id="p-lire" hidden><div id="annales"></div></section>
+</main>
+<div class="orn" aria-hidden="true"></div>
+<p class="pied">« Le maître du dragon » · La Maison des Contes · contenu en brouillon</p>
+<script id="data" type="application/json">{"titre":"Le maître du dragon","unite":"Conte","mode":"conte","labels":{"persos":"Les personnages","autres":"Les silhouettes","objets":"Les objets"},"persos":[{"main":{"title":"Léonid","desc":"Léonid est le plus jeune fils de la régente, un garçon doux et rêveur qui aime passer du temps près de la fontaine. Dans l'histoire, il écoute son cœur et fait preuve de beaucoup de courage face au dragon.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/character/8c985ed6-feb4-40cf-a97d-ef7ece75e595.png"},"formes":[],"entourage":[{"title":"Dimitri","desc":"Dimitri est le frère de Léonid et Ludmila, courageux et toujours prêt à aider les siens. Il espère aussi avoir une chance d'être choisi par le dragon.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/character/387aab2a-254a-4b39-9598-4feb1ca5edf4.png"},{"title":"Le dragon de l’eau","desc":"Le dragon de l’eau est une créature mystérieuse et sage qui vit cachée dans le palais. Il attend de rencontrer l’un des enfants de la régente pour choisir son Maître.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/character/2226f9a3-1fe3-4101-9853-d8f95b859d08.png"}],"lieux":[{"title":"La fontaine du palais","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/99c78774-61e4-4a8f-a5ca-f26a96edf48c.png"},{"title":"Le palais","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/e5f75f74-ef26-41de-aad1-aa13f3c82b77.png"}]},{"main":{"title":"Ludmila","desc":"Ludmila est la fille aînée de la régente, sûre d'elle et persuadée de mériter le trône plus que les autres. Elle cherche à prouver sa valeur et veut être choisie par le dragon.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/character/b11676f5-dbbb-4773-8263-914e3437ec31.png"},"formes":[],"entourage":[],"lieux":[{"title":"Sa chambre","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/112f97de-9df0-4ff8-9ce1-e7567014f080.png"}]},{"main":{"title":"La régente","desc":"La régente est la maman de Léonid, Ludmila et Dimitri, qui veille sur ses enfants et sur le palais depuis la mort de l'empereur. Elle s'inquiète beaucoup pour l'avenir de sa famille et de son peuple.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/character/18db2e95-0c11-4a60-91bf-40e1ff9b117e.png"},"formes":[],"entourage":[{"title":"Percépha","desc":"Percépha est la confidente fidèle de la régente, toujours là pour la conseiller et la rassurer. Elle connaît beaucoup de choses sur les dragons et les secrets du palais.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/character/27c871d1-7c0c-4682-806d-c41bc82e6248.png"}],"lieux":[{"title":"Les tribunes du palais","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/12cae55d-43ca-41ed-b6ef-e0aee8ba0194.png"},{"title":"Le palais sous la neige","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/e5f75f74-ef26-41de-aad1-aa13f3c82b77.png"}]}],"figurants":[],"objets":[{"title":"Le médaillon en serpentine","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/6bd76041-5278-4250-a069-53c00441b160.png"},{"title":"L’épée à la pierre verte","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/d438a4a4-78d4-468f-ace6-5af354a1aa53.png"}],"fonds":{"persos":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/99c78774-61e4-4a8f-a5ca-f26a96edf48c.png","autres":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/12cae55d-43ca-41ed-b6ef-e0aee8ba0194.png","lieux":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/112f97de-9df0-4ff8-9ce1-e7567014f080.png","objets":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/6bd76041-5278-4250-a069-53c00441b160.png"},"eps":[{"titre":"Le maître du dragon","part":0,"cover":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/e5f75f74-ef26-41de-aad1-aa13f3c82b77.png","pages":[{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/e5f75f74-ef26-41de-aad1-aa13f3c82b77.png","b":[["p","Dehors, la neige tombait en gros flocons sur le palais."],["p","La régente² ne dormait presque plus. Depuis la mort de l’empereur, elle et ses enfants attendaient. Le peuple entier attendait. Tout le monde attendait que le dragon du palais apparaisse enfin. Elle connaissait la loi de l’empire par cœur. Elle était ainsi faite : à la mort de l’empereur, un dragon qui vivait caché dans les entrailles du palais devait se montrer à l’un de ses enfants."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/32e2db95-9356-4df8-b902-db24a9ca32b8.png","b":[["p","Celui que le dragon choisirait serait proclamé empereur. Mais pour cela, il fallait vaincre la créature, pour en devenir le Maître."],["d","— Un seul dragon pour un seul empereur, murmura la régente à haute voix."],["p","Percépha, sa plus fidèle confidente, lui dit :"],["d","— Vous pensez à vos enfants."],["d","— Comment ne pas y penser ?"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/c9a7753e-c580-4c25-812c-b0eb0f3ffff5.png","b":[["p","La régente serra son médaillon en serpentine. Elle pensa d’abord à Ludmila, sa fille aînée. Toujours convaincue qu’elle méritait plus que les autres. Serait-elle la première à voir le dragon ? Puis, elle songea à Dimitri, son deuxième enfant. Dévoué et courageux, il pourrait peut-être avoir une chance si on lui donnait l’armure la plus résistante et l’épée la plus tranchante de l’empire. Enfin, il y avait Léonid."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/99c78774-61e4-4a8f-a5ca-f26a96edf48c.png","b":[["p","Le cœur de la régente se serra. Léonid était différent de sa sœur et de son frère. Il était doux, rêveur. Depuis la mort de son père, il passait des heures assis, près de la fontaine du palais, à observer l’eau claire. La régente l’aimait, mais elle savait aussi qu’il n’aurait jamais le courage de tuer le dragon."],["d","— Si le dragon choisit Léonid, alors… commença-t-elle, en imaginant le pire."],["p","Percépha l’interrompit :"],["d","— Les dragons sont des créatures légendaires qui ont le sens de l’honneur, Madame. Ils choisissent toujours un adversaire à leur hauteur."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/12cae55d-43ca-41ed-b6ef-e0aee8ba0194.png","b":[["p","Lequel de ses enfants serait digne du dragon ? La régente pria pour qu’il ne se montre jamais à Léonid."],["p","Elle se souvenait encore du combat de son époux contre le dragon de l’air. À l’époque, elle n’était qu’une jeune fille du peuple. Elle avait tout vu, assise dans les tribunes du palais. Elle revoyait la créature légère comme un oiseau, puissante comme un tigre."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/6bd76041-5278-4250-a069-53c00441b160.png","b":[["d","— Votre médaillon, demanda Percépha, est-il toujours froid ?"],["d","— Aussi froid que la neige qui tombe dehors, répondit l’impératrice en le serrant dans sa main."],["p","Le joyau était incrusté d’une pierre spéciale, appelée serpentine. Celle-ci avait le pouvoir de réagir à la présence d’un dragon."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/5e8f8ca1-9384-48aa-b899-c7295fa67b15.png","b":[["p","Quand elle alla se coucher, la régente entendit des serviteurs parler du dragon et de l’héritier qu’il choisirait."],["d","— Le dragon ne pourra pas se cacher éternellement… murmura une servante."],["d","— C’est sa vie ou celle d’un des enfants de la régente… répondit une autre."],["d","— Si le dragon gagne le combat, alors nous devrons tous fuir le palais…"],["d","— Il finira par se montrer et nous saurons ce qui nous attend, répondit l’autre serviteur. La régente qui était restée cachée derrière un mur, avait tout entendu."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/9d9284d6-0055-4f83-8c8a-6d951b87e2e0.png","b":[["p","Elle regrettait que le palais eut été bâti sur un gisement de serpentine, qui en faisait depuis toujours la demeure des dragons. Elle s’attendait au pire. Pourtant, ce soir-là, aucun dragon n’apparut et le palais s’endormit paisiblement."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/112f97de-9df0-4ff8-9ce1-e7567014f080.png","b":[["p","La régente fut réveillée au beau milieu de la nuit par les hurlements de Ludmila. Elle accourut dans la chambre de sa fille, d’où provenait une terrible odeur de brûlé. Des serviteurs étaient déjà en train d’éteindre les flammes qui s’étaient propagées au lit. Ludmila tenait une épée à la main et avait une entaille au bras. Elle était transpirante :"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/d438a4a4-78d4-468f-ace6-5af354a1aa53.png","b":[["d","— Mère, le dragon de feu ! Il m’est apparu ! Je lui ai tranché la gorge avec cette épée."],["p","La régente comprit aussitôt. Le dragon avait donc choisi Ludmila. Tout ce temps, elle avait pensé secrètement qu’il aurait choisi Dimitri. Elle serra sa fille dans ses bras, non pas heureuse pour elle, mais soulagée que ses trois enfants soient sains et saufs. C’était doublement fabuleux. En vainquant la créature, la cour n’aurait pas à fuir le palais."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/b581da7a-febf-4b24-aa7e-0a23451cf931.png","b":[["p","Léonid arriva seulement dans la chambre de sa sœur."],["d","— Où étais-tu Léonid ? demanda Ludmila."],["d","— À la fontaine."],["d","— Alors, tu dois savoir que j’ai tué le dragon de feu, lui apprit-elle."],["p","Dimitri, son autre frère, se tourna vers Ludmila :"],["d","— Le dragon, comment était-il ?"],["d","— Noir comme le charbon et couvert de piquants. Il s’est révélé à moi, là dans les flammes de ma cheminée."],["p","Ludmila essuya les traces noires qu’elle avait au visage. Elle expliqua qu’une fois mort, le dragon s’était évaporé en un nuage de fumée."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/010c55f9-9bd4-4a47-ae7d-756f2461714e.png","b":[["d","— Quelqu’un d’autre a vu le combat ? demanda Dimitri. Notre père avait réuni tout son peuple pour qu’il assiste à l’affrontement contre le dragon de l’air."],["d","— Désolée de ne pas t’avoir invité. J’aurais dû deviner qu’il essaierait de me tuer dans mon sommeil ! rétorqua sèchement Ludmila. Touche mon épée, si tu ne me crois pas. La serpentine a réagi."],["p","Tout comme le médaillon, l’épée était incrustée d’une plaque de serpentine. Celle-ci était brûlante. Dimitri la toucha, avant de retirer rapidement sa main."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/c5c035bf-46c1-4667-976e-fc36a68e7d7c.png","b":[["d","— C’est moi que le dragon a choisie, dit Ludmila d’un ton qui n’appelait aucune réplique."],["p","Tout le monde comprit ce que cela signifiait. Les serviteurs se mirent à s’agiter dans tous les sens pour organiser le couronnement de la nouvelle impératrice. Une lettre partirait au lever du jour pour annoncer la nouvelle au peuple. La régente embrassa sa fille sur la joue, mais un détail l’interrogeait depuis le début : son propre médaillon en serpentine était froid. N’aurait-il pas dû réagir, lui aussi ?"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/d9aab353-76cc-4c28-8f9a-f1ab5cb6b7bd.png","b":[["p","Plus tard, tandis qu’un festin était dressé en l’honneur de Ludmila, la régente remarqua que Léonid manquait à l’appel. Elle savait où le trouver : à la fontaine."],["d","— Mon cher Léonid, vous ne venez pas au banquet ?"],["d","— Mère, il faut empêcher le couronnement de Ludmila, dit-il sans détourner le regard."],["p","La régente retint son souffle."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/59e3ddb8-eb34-43af-aefa-289e915ca1d6.png","b":[["p","Soudain, elle sentit son médaillon en serpentine chauffer au point qu’elle dut l’arracher et le jeter dans la fontaine."],["p","La seconde d’après, l’eau de la fontaine se mit à bouillonner. La régente n’y comprenait rien."],["d","— Mère, vous devez savoir qu’un autre dragon s’est présenté au palais depuis bien longtemps. Mais d’abord, promettez-moi de ne pas avoir peur de lui… Il me parle depuis des semaines, dans ma tête. Je n’ai pas eu le courage de vous le dire avant, car je savais qu’on me pousserait à l’affronter…"],["p","La régente frémit."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/9c58a86b-17a9-4f76-b125-cec5d711889d.png","b":[["p","Alors, voilà pourquoi son fils passait des heures assis à cette fontaine."],["p","Aussitôt Ludmila et Dimitri, ainsi que les serviteurs arrivèrent en nombre, attirés par la fontaine devenue incontrôlable. L’eau s’élevait en bouillons furieux au-dessus de leurs têtes."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/d2a3d5d3-6be3-448f-a3b1-734cede36751.png","b":[["p","Léonid se confronta à sa sœur devant tout le palais réuni :"],["d","— L’épée en serpentine de Ludmila n’a pas réagi avec le pouvoir du dragon de feu tout à l’heure ! dénonça Léonid. Ma sœur l’a fait chauffer dans la cheminée de sa chambre pour nous tromper. C’est elle qui s’est infligé ses blessures et qui a mis feu à son propre lit !"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/3f940989-dd06-4a1e-ae55-fe3b85367ab0.png","b":[["p","La régente se tourna vers sa fille, la déception sur le visage. Soudain, tout le monde vit le corps immense qui jaillit de la fontaine. Des écailles luisantes, d’un bleu glacé. Une tête de cheval des mers. Des yeux noirs et brillants."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/89bde27f-e8ba-4f96-b9bf-a585320394ba.png","b":[["p","Étrangement, personne ne recula. Personne n’avait l’air effrayé par l’apparition du dragon de l’eau."],["d","— Il ne peut y avoir qu’un dragon à la fois, tout comme il n’y a qu’un empereur, dit Dimitri. Le dragon de feu ne s’est jamais présenté à Ludmila."],["p","Il y eut des exclamations parmi les serviteurs quand Léonid caressa le museau du dragon de l’eau."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/b83d022e-0bdf-4f25-a2df-9018a2fc6eb4.png","b":[["d","— J’ai une annonce à faire, dit-il. Comme je ne peux me résoudre à le tuer, j’ai pris la décision de quitter le palais. Je laisse le pouvoir à ma mère, la régente."],["p","Ludmila s’avança à grandes enjambées vers la fontaine bouillonnante, son épée tendue vers le dragon :"],["d","— Comment peux-tu être aussi égoïste, Léonid ? Nous allons tous devoir quitter le palais par ta faute ! Très bien… Puisque tu ne veux pas le tuer, je vais te rendre ce service !"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/0a4e2808-a152-4a4e-9cd9-4e8525a0fd14.png","b":[["p","À ce moment précis, Ludmila lâcha son épée et poussa un cri, brûlée au troisième degré par la serpentine. Léonid ramassa l’épée de sa sœur, sans éprouver la moindre douleur."],["p","Les serviteurs se demandaient ce qui allait se passer ensuite. Alors, Percépha, la confidente de la régente s’avança :"],["d","— Vous ne comprenez pas ? Si la serpentine ne brûle pas Léonid, c’est parce que le dragon en a décidé ainsi… Léonid a refusé de tuer le dragon et celui-ci le protège en retour. Alors, nous savons qui est véritablement le Maître du dragon…"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/fab7e55a-4827-4932-91a9-fa6d531378bd.png","b":[["p","Il y eut un grand silence dans la salle de la fontaine. Dimitri fut le premier à s’agenouiller devant le nouvel empereur Léonid. Il fut imité par tous les serviteurs. Même Ludmila finit par incliner la tête, malgré sa brûlure. La régente éprouva une immense fierté. Jamais elle n’aurait cru que Léonid serait l’héritier de l’empire."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/09ba92c5-ab45-4163-8888-8d6ec7ca3cf5/imports/page/83287017-2482-422d-9160-e7c24ac2350a.png","b":[["p","Il y eut une explosion de joie. Il n’y avait pas besoin de tuer le dragon, ou de le blesser pour devenir le Maître du dragon. Hommes et dragons pouvaient coexister, Léonid l’avait prouvé."],["p","Le peuple reconnut son nouvel empereur Léonid et plus aucun dragon ne fut abattu."]]}]}],"parties":["Le maître du dragon"]}</script>
+<script>
+var DEFAUT='#lore/0';
+var D=JSON.parse(document.getElementById('data').textContent);
+function $(s,r){return (r||document).querySelector(s)}
+function $$(s,r){return [].slice.call((r||document).querySelectorAll(s))}
+function h(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+/* texte d'une page : une réplique par ligne, séparateurs ✦ */
+function texte(blocs){return blocs.map(function(b){return b[0]==='s'?'<hr>':'<p class="'+b[0]+'">'+h(b[1])+'</p>'}).join('')}
+/* lightbox : toute image marquée data-z s'ouvre en grand */
+(function(){
+  var v=document.createElement('div');v.className='voile';v.id='voile';v.hidden=true;
+  v.innerHTML='<figure><img alt=""><figcaption></figcaption></figure>';document.body.appendChild(v);
+  window.zoom=function(src,txt){$('img',v).src=src;$('figcaption',v).textContent=txt||'';v.hidden=false};
+  v.addEventListener('click',function(){v.hidden=true});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')v.hidden=true});
+  document.addEventListener('click',function(e){var im=e.target.closest('img[data-z]');if(im){zoom(im.currentSrc||im.src,im.alt)}});
+})();
+/* navigation par hash (#lore/…, #lire/e/p) ; le gabarit définit render() et DEFAUT */
+var route=location.hash||DEFAUT;
+function parse(){return route.slice(1).split('/')}
+function go(hash){route=hash;try{if(location.hash!==hash)history.pushState(null,'',hash)}catch(e){}render()}
+function reroute(){route=location.hash||DEFAUT;render()}
+window.addEventListener('hashchange',reroute);window.addEventListener('popstate',reroute);
+/* lecture : page courante et tourne-page */
+function borne(e,p){e=Math.min(Math.max(+e||1,1),D.eps.length);var n=D.eps[e-1].pages.length;p=Math.min(Math.max(+p||1,1),n);return[e,p]}
+function voisin(e,p,d){p+=d;if(p>D.eps[e-1].pages.length){if(e>=D.eps.length)return null;return[e+1,1]}if(p<1){if(e<=1)return null;return[e-1,D.eps[e-2].pages.length]}return[e,p]}
+
+(function(){var n=$('#neige');for(var i=0;i<46;i++){var f=document.createElement('i');f.className='flocon';f.style.cssText='left:'+(Math.random()*100)+'%;--s:'+(2+Math.random()*4)+'px;--d:'+(7+Math.random()*9)+'s;--r:-'+(Math.random()*14)+'s;--x:'+(Math.random()*80-40)+'px';n.appendChild(f)}})();
+/* le médaillon réagit à la présence du dragon */
+(function(){var p=$('#palais'),r=$('#temp'),o=$('#temp-txt');function maj(){var v=+r.value;p.style.setProperty('--t',v);o.textContent=v<20?'Froid comme la neige : aucun dragon à l’horizon.':v<50?'Il se réchauffe doucement… quelque chose approche.':v<80?'Il chauffe ! Un dragon est tout près.':'Brûlant ! La serpentine a reconnu le dragon.'}r.addEventListener('input',maj);maj()})();
+var COUL=['#1d6fb8,#0f3f78','#7a3fb0,#44207a','#3f8a63,#1f5238','#a06a1c,#5c3a0c'];
+var sel=0;
+function render(){
+  var p=parse(),top=p[0]==='lire'?'lire':'lore';
+  $$('[data-top]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.top===top)});
+  $('#p-lore').hidden=top!=='lore';$('#p-lire').hidden=top!=='lire';document.body.dataset.vue=top;$('#bandeau').style.setProperty('--bandeau','url('+(top==='lore'?D.fonds.persos:D.fonds.lieux)+')');document.documentElement.style.setProperty('--fond-persos','url('+D.fonds.persos+')');
+  if(top==='lore'){sel=Math.min(+p[1]||0,D.persos.length-1);lore()}else lire(+p[1]||1,+p[2]||1);
+}
+function lore(){
+  $('#armoiries').innerHTML=D.persos.map(function(g,i){var c=COUL[i%COUL.length].split(',');return '<button class="banniere" role="tab" style="--b1:'+c[0]+';--b2:'+c[1]+'" aria-selected="'+(i===sel)+'" data-p="'+i+'"><span class="rond"><img src="'+h(g.main.img)+'" alt=""></span><b>'+h(g.main.title)+'</b></button>'}).join('');
+  var g=D.persos[sel],m=g.main;
+  var cor=g.entourage.map(function(x){return '<div class="suivant"><img src="'+h(x.img)+'" alt="'+h(x.title)+'" data-z><div><b>'+h(x.title)+'</b><p>'+h(x.desc)+'</p></div></div>'}).join('');
+  $('#fiche').innerHTML='<article class="parchemin"><h3>'+h(m.title)+'</h3><p>'+h(m.desc)+'</p>'+(cor?'<div class="etq">Sa suite</div><div class="cortege">'+cor+'</div>':'')+
+   (g.lieux.length?'<div class="etq">Plan du palais</div><div class="plan">'+g.lieux.map(function(l){return '<button class="piece"><img src="'+h(l.img)+'" alt="'+h(l.title)+'" data-z loading="lazy"><span>'+h(l.title)+'</span></button>'}).join('')+'</div>':'')+'</article>';
+  $('#reliques').innerHTML=D.objets.length?'<div class="etq" style="text-align:center;margin-top:44px">Les joyaux de l’empire</div><div class="relique">'+D.objets.map(function(x){return '<figure class="joyau"><img src="'+h(x.img)+'" alt="'+h(x.title)+'" data-z loading="lazy"><figcaption>'+h(x.title)+'</figcaption></figure>'}).join('')+'</div>':'';
+}
+function lire(e,pg){
+  var r=borne(e,pg);e=r[0];pg=r[1];var ep=D.eps[e-1],page=ep.pages[pg-1],n=ep.pages.length,pre=voisin(e,pg,-1),sui=voisin(e,pg,1);
+  $('#annales').innerHTML='<article class="annales"><div class="fenetre"><div class="fenetre__arc"><img src="'+h(page.i)+'" alt="Illustration '+pg+'" data-z></div></div><div class="rouleau"><span class="num">FOLIO '+pg+' SUR '+n+'</span><h3>'+h(ep.titre)+'</h3><div class="texte">'+texte(page.b)+'</div>'+
+   '<div class="sceaux"><button class="cire" data-n="-1" aria-label="Page précédente"'+(pre?'':' disabled')+'>←</button><div class="flocons" aria-label="Pages">'+ep.pages.map(function(_,i){return '<button class="'+(i+1<pg?'fait':'')+'" aria-label="Page '+(i+1)+'" aria-current="'+(i+1===pg)+'" data-pg="'+(i+1)+'"></button>'}).join('')+'</div><button class="cire" data-n="1" aria-label="Page suivante"'+(sui?'':' disabled')+'>→</button></div></div></article>';
+  window._cur=[e,pg];if(sui){var im=new Image();im.src=D.eps[sui[0]-1].pages[sui[1]-1].i}
+}
+document.addEventListener('click',function(ev){
+  var t=ev.target.closest('[data-top],[data-p],[data-pg],[data-n]');if(!t)return;
+  if(t.dataset.top)return go(t.dataset.top==='lore'?'#lore/0':'#lire/1/1');
+  if(t.dataset.p!==undefined)return go('#lore/'+t.dataset.p);
+  if(t.dataset.pg)return go('#lire/'+window._cur[0]+'/'+t.dataset.pg);
+  if(t.dataset.n){var v=voisin(window._cur[0],window._cur[1],+t.dataset.n);if(v){go('#lire/'+v[0]+'/'+v[1]);$('#annales').scrollIntoView({block:'start'})}}
+});
+document.addEventListener('keydown',function(e){if(!$('#p-lire').hidden&&$('#voile').hidden&&document.activeElement.tagName!=='INPUT'){var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(d){var v=voisin(window._cur[0],window._cur[1],d);if(v)go('#lire/'+v[0]+'/'+v[1])}}});
+render();
+</script>
+</body>
+</html>

@@ -35,6 +35,10 @@
                     <a class="carte__lien" [routerLink]="url" [attr.aria-label]="c.title">
                       <img [src]="c.cover_url" [alt]="'Couverture de ' + c.title" loading="lazy">
                     </a>
+                  } @else if (estFichier(url)) {
+                    <a class="carte__lien" [href]="url" [attr.aria-label]="c.title">
+                      <img [src]="c.cover_url" [alt]="'Couverture de ' + c.title" loading="lazy">
+                    </a>
                   } @else {
                     <a class="carte__lien" [href]="url" target="_blank" rel="noopener noreferrer" [attr.aria-label]="c.title + ' (nouvel onglet)'">
                       <img [src]="c.cover_url" [alt]="'Couverture de ' + c.title" loading="lazy">

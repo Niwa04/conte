@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>L’affaire des citrouilles — Le conte complet</title>
+<meta name="description" content="L’affaire des citrouilles : le lore, les personnages, les lieux et le texte à feuilleter page par page.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Caveat:wght@500;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;line-height:1.7}
+img{display:block;max-width:100%}
+button{font:inherit;cursor:pointer;color:inherit}
+[hidden]{display:none!important}
+.voile{position:fixed;inset:0;background:#05080cee;display:grid;place-items:center;z-index:99;padding:22px;cursor:zoom-out}
+.voile figure{margin:0;max-width:min(1100px,100%);text-align:center}
+.voile img{max-height:80vh;width:auto;margin:auto;border-radius:12px;box-shadow:0 20px 70px #000a}
+.voile figcaption{color:#fff;margin-top:12px;font-size:1.05rem}
+img[data-z]{cursor:zoom-in}
+.texte hr{border:0;text-align:center;margin:1.1em 0}
+.texte hr::before{content:"✦  ✦  ✦";letter-spacing:.4em;opacity:.7}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+:root{--nuit:#1b0f2c;--prune:#3a1d57;--orange:#ff8a1f;--orange-d:#c4520a;--liege:#b98a5a;--liege-d:#8a6238;--manille:#f0dca8;--papier:#fffaf0;--encre:#2a2233;--rouge:#c8281e}
+body{background:var(--nuit);color:#f6e8d4;font-family:"Courier Prime",ui-monospace,monospace}
+/* ───── Ouverture : la rue sans citrouilles ───── */
+.rue{position:relative;overflow:hidden;background:linear-gradient(180deg,#14091f 0%,#33174f 55%,#7a2f1b 100%);min-height:540px}
+.lune{display:none}
+.maisons{position:absolute;left:0;right:0;bottom:70px;height:230px;background:
+  linear-gradient(#0b0514,#0b0514) 0 100%/100% 60% no-repeat,
+  repeating-linear-gradient(90deg,#0b0514 0 140px,transparent 140px 150px);}
+.fenetres{position:absolute;left:0;right:0;bottom:90px;height:150px;background:
+  repeating-linear-gradient(90deg,transparent 0 22px,#ffb347 22px 40px,transparent 40px 90px);
+  -webkit-mask:repeating-linear-gradient(180deg,#000 0 26px,transparent 26px 60px);mask:repeating-linear-gradient(180deg,#000 0 26px,transparent 26px 60px);opacity:.85;animation:lueurs 4s ease-in-out infinite alternate}
+@keyframes lueurs{from{opacity:.55}to{opacity:.95}}
+.trottoir{position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(180deg,#2a1830,#12091a)}
+.socles{position:absolute;left:0;right:0;bottom:78px;display:flex;justify-content:space-around;padding:0 4%}
+.socle{width:70px;height:34px;border-radius:50% 50% 8px 8px / 100% 100% 8px 8px;border:3px dashed #ffb34788;border-bottom:0;text-align:center}
+.socle::after{content:none}
+.feuilles{position:absolute;inset:0;pointer-events:none}
+.feuille-vol{position:absolute;top:-30px;font-size:1.6rem;animation:chute var(--d) linear var(--r) infinite}
+@keyframes chute{to{transform:translate(var(--x),620px) rotate(540deg)}}
+.rue__in{position:relative;z-index:2;width:min(1100px,100% - 32px);margin:0 auto;padding:46px 0 150px;display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:center}
+.tampon{display:inline-block;border:4px solid var(--rouge);color:var(--rouge);font-family:"Permanent Marker",cursive;font-size:1.2rem;padding:2px 14px;border-radius:6px;transform:rotate(-6deg);letter-spacing:.08em;background:#fff3e8;opacity:.95}
+.rue h1{font-family:"Permanent Marker",cursive;font-weight:400;font-size:clamp(2.2rem,5.4vw,4rem);line-height:1.05;margin:.35em 0 .25em;color:#fff3df;text-shadow:3px 3px 0 #c4520a}
+.rue h1 em{font-style:normal;color:var(--orange)}
+.rue .accroche{font-family:"Caveat",cursive;font-size:1.7rem;line-height:1.25;color:#ffe2bd;max-width:25em;margin:0 0 18px}
+.dossier-info{display:flex;gap:10px;flex-wrap:wrap}
+.dossier-info span{background:var(--manille);color:var(--encre);padding:3px 14px;font-weight:700;font-size:.85rem;border-radius:2px 8px 2px 8px;box-shadow:2px 3px 0 #0006}
+.pola{position:relative;justify-self:center;background:#fffaf0;padding:12px 12px 46px;box-shadow:0 22px 44px #000a;transform:rotate(-3deg);width:min(420px,100%)}
+.pola img{width:100%}
+.pola::before{content:"";position:absolute;top:-12px;left:50%;width:22px;height:22px;margin-left:-11px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff7a6b,#b3140b);box-shadow:2px 4px 4px #0006}
+.pola b{position:absolute;left:0;right:0;bottom:10px;text-align:center;font-family:"Caveat",cursive;font-size:1.5rem;color:var(--encre)}
+/* onglets : intercalaires de dossier */
+.classeur{position:relative;z-index:3;margin:-58px auto 0;width:min(1100px,100% - 24px);display:flex;gap:6px;padding-left:20px}
+.chemise{border:0;background:#e1c98a;color:#4a3513;font-family:"Courier Prime",monospace;font-weight:700;font-size:1rem;padding:11px 26px 9px;border-radius:12px 12px 0 0;box-shadow:inset 0 -6px 8px #0002;transition:transform .15s}
+.chemise[aria-selected=true]{background:var(--manille);transform:translateY(-6px);padding-top:17px;box-shadow:0 -4px 10px #0004}
+main{position:relative;background:var(--manille);width:min(1100px,100% - 24px);margin:0 auto 70px;border-radius:6px 14px 14px 14px;padding:30px clamp(14px,3vw,34px) 38px;color:var(--encre);box-shadow:0 26px 50px #000b}
+h2{font-family:"Permanent Marker",cursive;font-weight:400;font-size:clamp(1.6rem,3vw,2.3rem);margin:0 0 4px;color:var(--orange-d)}
+.note{font-family:"Caveat",cursive;font-size:1.45rem;color:#5b4631;margin:0 0 18px}
+/* tableau en liège */
+.liege{position:relative;border-radius:10px;border:12px solid #6b4423;padding:26px 18px 30px;background:
+  radial-gradient(circle at 20% 30%,#c79a68 0 2px,transparent 3px) 0 0/34px 34px,
+  radial-gradient(circle at 70% 60%,#a77a4a 0 2px,transparent 3px) 0 0/27px 27px,var(--liege);
+  box-shadow:inset 0 0 40px #0006,0 10px 20px #0004}
+.epingles{display:flex;flex-wrap:wrap;gap:22px 18px;justify-content:center}
+.fiche{position:relative;border:0;background:#fffaf0;padding:10px 10px 8px;width:156px;text-align:center;box-shadow:0 8px 14px #0006;transform:rotate(var(--r));transition:transform .18s}
+.fiche::before{content:"";position:absolute;top:-9px;left:50%;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff7a6b,#b3140b);box-shadow:1px 3px 3px #0006}
+.fiche img{width:100%;height:150px;object-fit:contain;mix-blend-mode:multiply;background:#fffaf0}
+.fiche b{display:block;font-family:"Caveat",cursive;font-size:1.3rem;line-height:1.05;color:var(--encre);margin-top:4px}
+.fiche small{display:block;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-d);font-weight:700}
+.fiche:hover{transform:rotate(0) scale(1.06);z-index:2}
+.fiche[aria-selected=true]{transform:rotate(0) scale(1.1);z-index:3;box-shadow:0 0 0 4px var(--orange),0 12px 22px #000a}
+.fil{position:absolute;inset:0;pointer-events:none}
+/* dossier ouvert */
+.ouvert{margin-top:26px;display:grid;grid-template-columns:240px minmax(0,1fr);gap:26px;background:var(--papier);border-radius:4px;padding:22px;box-shadow:0 12px 24px #0004;position:relative;background-image:repeating-linear-gradient(180deg,transparent 0 29px,#8fb2d633 29px 30px)}
+.ouvert::before{content:"";position:absolute;top:-12px;left:34px;width:70px;height:26px;border:4px solid #8a8f98;border-radius:14px 14px 0 0;border-bottom:0}
+.ouvert__img{background:#fffaf0;padding:8px;box-shadow:0 6px 12px #0004;transform:rotate(-1.5deg);align-self:start}
+.ouvert__img img{margin:auto;max-height:290px;width:auto;mix-blend-mode:multiply}
+.ouvert h3{font-family:"Permanent Marker",cursive;font-weight:400;font-size:2.1rem;margin:0 0 6px;color:var(--prune)}
+.ouvert p{margin:0 0 10px}
+.verdict{display:inline-block;border:3px solid var(--rouge);color:var(--rouge);font-family:"Permanent Marker",cursive;padding:2px 12px;transform:rotate(-3deg);margin:6px 0 4px;font-size:1.05rem}
+.verdict--ok{border-color:#1b7a46;color:#1b7a46}
+.etq{font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.78rem;color:var(--orange-d);margin:16px 0 8px}
+.indices{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.indice{margin:0;position:relative;background:#fff;padding:6px 6px 8px;box-shadow:0 5px 10px #0004}
+.indice img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.indice figcaption{font-family:"Caveat",cursive;font-size:1.15rem;line-height:1.05;margin-top:4px;text-align:center}
+.indice .num{position:absolute;top:-10px;left:-8px;width:28px;height:28px;border-radius:50%;background:var(--orange);color:#fff;font-weight:700;display:grid;place-items:center;font-size:.9rem;box-shadow:0 3px 5px #0005}
+/* carnet de Mia */
+.carnet{background:var(--papier);position:relative;border-radius:6px;padding:46px clamp(14px,3vw,38px) 30px;box-shadow:0 14px 28px #0004;background-image:repeating-linear-gradient(180deg,transparent 0 33px,#8fb2d644 33px 34px)}
+.spirale{position:absolute;top:-14px;left:0;right:0;height:30px;background:radial-gradient(circle at 14px 14px,#3b3b46 0 5px,transparent 6px) 0 0/34px 30px repeat-x;filter:drop-shadow(0 3px 2px #0005)}
+.carnet::before{content:"";position:absolute;left:46px;top:0;bottom:0;width:2px;background:#e3736d88}
+.carnet__tete{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;margin:0 0 12px 38px}
+.carnet__tete b{font-family:"Permanent Marker",cursive;font-size:1.4rem;color:var(--prune);font-weight:400}
+.carnet__tete span{font-family:"Caveat",cursive;font-size:1.5rem;color:var(--rouge)}
+.photo{position:relative;margin:0 0 18px 38px;background:#fff;padding:8px 8px 8px;box-shadow:0 8px 16px #0004;transform:rotate(.6deg)}
+.photo::before{content:"";position:absolute;top:-16px;right:36px;width:20px;height:54px;border:4px solid #8a8f98;border-radius:10px;transform:rotate(8deg);border-top-color:transparent}
+.photo img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.carnet .texte{margin-left:38px;font-family:"Caveat",cursive;font-size:clamp(1.35rem,2.4vw,1.75rem);line-height:34px}
+.carnet .texte p{margin:0 0 34px 0;line-height:34px}
+.carnet .texte p{margin-bottom:0}
+.carnet .texte p.d{color:#9b2c19}
+.piste{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin:24px 0 0 38px}
+.piste button{width:14px;height:14px;border:0;padding:0;background:#e6c28a;border-radius:50% 50% 50% 0;transform:rotate(-45deg);transition:transform .15s}
+.piste button[aria-current=true]{background:var(--orange);transform:rotate(-45deg) scale(1.5)}
+.piste button.fait{background:#f0a65a}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:16px 0 0 38px}
+.btn{border:0;background:var(--prune);color:#fff;font-family:"Courier Prime",monospace;font-weight:700;padding:10px 18px;border-radius:3px 12px 3px 12px;box-shadow:3px 4px 0 #0005}
+.btn--ok{background:var(--orange-d)}.btn[disabled]{opacity:.35;pointer-events:none}
+.pied{text-align:center;color:#a98ac0;font-size:.82rem;padding:0 16px 40px}
+@media(max-width:860px){.rue__in{grid-template-columns:1fr}.pola{order:-1;width:min(330px,84%)}.ouvert{grid-template-columns:1fr}.ouvert__img{max-width:230px}.carnet::before{left:24px}.carnet__tete,.photo,.carnet .texte,.piste,.nav{margin-left:14px}}
+
+/*VISUEL*/
+.bandeau{height:clamp(90px,15vw,170px);border-radius:14px;margin:0 0 24px;background:linear-gradient(180deg,rgba(0,0,0,.10),rgba(0,0,0,.50)),var(--bandeau) center/cover;box-shadow:0 10px 24px rgba(0,0,0,.45)}
+.orn{height:clamp(70px,11vw,130px);width:min(1100px,100% - 24px);margin:0 auto 26px;border-radius:14px;background:var(--orn) center/cover;box-shadow:0 10px 24px rgba(0,0,0,.4)}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(var(--voile-h),var(--voile-b)),var(--bg-page) center/cover no-repeat}
+body[data-vue=lore]{--bg-page:var(--bg-lore)}body[data-vue=lire]{--bg-page:var(--bg-lire)}
+body{--voile-h:rgba(22,10,36,.86);--voile-b:rgba(22,10,36,.94)}
+:root{--orn:url(/assets/recueils/citrouilles/orn.webp);--bg-lore:url(/assets/recueils/citrouilles/lore.webp);--bg-lire:url(/assets/recueils/citrouilles/lire.webp)}
+.rue{background:linear-gradient(180deg,rgba(20,9,31,.80),rgba(51,23,79,.50) 55%,rgba(122,47,27,.70)),url(/assets/recueils/citrouilles/hero.webp) center/cover}
+.maisons,.fenetres{display:none}
+.rue h1,.rue .accroche{text-shadow:0 2px 10px #000,3px 3px 0 #c4520a}
+.rue .accroche{text-shadow:0 2px 8px #000}
+.indice img{aspect-ratio:16/9}
+.photo img{aspect-ratio:16/9}
+
+</style>
+</head>
+<body>
+<style>
+@font-face{font-family:'Contract';src:url('/fonts/ContractSans.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'Contract';src:url('/fonts/ContractSans-Bold.ttf') format('truetype');font-weight:700;font-display:swap}
+/* Copie de l'en-tête de l'accueil (home.scss) : même dégradé, même filet or, même badge suspendu */
+.entete{--mdc-royal:#1a3fa6;--mdc-navy:#12296f;--mdc-gold:#d9a93a;--mdc-gold-clair:#f3d27a;position:sticky;top:0;z-index:80;background:linear-gradient(#1f48b8,var(--mdc-navy));border-bottom:3px solid var(--mdc-gold);box-shadow:0 0 0 1px #0a1a52,0 6px 18px rgb(0 0 0/.35);font-family:'Contract','Segoe UI',system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+.entete *{box-sizing:border-box}
+.entete__interieur{max-width:1200px;margin:0 auto;padding:.5rem 1.25rem;min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.marque{position:relative;z-index:3;align-self:flex-start;margin-bottom:-48px;display:block}
+.marque__badge{display:block;height:104px;width:auto;max-width:none;filter:drop-shadow(0 6px 8px rgb(0 0 0/.45));transition:transform .3s}
+.marque:hover .marque__badge{transform:rotate(-3deg) scale(1.05)}
+.navigation{display:flex;align-items:center;gap:1.5rem}
+.navigation a:not(.bouton){color:var(--mdc-gold-clair);font-weight:700;text-decoration:none}
+.navigation a:not(.bouton):hover{color:#fff;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+.entete .bouton{position:relative;display:inline-block;overflow:hidden;padding:.5rem 1.2rem;border-radius:999px;border:3px solid var(--mdc-gold);background:linear-gradient(#f8dc8a,var(--mdc-gold) 55%,#b9831d);border-color:#fff3c9;color:#3b2606;text-shadow:0 1px 0 rgb(255 255 255/.5);font-weight:700;font-size:1rem;text-decoration:none;box-shadow:inset 0 0 0 2px rgb(255 255 255/.18),0 5px 0 #0a1a52,0 12px 20px rgb(0 0 0/.28);transition:transform .12s,box-shadow .12s}
+.entete .bouton:hover{transform:translateY(-3px) scale(1.03)}
+.entete .bouton:focus-visible{outline:3px solid var(--mdc-gold-clair);outline-offset:3px}
+.burger{display:none;width:44px;height:44px;border:2px solid var(--mdc-gold);border-radius:12px;background:var(--mdc-navy);padding:11px 9px;flex-direction:column;justify-content:space-between}
+.burger span{display:block;height:3px;border-radius:2px;background:var(--mdc-gold-clair)}
+@media(max-width:900px){
+  .marque__badge{height:84px}.marque{margin-bottom:-36px}.burger{display:flex}
+  .navigation{display:none;position:absolute;inset:100% 0 auto 0;flex-direction:column;align-items:stretch;padding:1rem 1.25rem 1.5rem;background:var(--mdc-navy);border-bottom:3px solid var(--mdc-gold);text-align:center}
+  .navigation.navigation--ouverte{display:flex}
+}
+</style>
+<header class="entete">
+  <div class="entete__interieur">
+    <a class="marque" href="/" aria-label="La Maison des Contes, accueil">
+      <img class="marque__badge" src="/assets/badge-maison-des-contes.webp" alt="La Maison des Contes" width="277" height="352">
+    </a>
+    <button type="button" class="burger" aria-expanded="false" aria-controls="navigation" aria-label="Menu" onclick="var n=document.getElementById('navigation');var o=n.classList.toggle('navigation--ouverte');this.setAttribute('aria-expanded',o)">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="navigation" class="navigation" aria-label="Principale">
+      <a href="/#interactif">Lecture interactive</a>
+      <a href="/#collection">Collection</a>
+      <a href="/#test">Tester</a>
+      <a href="/#bibliotheque">Bibliothèque</a>
+      <a href="/contes">Nos contes</a>
+      <a href="/#tarifs">Tarifs</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/connexion">Se connecter</a>
+      <a class="bouton" href="/webgl-build/game.html">Télécharger l’app</a>
+    </nav>
+  </div>
+</header>
+
+<header class="rue">
+  <div class="lune"></div>
+  <div class="maisons"></div><div class="fenetres"></div><div class="trottoir"></div>
+  <div class="socles"><i class="socle"></i><i class="socle"></i><i class="socle"></i><i class="socle"></i><i class="socle"></i></div>
+  <div class="feuilles" id="feuilles"></div>
+  <div class="rue__in">
+    <div>
+      <span class="tampon">AFFAIRE N°1 — RÉSOLUE</span>
+      <h1>L’affaire des <em>citrouilles</em></h1>
+      <p class="accroche">Mia et Théo adorent résoudre des mystères dans leur quartier. Cette fois, ils doivent retrouver les citrouilles disparues avant la fête d'Halloween !</p>
+      <div class="dossier-info"><span>15 pages illustrées</span></div>
+    </div>
+    <div class="pola"><img src="https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/cover/2d2fd78b-ccc1-4147-b9a7-e0d56520c0bf.png" alt="Couverture : L’affaire des citrouilles"><b>Pièce n°1 : la couverture</b></div>
+  </div>
+</header>
+<div class="classeur" role="tablist" aria-label="Sections">
+  <button class="chemise" role="tab" data-top="lore">Le tableau d’enquête</button>
+  <button class="chemise" role="tab" data-top="lire">Le carnet de Mia</button>
+</div>
+<main>
+  <div class="bandeau" id="bandeau"></div>
+  <section id="p-lore" hidden>
+    <h2>Le quartier de Mia et Théo</h2>
+    <p class="note">Les suspects, les témoins et les lieux. Clique sur une fiche pour ouvrir son dossier.</p>
+    <div class="liege"><div class="epingles" id="epingles" role="tablist"></div></div>
+    <div id="ouvert"></div>
+  </section>
+  <section id="p-lire" hidden>
+    <div id="carnet"></div>
+  </section>
+</main>
+<div class="orn" aria-hidden="true"></div>
+<p class="pied">« L’affaire des citrouilles » · La Maison des Contes · contenu en brouillon</p>
+<script id="data" type="application/json">{"titre":"L’affaire des citrouilles","unite":"Conte","mode":"conte","labels":{"persos":"Les personnages","autres":"Les silhouettes","objets":"Les objets"},"persos":[{"main":{"title":"Mia","desc":"Mia est une fille curieuse et pleine d'énergie, qui adore mener des enquêtes avec son carnet. Dans l'histoire, elle cherche à résoudre le mystère des citrouilles disparues pour sauver la fête d'Halloween.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/character/ecfac424-8084-427f-bc19-d68b48ddeb9c.png"},"formes":[],"entourage":[{"title":"Madame Persillette","desc":"Madame Persillette est la voisine la plus âgée du quartier, connue pour son caractère un peu grincheux. Les enfants viennent la questionner car elle adore préparer des soupes et pourrait bien aimer les citrouilles.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/character/3dfddc12-e212-4c03-9b52-2a5bcb4e72a0.png"},{"title":"Monsieur Noël-Pavant","desc":"Monsieur Noël-Pavant est un voisin joyeux qui adore préparer Noël très en avance. Il intrigue Mia et Théo car il ne s'intéresse qu'à Noël et pourrait vouloir enlever les décorations d'Halloween.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/character/8b59d81a-f930-4cf0-aecb-3fa22588f035.png"},{"title":"Madame Compostine","desc":"Madame Compostine est une voisine énergique qui aime que tout soit propre et bien rangé dans la rue. Elle donne aux enfants un indice important en parlant des citrouilles jetées à la poubelle.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/character/b50744a1-3775-44c7-b177-f365ea80ecd0.png"}],"lieux":[{"title":"Sa chambre","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/4d365a9a-744d-46de-83b2-82cc42e2a150.png"},{"title":"La rue du quartier","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/3e6c0d26-0041-4f42-8bea-413b1565728f.png"},{"title":"La maison de Madame Persillette","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/bfc4cb90-8541-4f08-88ac-c9f859284250.png"},{"title":"La maison de Monsieur Noël-Pavant","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/00aa0288-27da-442a-a1f5-5ceaa7968650.png"},{"title":"La maison de Madame Compostine","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/146ebd3e-80fb-4f2b-9163-9cb2c635bde4.png"}]},{"main":{"title":"Théo","desc":"Théo est le meilleur ami de Mia, toujours prêt à l'aider même s'il est parfois un peu inquiet. Il accompagne Mia dans son aventure pour retrouver les citrouilles et aime passer du temps avec elle.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/character/6189b385-d3b1-4b84-b89b-f16608132dab.png"},"formes":[],"entourage":[],"lieux":[{"title":"Le jardin de Théo","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/24748db6-917f-437d-a285-c424cb3c1642.png"},{"title":"Le poulailler","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/c2e8a191-a100-4a3b-91b9-f2783b329166.png"}]}],"figurants":[],"objets":[],"fonds":{"persos":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/3e6c0d26-0041-4f42-8bea-413b1565728f.png","autres":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/12c98423-7398-4237-9661-08678d4e5f2b.png","lieux":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/00aa0288-27da-442a-a1f5-5ceaa7968650.png","objets":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/3e6c0d26-0041-4f42-8bea-413b1565728f.png"},"eps":[{"titre":"L’affaire des citrouilles","part":0,"cover":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/4d365a9a-744d-46de-83b2-82cc42e2a150.png","pages":[{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/4d365a9a-744d-46de-83b2-82cc42e2a150.png","b":[["p","Mia adorait Halloween, c’était sa fête préférée parce qu’elle adorait se faire peur. Elle ouvrit en grand la fenêtre de sa chambre. Les feuilles rouges tapissaient les trottoirs, les fausses toiles d’araignée pendaient aux fenêtres, et l’air sentait le feu de bois. Elle se rappelait que ce soir elle devait regarder le film Chair de Poule avec son ami Théo. Tout était là pour lui plaire, pourtant elle avait envie de pleurer. Les citrouilles qui décoraient la rue avaient disparu. C’était une vraie catastrophe ! Elles devaient servir de lanternes pour ce soir !"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/3e6c0d26-0041-4f42-8bea-413b1565728f.png","b":[["p","Elle avait passé la semaine à les sculpter avec sa mère, pour leur tailler des yeux terrifiants et des bouches tordues. Halloween sans citrouilles, c’était un peu comme Noël sans sapin. Elle attrapa son carnet d’enquêtrice (celui où elle avait noté l’affaire des biscuits volés à la cantine) et fonça chez son copain Théo. Il avait emménagé dans la rue pendant l’été et tous les deux formaient une équipe de choc. Aucune enquête ne leur résistait. Elle expliqua la situation à son ami :"],["d","— Théo, c’est une cata-citrouille !"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/12c98423-7398-4237-9661-08678d4e5f2b.png","b":[["p","On doit résoudre cette enquête avant ce soir, ou ce sera la pire fête d’Halloween de ma vie ! Théo leva les yeux de son bol de chocolat chaud."],["d","— Une enquête ? Maintenant ? Maman voulait que j’aille chercher les œufs au poulailler pour faire un gâteau… Il savait qu’il était inutile de discuter. Mia avait ce don de l’entraîner dans toutes ses histoires. Le premier suspect habitait au bout de la rue : Madame Persillette, la doyenne du quartier."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/bfc4cb90-8541-4f08-88ac-c9f859284250.png","b":[["p","Elle avait l’habitude de passer ses journées à préparer des soupes et à en distribuer des litres et des litres à tous les voisins, particulièrement en automne… Tous les enfants du quartier la détestaient. À cause d’elle, ils se retrouvaient à manger de la soupe au navet. Mais préparait-elle aussi des soupes à la citrouille ? La vieille dame ouvrit la porte avant même qu’ils ne frappent :"],["d","— Il est un peu tôt pour les bonbons, non ? Et où sont vos déguisements ?"],["d","— Nous n’avons plus l’âge pour ces enfantillages, Madame."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/c5765bc9-b8a5-4afa-9cf4-290d63854615.png","b":[["p","Nous sommes sur l’affaire des citrouilles volées."],["d","— Des citrouilles ? répéta-t-elle. Quel délice ! J’en aurais bien fait un velouté, mais dans ce cas, je les aurais volées avant qu’elles ne soient aussi vides que vos petites têtes sans cervelle ! Maintenant, ce ne sont plus que de vieilles épluchures, enfin je suppose. Elle leur claqua la porte au nez."],["d","— C’est elle la vieille épluchure… dit Mia à voix basse. Puis elle nota dans son carnet : « Innocente… pour cette année… et vraiment pas sympa ». Le deuxième suspect était Monsieur Noël-Pavant."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/00aa0288-27da-442a-a1f5-5ceaa7968650.png","b":[["p","C’était un drôle de monsieur qui avait installé ses décorations de Noël depuis le premier octobre. En approchant de chez lui, les deux amis furent éblouis par les guirlandes multicolores. Monsieur Noël-Pavant était dehors, un bonnet rouge sur la tête, en train de gonfler un père Noël en plastique."],["d","— Dans cinquante-cinq jours, c’est Noël, les enfants ! claironna-t-il. Vous venez profiter de la magie de Noël ?"],["d","— Pas exactement, répondit Théo. Avant de penser à Noël, nous essayons déjà de sauver Halloween."],["d","— Allo quoi ? Allo fouine ? Mia et Théo se regardèrent, gênés."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/7b5d0e28-843c-4805-a33f-42f722421a76.png","b":[["p","Pour Monsieur Noël-Pavant il n’y avait décidément que Noël qui comptait !"],["d","— Allons, Monsieur, vous savez bien ! La fête de l’horreur ! dit Théo."],["d","— Ah, mais c’est pour ça que vous faites une tête de morts-vivants, tous les deux ! Prenez plutôt un petit chocolat dans mon calendrier de l’avent… De toute façon, je le termine toujours avant le mois de décembre…"],["d","— Nous ne sommes pas là pour manger des chocolats, reprit Théo. Quand avez-vous vu les citrouilles pour la dernière fois ?"],["d","— Pas vu, dit-il sèchement."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/74c02bc5-866b-4e14-8c8c-c7f2d7dabe38.png","b":[["d","— Monsieur Noël-Pavant, demanda Mia très sérieusement, est-ce que vous vous êtes débarrassés des citrouilles pour faire plus de place pour vos décorations ? Monsieur Noël-Pavant retrouva bizarrement la mémoire au sujet des citrouilles. Puis il jura sur la tête du Pôle Nord qu’il n’avait rien à voir dans cette étrange disparition."],["d","— Mais le Pôle Nord n’a pas de tête… murmura Théo. Mia griffonna quelque chose dans son carnet. Elle était contente de voir que Théo commençait à prendre l’affaire vraiment au sérieux."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/146ebd3e-80fb-4f2b-9163-9cb2c635bde4.png","b":[["p","Plus loin, ils croisèrent Madame Compostine, armée de son balai et de son éternel tablier à fleurs. Elle balayait les feuilles mortes devant sa porte. Mia devait reconnaître qu’elle n’avait pas vraiment l’allure d’une criminelle."],["d","— Ces citrouilles étaient d’un goût affreux, déclara-t-elle. Quelqu’un a eu la bonne idée de nettoyer un peu cette rue !"],["d","— Ce sont des aveux, Madame Compostine ? demanda Mia, le crayon prêt à noircir son carnet."],["d","— Allons donc ! Si c’était moi, les citrouilles seraient déjà au compost et pas à déborder d’une poubelle ordinaire !"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/06036e3b-4b2f-44e6-9e94-0821c887d4cf.png","b":[["p","Un peu d’ordre dans cette rue, s’il vous plaît ! Mia fronça les sourcils."],["d","— Tiens donc… Je ne me souviens pas vous avoir dit qu’elles avaient été jetées à la poubelle. Madame Compostine haussa les épaules et montra du doigt une poubelle d’où dépassaient des morceaux orange."],["d","— La personne qui a fait ça, avait l’air pressée en tout cas, pour faire les choses aussi mal ! rouspéta-t-elle. Pour faire ça, autant ne rien faire ! Les enfants coururent jusqu’à la poubelle : elle contenait des épluchures de citrouilles, mais il y en avait aussi ailleurs."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/24748db6-917f-437d-a285-c424cb3c1642.png","b":[["p","Elles formaient une traînée qui remontait tout le long de la rue. Comment n’avaient-il pas vu ça avant ? Mia suivit la piste du regard. Elle s’arrêtait… dans le jardin de Théo. Tout indiquait que le malfaiteur s’était introduit chez Théo. Mia se jura que le voleur allait passer un sale quart d’heure ! Théo sentit ses joues chauffer, mais Mia était déjà partie en courant vers le poulailler. C’était un spectacle abominable. Les poules se régalaient en picorant ce qui restait des citrouilles. Des morceaux partout, déchiquetés et bientôt engloutis."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/c2e8a191-a100-4a3b-91b9-f2783b329166.png","b":[["p","On ne reconnaissait même plus les visages que Mia avait passé une éternité à tailler avec sa mère ! Il n’y avait plus rien à sauver. Qui avait commis ce massacre ? Théo prit une grande inspiration."],["d","— C’est moi le coupable, avoua-t-il."],["d","— Toi ?! Mais pourquoi ? Mia ne l’aurait jamais cru capable d’une chose pareille. Théo hésita, puis baissa les yeux :"],["d","— Les citrouilles… elles me font peur. Vraiment peur. Ne te moque pas, mais tous les ans, j’en fais des cauchemars à la période d’Halloween, avec leur horrible sourire dans le noir."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/43ccb2c3-a783-4ead-8370-99b7c0b95e57.png","b":[["p","Quand elles sont éteintes, ça va… Mais quand elles sont allumées… elles sont monstrueuses. Je ne pensais pas que tu remarquerais que quelqu’un les avait jetées. Je croyais qu’on regarderait un film ce soir et qu’on resterait chez toi. Je n’ai pas osé te le dire, pour ne pas te gâcher ton Halloween. Mia resta silencieuse. Elle repensa à tout ce temps passé à préparer ces citrouilles… et au courage que Théo venait d’avoir en lui disant la vérité. Elle referma doucement son carnet."],["d","— Alors, l’affaire des citrouilles est résolue ! déclara-t-elle. C’est moi qui te dois des excuses."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/b43953f1-7bc6-4799-ae41-a1fe197f22ac.png","b":[["p","Je me faisais une telle joie de fêter Halloween que je n’ai même pas remarqué que quelque chose t’avait mis mal à l’aise. Théo la regarda, surpris."],["d","— Tu n’es pas fâchée ?"],["d","— Non. Depuis le début, je me suis trompée. En fait, on peut très bien fêter Halloween sans citrouilles. Mais on ne peut pas fêter Halloween sans ami. Le soir venu, ils allumèrent un feu de cheminée, grignotèrent des bonbons et jouèrent à un jeu de société."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/610eb202-5aa4-4c60-8307-9da4c8aa50b8/imports/page/176f3db7-90d3-43c5-8836-a2dcae7bf5bf.png","b":[["p","Dehors, il n’y avait pas la lueur orangée des citrouilles, mais les lumières multicolores de Monsieur Noël-Pavant qui éclairaient tout le quartier. Mia sourit. Rien de tel qu’une bonne enquête avec un ami pour rendre la fête d’Halloween inoubliable."]]}]}],"parties":["L’affaire des citrouilles"]}</script>
+<script>
+var DEFAUT='#lore/0';
+var D=JSON.parse(document.getElementById('data').textContent);
+function $(s,r){return (r||document).querySelector(s)}
+function $$(s,r){return [].slice.call((r||document).querySelectorAll(s))}
+function h(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+/* texte d'une page : une réplique par ligne, séparateurs ✦ */
+function texte(blocs){return blocs.map(function(b){return b[0]==='s'?'<hr>':'<p class="'+b[0]+'">'+h(b[1])+'</p>'}).join('')}
+/* lightbox : toute image marquée data-z s'ouvre en grand */
+(function(){
+  var v=document.createElement('div');v.className='voile';v.id='voile';v.hidden=true;
+  v.innerHTML='<figure><img alt=""><figcaption></figcaption></figure>';document.body.appendChild(v);
+  window.zoom=function(src,txt){$('img',v).src=src;$('figcaption',v).textContent=txt||'';v.hidden=false};
+  v.addEventListener('click',function(){v.hidden=true});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')v.hidden=true});
+  document.addEventListener('click',function(e){var im=e.target.closest('img[data-z]');if(im){zoom(im.currentSrc||im.src,im.alt)}});
+})();
+/* navigation par hash (#lore/…, #lire/e/p) ; le gabarit définit render() et DEFAUT */
+var route=location.hash||DEFAUT;
+function parse(){return route.slice(1).split('/')}
+function go(hash){route=hash;try{if(location.hash!==hash)history.pushState(null,'',hash)}catch(e){}render()}
+function reroute(){route=location.hash||DEFAUT;render()}
+window.addEventListener('hashchange',reroute);window.addEventListener('popstate',reroute);
+/* lecture : page courante et tourne-page */
+function borne(e,p){e=Math.min(Math.max(+e||1,1),D.eps.length);var n=D.eps[e-1].pages.length;p=Math.min(Math.max(+p||1,1),n);return[e,p]}
+function voisin(e,p,d){p+=d;if(p>D.eps[e-1].pages.length){if(e>=D.eps.length)return null;return[e+1,1]}if(p<1){if(e<=1)return null;return[e-1,D.eps[e-2].pages.length]}return[e,p]}
+
+(function(){var f=$('#feuilles'),c=['🍂','🍁','🍂','🍁','🎃'];for(var i=0;i<16;i++){var e=document.createElement('span');e.className='feuille-vol';e.textContent=c[i%c.length];e.style.cssText='left:'+(Math.random()*100)+'%;--d:'+(7+Math.random()*7)+'s;--r:-'+(Math.random()*10)+'s;--x:'+(Math.random()*160-80)+'px;font-size:'+(1.1+Math.random()*1.2)+'rem;opacity:.8';f.appendChild(e)}})();
+/* les verdicts viennent du récit */
+var VERDICTS={'Mia':['L’enquêtrice du quartier',1],'Théo':['Coupable… par peur des citrouilles',0],'Madame Persillette':['Innocente… pour cette année',1],'Monsieur Noël-Pavant':['« Pas vu », dit-il sèchement',1],'Madame Compostine':['Innocente : pas de compost, pas de crime',1]};
+var gens=[];D.persos.forEach(function(g,gi){gens.push({p:g.main,g:gi,role:'Enquêteur'});g.entourage.forEach(function(x){gens.push({p:x,g:gi,role:'Suspect'})})});
+var sel=0;
+function render(){
+  var p=parse(),top=p[0]==='lire'?'lire':'lore';
+  $$('[data-top]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.top===top)});
+  $('#p-lore').hidden=top!=='lore';$('#p-lire').hidden=top!=='lire';document.body.dataset.vue=top;$('#bandeau').style.setProperty('--bandeau','url('+(top==='lore'?D.fonds.persos:D.fonds.lieux)+')');document.documentElement.style.setProperty('--fond-persos','url('+D.fonds.persos+')');
+  if(top==='lore'){sel=Math.min(+p[1]||0,gens.length-1);lore()}else lire(+p[1]||1,+p[2]||1);
+}
+function lieuxDe(x){
+  var g=D.persos[x.g],mot=x.p.title.split(' ').pop(),autres=g.entourage.map(function(e){return e.title.split(' ').pop()});
+  return x.role==='Enquêteur'?g.lieux.filter(function(l){return !autres.some(function(a){return l.title.indexOf(a)>-1})}):g.lieux.filter(function(l){return l.title.indexOf(mot)>-1});
+}
+function lore(){
+  var rot=[-3,2,-1.5,3,-2.5,1.5];
+  $('#epingles').innerHTML=gens.map(function(x,i){return '<button class="fiche" role="tab" style="--r:'+rot[i%rot.length]+'deg" aria-selected="'+(i===sel)+'" data-p="'+i+'"><img src="'+h(x.p.img)+'" alt=""><small>'+x.role+'</small><b>'+h(x.p.title)+'</b></button>'}).join('');
+  var x=gens[sel],v=VERDICTS[x.p.title],lx=lieuxDe(x);
+  $('#ouvert').innerHTML='<article class="ouvert"><div class="ouvert__img"><img src="'+h(x.p.img)+'" alt="'+h(x.p.title)+'" data-z></div><div><h3>'+h(x.p.title)+'</h3><p>'+h(x.p.desc)+'</p>'+(v?'<span class="verdict'+(v[1]?' verdict--ok':'')+'">'+h(v[0])+'</span>':'')+
+   (lx.length?'<div class="etq">Lieux de l’enquête</div><div class="indices">'+lx.map(function(l,i){return '<figure class="indice"><span class="num">'+(i+1)+'</span><img src="'+h(l.img)+'" alt="'+h(l.title)+'" data-z loading="lazy"><figcaption>'+h(l.title)+'</figcaption></figure>'}).join('')+'</div>':'')+'</div></article>';
+}
+function lire(e,pg){
+  var r=borne(e,pg);e=r[0];pg=r[1];var ep=D.eps[e-1],page=ep.pages[pg-1],pre=voisin(e,pg,-1),sui=voisin(e,pg,1);
+  $('#carnet').innerHTML='<article class="carnet"><div class="spirale"></div><div class="carnet__tete"><b>Carnet d’enquêtrice de Mia</b><span>indice n°'+pg+' / '+ep.pages.length+'</span></div><figure class="photo"><img src="'+h(page.i)+'" alt="Illustration '+pg+'" data-z></figure><div class="texte">'+texte(page.b)+'</div>'+
+   '<div class="piste" aria-label="Pistes">'+ep.pages.map(function(_,i){return '<button class="'+(i+1<pg?'fait':'')+'" aria-label="Indice '+(i+1)+'" aria-current="'+(i+1===pg)+'" data-pg="'+(i+1)+'"></button>'}).join('')+'</div>'+
+   '<div class="nav"><button class="btn" data-n="-1"'+(pre?'':' disabled')+'>← piste précédente</button><button class="btn btn--ok" data-n="1"'+(sui?'':' disabled')+'>indice suivant →</button></div></article>';
+  window._cur=[e,pg];if(sui){var im=new Image();im.src=D.eps[sui[0]-1].pages[sui[1]-1].i}
+}
+document.addEventListener('click',function(ev){
+  var t=ev.target.closest('[data-top],[data-p],[data-pg],[data-n]');if(!t)return;
+  if(t.dataset.top)return go(t.dataset.top==='lore'?'#lore/0':'#lire/1/1');
+  if(t.dataset.p!==undefined)return go('#lore/'+t.dataset.p);
+  if(t.dataset.pg)return go('#lire/'+window._cur[0]+'/'+t.dataset.pg);
+  if(t.dataset.n){var v=voisin(window._cur[0],window._cur[1],+t.dataset.n);if(v){go('#lire/'+v[0]+'/'+v[1]);$('#carnet').scrollIntoView({block:'start'})}}
+});
+document.addEventListener('keydown',function(e){if(!$('#p-lire').hidden&&$('#voile').hidden){var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(d){var v=voisin(window._cur[0],window._cur[1],d);if(v)go('#lire/'+v[0]+'/'+v[1])}}});
+render();
+</script>
+</body>
+</html>

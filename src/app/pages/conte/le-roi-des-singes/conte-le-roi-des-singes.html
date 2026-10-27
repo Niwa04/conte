@@ -1,0 +1,181 @@
+<main class="si" [style.--laque]="deco('motif')" [style.--treillis]="deco('tuile')">
+  <!-- Ouverture : la montagne des fleurs et des fruits -->
+  <section class="ouverture" [style.--fond]="deco('montagne')">
+    <div class="ouverture__interieur">
+      <div class="ouverture__texte">
+        <div class="pays-badge">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <span><strong>Chine</strong> · 中国</span>
+        </div>
+        <h1>{{ conte().titre }}</h1>
+        <p class="ouverture__accroche">{{ conte().accroche }}</p>
+        <p class="ouverture__origine">{{ conte().mentionOrigine }}</p>
+        <ul class="pastilles">
+          @for (e of conte().etiquettes; track e) { <li>{{ e }}</li> }
+        </ul>
+        <div class="ouverture__actions">
+          <a class="bouton bouton--vert bouton--brille" [href]="appUrl">Lire dans l’application</a>
+        </div>
+      </div>
+      <div class="ouverture__livre">
+        <img [src]="conte().couverture" [alt]="conte().couvertureAlt" width="1400" height="788" fetchpriority="high">
+      </div>
+    </div>
+    <div class="grecque" aria-hidden="true"></div>
+  </section>
+
+  <div class="rideau" aria-hidden="true"></div>
+  <!-- Le pays : une lanterne rouge et trois portes-lunes -->
+  <section class="pays section" aria-labelledby="titre-pays" [style.--fond]="deco('opera')">
+    <div class="interieur pays__grille">
+      <div class="lanterne">
+        <span class="lanterne__cordon" aria-hidden="true"></span>
+        <div class="lanterne__corps">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <p class="lanterne__nom">Chine</p>
+          <p class="lanterne__natif" lang="zh">中国 · Zhōngguó</p>
+          <p class="lanterne__ou">Roman classique</p>
+        </div>
+        <span class="lanterne__franges" aria-hidden="true"></span>
+      </div>
+      <div class="pays__texte">
+        <p class="etiquette">Une aventure venue de Chine</p>
+        <h2 id="titre-pays">Des montagnes dans les nuages</h2>
+        <p class="pays__intro">Cette histoire est l’une des plus connues de Chine. Elle se passe sur une montagne couverte de fleurs, sous la mer, dans le palais du Ciel et jusqu’au bout du monde.</p>
+        <ul class="portes-lune">
+          @for (m of mots; track m.pinyin) {
+            <li appApparition>
+              <span class="porte__hanzi" lang="zh">{{ m.hanzi }}</span>
+              <span class="porte__pinyin">{{ m.pinyin }}</span>
+              <span class="porte__sens">{{ m.sens }} <em>· {{ m.prononce }}</em></span>
+            </li>
+          }
+        </ul>
+        <p class="mots-titre">Trois mots chinois à retenir</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- L'histoire : la scène d'opéra, rideaux ouverts, sous-titres en bas -->
+  <section class="histoire section" id="histoire" [style.--fond]="deco('opera')">
+    <div class="interieur scene-opera">
+      <span class="coulisse coulisse--g" aria-hidden="true"></span>
+      <span class="coulisse coulisse--d" aria-hidden="true"></span>
+      <div class="scene-opera__centre">
+        <figure appApparition class="histoire__visuel">
+          <img [src]="conte().imageHistoire.src" [alt]="conte().imageHistoire.alt" loading="lazy" width="1400" height="788">
+          <figcaption>{{ conte().imageHistoire.legende }}</figcaption>
+        </figure>
+        <div class="surtitre">
+          <p class="etiquette">L’histoire</p>
+          <h2>Un singe qui voulait le Ciel</h2>
+          <blockquote appApparition class="citation"><p>{{ conte().citation }}</p></blockquote>
+          <p appApparition class="resume">{{ conte().resume }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- La paume du Bouddha -->
+  <section class="paume section" aria-labelledby="titre-paume" [style.--fond]="deco('piliers')">
+    <div class="interieur">
+      <p class="etiquette">À toi de sauter</p>
+      <h2 id="titre-paume">Peux-tu sortir de la main du Bouddha ?</h2>
+
+      <div class="defi">
+        <div class="monde" [attr.data-etat]="etat()" role="img" aria-label="Wukong sur son nuage face à la main du Bouddha">
+          <div class="monde__fond" [style.background-image]="deco('nuages')"></div>
+          <svg class="main" viewBox="0 0 800 450" aria-hidden="true">
+            <!-- paume -->
+            <rect class="main__paume" x="230" y="250" width="340" height="190" rx="70"/>
+            <!-- cinq doigts / cinq piliers -->
+            @for (x of [232, 300, 368, 436, 504]; track x; let i = $index) {
+              <g class="doigt" [class.doigt--milieu]="i === 2">
+                <rect class="doigt__corps" [attr.x]="x" [attr.y]="i === 2 ? 40 : (i === 0 || i === 4 ? 100 : 70)" width="60" [attr.height]="i === 2 ? 240 : (i === 0 || i === 4 ? 180 : 210)" rx="30"/>
+                <rect class="doigt__chapiteau" [attr.x]="x - 4" [attr.y]="i === 2 ? 40 : (i === 0 || i === 4 ? 100 : 70)" width="68" height="16" rx="6"/>
+              </g>
+            }
+            <text class="nom" x="400" y="108" text-anchor="middle">孙悟空</text>
+          </svg>
+          <img class="wukong" [src]="chemin('personnages/sun-wukong-t.webp')" alt="" width="200" height="300">
+          <span class="trace" aria-hidden="true"></span>
+        </div>
+
+        <div class="commande">
+          <p class="commande__msg" aria-live="polite">{{ message() }}</p>
+          <div class="commande__boutons">
+            <button type="button" class="saut" [disabled]="occupe() || etat() === 'retour'" (click)="sauter()">Saut du nuage !</button>
+            @if (etat() === 'retour') {
+              <button type="button" class="reset" (click)="recommencer()">Rejouer</button>
+            }
+          </div>
+          @if (etat() === 'retour') {
+            <figure class="finger">
+              <img [src]="page(12)" alt="" width="1400" height="788" loading="lazy">
+            </figure>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Illustrations -->
+  <section class="galerie section" id="illustrations" [style.--fond]="fond(1)">
+    <div class="interieur">
+      <p class="etiquette">Les illustrations</p>
+      <h2>Un conte à regarder autant qu’à lire</h2>
+      <ul class="galerie-trois">
+        @for (i of conte().illustrations; track i.src; let n = $index) {
+          <li appApparition class="cadre" [style.transition-delay.ms]="n * 120">
+            <img [src]="i.src" [alt]="i.alt" loading="lazy" width="1400" height="788">
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Personnages -->
+  <section class="gens section" id="personnages" aria-labelledby="titre-gens" [style.--fond]="deco('ciel')">
+    <div class="interieur">
+      <p class="etiquette">Les personnages</p>
+      <h2 id="titre-gens">Ceux de la montagne, de la mer et du Ciel</h2>
+      <p class="chapeau">Choisis un personnage pour le découvrir.</p>
+      <app-personnages-conte [personnages]="conte().personnages" idBase="wukong" />
+    </div>
+  </section>
+
+  <!-- Origine -->
+  <section class="origine section">
+    <div class="interieur">
+      <p class="etiquette">L’origine</p>
+      <h2>{{ conte().origine.titre }}</h2>
+      <aside class="oeuvre" appApparition>
+        <p class="oeuvre__etiquette">L’œuvre d’origine</p>
+        <p class="oeuvre__titre"><span lang="zh">西游记</span> · Xiyouji</p>
+        <p class="oeuvre__auteur">Le Voyage en Occident · Wu Cheng’en · publié vers 1592 (à vérifier) · inspiré du pèlerinage du moine Xuanzang (VIIe siècle)</p>
+      </aside>
+      <div class="origine__colonnes">
+        @for (p of conte().origine.paragraphes; track p) {
+          <p appApparition>{{ p }}</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Fiche -->
+  <section class="fiche-section section" id="fiche">
+    <div class="interieur centre">
+      <p class="etiquette">En un coup d’œil</p>
+      <h2>La fiche du conte</h2>
+      <app-fiche-conte [titre]="conte().titre" [infos]="conte().infos" />
+    </div>
+  </section>
+
+  <section class="appel section" [style.--fond]="fond(13)">
+    <div class="interieur centre">
+      <h2>Prêt à suivre le Roi des Singes ?</h2>
+      <p>Ouvre l’application et lis son voyage en entier.</p>
+      <button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="installer()">Télécharger l’application</button>
+    </div>
+  </section>
+</main>

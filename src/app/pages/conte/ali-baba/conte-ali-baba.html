@@ -1,0 +1,176 @@
+<main class="ab" [style.--tapis]="deco('motif')" [style.--tuile]="deco('tuile')">
+  <!-- Ouverture : le rocher qui s'ouvre -->
+  <section class="ouverture">
+    <div class="ouverture__interieur">
+      <div class="ouverture__texte">
+        <div class="pays-badge">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <span><strong>Perse</strong> <span lang="fa">ایران</span></span>
+        </div>
+        <h1>{{ conte().titre }}</h1>
+        <p class="ouverture__accroche">{{ conte().accroche }}</p>
+        <p class="ouverture__origine">{{ conte().mentionOrigine }}</p>
+        <ul class="pastilles">
+          @for (e of conte().etiquettes; track e) { <li>{{ e }}</li> }
+        </ul>
+        <div class="ouverture__actions">
+          <button type="button" class="formule" (click)="basculerPorte()" [attr.aria-pressed]="ouvert()">
+            @if (ouvert()) { « Sésame, ferme-toi ! » } @else { « Sésame, ouvre-toi ! » }
+          </button>
+          <a class="bouton bouton--vert bouton--brille" [href]="appUrl">Lire dans l’application</a>
+        </div>
+      </div>
+
+      <div class="entree" [class.entree--ouverte]="ouvert()">
+        <div class="entree__grotte">
+          <img [src]="conte().couverture" [alt]="conte().couvertureAlt" width="1400" height="788" fetchpriority="high">
+        </div>
+        <div class="battant battant--g" aria-hidden="true"></div>
+        <div class="battant battant--d" aria-hidden="true"></div>
+        <p class="entree__aide" aria-live="polite">
+          @if (ouvert()) { La grotte est ouverte : tout ce qui brille n’est pas à prendre. } @else { Le rocher est fermé. Il attend un mot. }
+        </p>
+      </div>
+    </div>
+  </section>
+  <div class="frise" aria-hidden="true"></div>
+
+  <!-- Le pays : le mihrab et les trois lanternes -->
+  <section class="pays section" aria-labelledby="titre-pays">
+    <div class="interieur pays__grille">
+      <div class="mihrab">
+        <div class="mihrab__arc">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <p class="mihrab__nom">Perse</p>
+          <p class="mihrab__natif" lang="fa">ایران · Irân</p>
+          <p class="mihrab__ou">Mille et Une Nuits</p>
+        </div>
+      </div>
+      <div class="pays__texte">
+        <p class="etiquette">Un conte venu de Perse</p>
+        <h2 id="titre-pays">Des bazars, des tapis et des nuits à raconter</h2>
+        <p class="pays__intro">Le conte se passe en Perse, l’Iran d’aujourd’hui, au bord des routes que suivaient les caravanes. Les histoires y circulaient de marché en marché, la nuit, à la lumière des lanternes.</p>
+        <ul class="lanternes">
+          @for (m of mots; track m.translit) {
+            <li appApparition>
+              <span class="lanterne__natif" lang="fa">{{ m.persan }}</span>
+              <span class="lanterne__translit">{{ m.translit }}</span>
+              <span class="lanterne__sens">{{ m.sens }}</span>
+            </li>
+          }
+        </ul>
+        <p class="mots-note">Trois mots persans à retenir.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- L'histoire : une fenêtre sur le souk, un médaillon de tapis -->
+  <section class="histoire section" id="histoire" [style.--fond]="deco('souk')">
+    <div class="interieur histoire__pile">
+      <figure appApparition class="fenetre">
+        <img [src]="conte().imageHistoire.src" [alt]="conte().imageHistoire.alt" loading="lazy" width="1400" height="788">
+      </figure>
+      <div class="medaillon">
+        <p class="etiquette">L’histoire</p>
+        <h2>Un mot de passe, deux frères</h2>
+        <blockquote appApparition class="citation"><p>{{ conte().citation }}</p></blockquote>
+        <p appApparition class="resume">{{ conte().resume }}</p>
+        <p class="medaillon__legende">{{ conte().imageHistoire.legende }}</p>
+      </div>
+    </div>
+  </section>
+  <div class="frise" aria-hidden="true"></div>
+
+  <!-- Les quarante jarres -->
+  <section class="jarres section" aria-labelledby="titre-jarres">
+    <div class="interieur">
+      <p class="etiquette">À toi de jouer</p>
+      <h2 id="titre-jarres">Les quarante jarres</h2>
+      <p class="jarres__chapeau">Morgiane passe de jarre en jarre, une lanterne à la main. Touche une jarre pour écouter, touche-la encore pour la sceller.</p>
+
+      <p class="jarres__parole" aria-live="polite">{{ parole() }}</p>
+
+      <div class="cour" role="group" aria-label="Quarante jarres">
+        @for (rang of rangs; track $index) {
+          <div class="rang">
+            @for (i of rang; track i) {
+              <button type="button" class="jarre" [class.jarre--chuchote]="jarres()[i] === 1" [class.jarre--scellee]="jarres()[i] === 2"
+                [attr.aria-label]="'Jarre ' + (i + 1) + (jarres()[i] === 2 ? ', scellée' : '')" (click)="touche(i)">
+                <span class="jarre__couvercle"></span>
+                <span class="jarre__panse"></span>
+                @if (jarres()[i] === 1) { <span class="jarre__bulle">?</span> }
+                @if (jarres()[i] === 2) { <span class="jarre__corde"></span> }
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="jarres__bas">
+        <p class="jarres__compte"><strong>{{ scellees() }}</strong> / 40 jarres scellées</p>
+        @if (scellees() > 0) { <button type="button" class="jarres__reset" (click)="recommencer()">Tout rouvrir</button> }
+      </div>
+    </div>
+  </section>
+
+  <!-- Illustrations : trois niches d'une arcade -->
+  <section class="galerie section" id="illustrations" [style.--fond]="deco('souk')">
+    <div class="interieur">
+      <p class="etiquette">Les illustrations</p>
+      <h2>Un conte à regarder autant qu’à lire</h2>
+      <ul class="galerie-trois">
+        @for (i of conte().illustrations; track i.src; let n = $index) {
+          <li appApparition class="niche" [style.transition-delay.ms]="n * 120">
+            <img [src]="i.src" [alt]="i.alt" loading="lazy" width="1400" height="788">
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Personnages et voix -->
+  <section class="gens section" id="personnages" aria-labelledby="titre-gens" [style.--fond]="fond(15)">
+    <div class="interieur">
+      <p class="etiquette">Les personnages</p>
+      <h2 id="titre-gens">Ceux qui cherchent le trésor, et celle qui le garde</h2>
+      <p class="chapeau">Choisis un personnage pour le découvrir.</p>
+      <app-personnages-conte [personnages]="conte().personnages" idBase="alibaba" />
+    </div>
+  </section>
+
+  <!-- Origine : le manuscrit -->
+  <section class="origine section">
+    <div class="interieur">
+      <p class="etiquette">L’origine</p>
+      <h2>{{ conte().origine.titre }}</h2>
+      <aside class="oeuvre" appApparition>
+        <p class="oeuvre__etiquette">L’œuvre d’origine</p>
+        <p class="oeuvre__titre">Les Mille et Une Nuits · « Ali Baba et les quarante voleurs »</p>
+        <p class="oeuvre__auteur">Recueil de contes arabes et persans · traduction française d’Antoine Galland, 1704-1717</p>
+      </aside>
+      <div class="origine__colonnes">
+        @for (p of conte().origine.paragraphes; track p) {
+          <p appApparition>{{ p }}</p>
+        }
+      </div>
+    </div>
+  </section>
+  <div class="frise" aria-hidden="true"></div>
+
+  <!-- Fiche -->
+  <section class="fiche-section section" id="fiche">
+    <div class="interieur centre">
+      <p class="etiquette">En un coup d’œil</p>
+      <h2>La fiche du conte</h2>
+      <app-fiche-conte [titre]="conte().titre" [infos]="conte().infos" />
+    </div>
+  </section>
+
+  <section class="appel section" [style.--fond]="deco('grotte')">
+    <div class="interieur centre">
+      <h2>Prêt à entrer dans la grotte ?</h2>
+      <p>Ouvre l’application et découvre Ali Baba en entier.</p>
+      <button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="installer()">Télécharger l’application</button>
+    </div>
+  </section>
+</main>

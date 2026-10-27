@@ -1,0 +1,171 @@
+<main class="po" [style.--wampum]="deco('motif')" [style.--daim]="deco('tuile')">
+  <!-- Ouverture : la rivière entre deux rives -->
+  <section class="ouverture" [style.--fond]="deco('riviere')">
+    <div class="ouverture__interieur">
+      <div class="ouverture__texte">
+        <div class="pays-badge">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <span><strong>États-Unis</strong> · Virginie</span>
+        </div>
+        <h1>{{ conte().titre }}</h1>
+        <p class="ouverture__accroche">{{ conte().accroche }}</p>
+        <p class="ouverture__origine">{{ conte().mentionOrigine }}</p>
+        <ul class="pastilles">
+          @for (e of conte().etiquettes; track e) { <li>{{ e }}</li> }
+        </ul>
+        <div class="ouverture__actions">
+          <a class="bouton bouton--vert bouton--brille" [href]="appUrl">Lire dans l’application</a>
+        </div>
+      </div>
+      <div class="ouverture__livre">
+        <img [src]="conte().couverture" [alt]="conte().couvertureAlt" width="1400" height="788" fetchpriority="high">
+      </div>
+    </div>
+    <svg class="vague" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 30 Q 75 0 150 30 T 300 30 T 450 30 T 600 30 T 750 30 T 900 30 T 1050 30 T 1200 30 V60 H0Z"/>
+    </svg>
+  </section>
+
+  <div class="wampum" aria-hidden="true"></div>
+  <!-- Le pays : une maison longue, trois pochettes en peau suspendues à un cordon -->
+  <section class="pays section" aria-labelledby="titre-pays" [style.--fond]="deco('foret')">
+    <div class="interieur pays__grille">
+      <div class="maison-longue">
+        <div class="maison-longue__toit" aria-hidden="true"></div>
+        <div class="maison-longue__mur">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <p class="maison-longue__nom">États-Unis</p>
+          <p class="maison-longue__natif">United States · Virginie</p>
+          <p class="maison-longue__ou">Histoire et légende</p>
+        </div>
+      </div>
+      <div class="pays__texte">
+        <p class="etiquette">Un récit venu d’Amérique du Nord</p>
+        <h2 id="titre-pays">Au bord d’une grande baie, il y a quatre siècles</h2>
+        <p class="pays__intro">L’histoire se passe en Virginie, sur la côte est des États-Unis, au début du XVIIe siècle. Le peuple Powhatan y vit dans des villages entourés de forêts, de rivières et de champs de maïs.</p>
+        <div class="cordon" aria-hidden="true"></div>
+        <ul class="pochettes">
+          @for (m of mots; track m.natif) {
+            <li appApparition>
+              <span class="pochette__natif">{{ m.natif }}</span>
+              <span class="pochette__prononce">{{ m.prononce }}</span>
+              <span class="pochette__sens">{{ m.sens }}</span>
+            </li>
+          }
+        </ul>
+        <p class="mots-note">Mots de la langue algonquine de Virginie, orthographe approximative (à vérifier).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- L'histoire : écorce de bouleau et image cernée de perles -->
+  <section class="histoire section" id="histoire" [style.--fond]="deco('mais')">
+    <div class="interieur histoire__grille">
+      <div class="ecorce">
+        <p class="etiquette">L’histoire</p>
+        <h2>Une fillette qui pose mille questions</h2>
+        <blockquote appApparition class="citation"><p>{{ conte().citation }}</p></blockquote>
+        <p appApparition class="resume">{{ conte().resume }}</p>
+      </div>
+      <figure appApparition class="histoire__visuel">
+        <div class="cadre-perles">
+          <img [src]="conte().imageHistoire.src" [alt]="conte().imageHistoire.alt" loading="lazy" width="1400" height="788">
+        </div>
+        <figcaption>{{ conte().imageHistoire.legende }}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- La ceinture de perles -->
+  <section class="ceinture section" aria-labelledby="titre-ceinture" [style.--fond]="deco('perles')">
+    <div class="interieur">
+      <p class="etiquette">À toi de tisser</p>
+      <h2 id="titre-ceinture">Une perle après l’autre, un pont entre deux mondes</h2>
+      <p class="chapeau">Touche les perles pour tisser la ceinture. Chaque perle est un geste qui rapproche les deux peuples.</p>
+
+      <ol class="fil" aria-label="La ceinture de perles">
+        @for (p of perles; track p.titre; let i = $index) {
+          <li>
+            <button type="button" class="perle" [class.perle--tissee]="i < tissees()" [class.perle--actuelle]="etape() === i" [class.perle--sombre]="i % 2 === 1" [attr.aria-current]="etape() === i ? 'step' : null" [attr.aria-label]="'Perle ' + (i + 1) + ' : ' + p.titre" (click)="aller(i)">
+              <span>{{ i + 1 }}</span>
+            </button>
+          </li>
+        }
+      </ol>
+      <p class="progres">{{ tissees() }} {{ tissees() > 1 ? 'perles tissées' : 'perle tissée' }} sur {{ perles.length }}</p>
+
+      <article class="geste" aria-live="polite">
+        <figure class="geste__image">
+          <img [src]="page(perle().page)" alt="" width="1400" height="788" loading="lazy">
+        </figure>
+        <div class="geste__texte">
+          <h3>{{ perle().titre }}</h3>
+          <p>{{ perle().texte }}</p>
+          <button type="button" class="suivante" (click)="suivante()" [disabled]="etape() === perles.length - 1">Perle suivante →</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Illustrations -->
+  <section class="galerie section" id="illustrations" [style.--fond]="fond(10)">
+    <div class="interieur">
+      <p class="etiquette">Les illustrations</p>
+      <h2>Un conte à regarder autant qu’à lire</h2>
+      <ul class="galerie-trois">
+        @for (i of conte().illustrations; track i.src; let n = $index) {
+          <li appApparition class="cadre" [style.transition-delay.ms]="n * 120">
+            <img [src]="i.src" [alt]="i.alt" loading="lazy" width="1400" height="788">
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <div class="wampum" aria-hidden="true"></div>
+  <!-- Personnages -->
+  <section class="gens section" id="personnages" aria-labelledby="titre-gens" [style.--fond]="deco('village')">
+    <div class="interieur">
+      <p class="etiquette">Les personnages</p>
+      <h2 id="titre-gens">Ceux de la rivière</h2>
+      <p class="chapeau">Choisis un personnage pour le découvrir.</p>
+      <app-personnages-conte [personnages]="conte().personnages" idBase="pocahontas" />
+    </div>
+  </section>
+
+  <!-- Origine -->
+  <section class="origine section">
+    <div class="interieur">
+      <p class="etiquette">L’origine</p>
+      <h2>{{ conte().origine.titre }}</h2>
+      <aside class="oeuvre" appApparition>
+        <p class="oeuvre__etiquette">L’œuvre d’origine</p>
+        <p class="oeuvre__titre">The Generall Historie of Virginia</p>
+        <p class="oeuvre__auteur">John Smith · 1624 · récit contesté par certains historiens</p>
+      </aside>
+      <div class="origine__colonnes">
+        @for (p of conte().origine.paragraphes; track p) {
+          <p appApparition>{{ p }}</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <div class="wampum" aria-hidden="true"></div>
+  <!-- Fiche -->
+  <section class="fiche-section section" id="fiche">
+    <div class="interieur centre">
+      <p class="etiquette">En un coup d’œil</p>
+      <h2>La fiche du conte</h2>
+      <app-fiche-conte [titre]="conte().titre" [infos]="conte().infos" />
+    </div>
+  </section>
+
+  <section class="appel section" [style.--fond]="fond(12)">
+    <div class="interieur centre">
+      <h2>Prêt à traverser la rivière ?</h2>
+      <p>Ouvre l’application et découvre Pocahontas en entier.</p>
+      <button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="installer()">Télécharger l’application</button>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,178 @@
+<main class="co" [style.--formline]="deco('motif')" [style.--vannerie]="deco('tuile')">
+  <!-- Ouverture : la nuit sans fin -->
+  <section class="ouverture" [style.--fond]="deco('nuit')">
+    <div class="ouverture__interieur">
+      <div class="ouverture__texte">
+        <div class="pays-badge">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <span><strong>Alaska</strong> · peuples du Nord-Ouest</span>
+        </div>
+        <h1>{{ conte().titre }}</h1>
+        <p class="ouverture__accroche">{{ conte().accroche }}</p>
+        <p class="ouverture__origine">{{ conte().mentionOrigine }}</p>
+        <ul class="pastilles">
+          @for (e of conte().etiquettes; track e) { <li>{{ e }}</li> }
+        </ul>
+        <div class="ouverture__actions">
+          <a class="bouton bouton--vert bouton--brille" [href]="appUrl">Lire dans l’application</a>
+        </div>
+      </div>
+      <div class="ouverture__livre">
+        <img [src]="conte().couverture" [alt]="conte().couvertureAlt" width="1400" height="788" fetchpriority="high">
+      </div>
+    </div>
+    <div class="bande-formline" [style.background-image]="deco('formline')" aria-hidden="true"></div>
+  </section>
+
+  <!-- Le mât : le pays et l'histoire de part et d'autre d'un poteau de formline -->
+  <div class="mat" [style.--fond]="deco('maison')">
+    <div class="totem" aria-hidden="true"></div>
+
+    <section class="pays section" aria-labelledby="titre-pays">
+      <div class="interieur pays__grille">
+        <div class="facade">
+          <div class="facade__ovale" aria-hidden="true"></div>
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <p class="facade__nom">Alaska</p>
+          <p class="facade__natif">Lingít Aaní · pays des Tlingit</p>
+          <p class="facade__ou">Mythe du Nord-Ouest</p>
+        </div>
+        <span class="pays__vide" aria-hidden="true"></span>
+        <div class="pays__texte">
+          <p class="etiquette">Un conte venu du Grand Nord</p>
+          <h2 id="titre-pays">Des rives glacées, des forêts de cèdres</h2>
+          <p class="pays__intro">Ce mythe se raconte sur la côte de l’Alaska, parmi les peuples tlingit et leurs voisins. Corbeau y est un personnage très aimé, mi-farceur, mi-sage.</p>
+          <ul class="couvercles">
+            @for (m of mots; track m.tlingit) {
+              <li appApparition>
+                <span class="couvercle__natif" lang="tli">{{ m.tlingit }}</span>
+                <span class="couvercle__prononce">{{ m.prononce }}</span>
+                <span class="couvercle__sens">{{ m.sens }}</span>
+              </li>
+            }
+          </ul>
+          <p class="mots-note">Trois mots tlingit (orthographe et prononciation à vérifier).</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="histoire section" id="histoire">
+      <div class="interieur histoire__grille">
+        <div class="histoire__texte">
+          <p class="etiquette">L’histoire</p>
+          <h2>Comment la lumière est venue</h2>
+          <blockquote appApparition class="citation"><p>{{ conte().citation }}</p></blockquote>
+          <p appApparition class="resume">{{ conte().resume }}</p>
+        </div>
+        <span class="pays__vide" aria-hidden="true"></span>
+        <figure appApparition class="histoire__visuel">
+          <div class="cadre-formline">
+            <img [src]="conte().imageHistoire.src" [alt]="conte().imageHistoire.alt" loading="lazy" width="1400" height="788">
+          </div>
+          <figcaption>{{ conte().imageHistoire.legende }}</figcaption>
+        </figure>
+      </div>
+    </section>
+  </div>
+
+  <!-- Les trois boîtes -->
+  <section class="boites section" aria-labelledby="titre-boites" [style.--fond]="deco('boites')">
+    <div class="interieur">
+      <p class="etiquette">À toi d’ouvrir</p>
+      <h2 id="titre-boites">Les trois boîtes de lumière</h2>
+      <p class="chapeau">Ouvre les boîtes dans l’ordre, comme le bébé qui pleure pour les avoir.</p>
+
+      <div class="scene" [class.scene--etoiles]="ouvertes() >= 1" [class.scene--lune]="ouvertes() >= 2" [class.scene--jour]="ouvertes() >= 3" role="img" [attr.aria-label]="'Ciel : ' + ouvertes() + ' boîte(s) ouverte(s) sur 3'">
+        <span class="scene__etoiles"></span>
+        <span class="scene__lune"></span>
+        <span class="scene__soleil"></span>
+        <span class="scene__montagnes"></span>
+        <img class="scene__corbeau scene__corbeau--blanc" [src]="chemin('personnages/corbeau-blanc-t.webp')" alt="" width="300" height="400">
+        <img class="scene__corbeau scene__corbeau--noir" [src]="chemin('personnages/corbeau-noir-t.webp')" alt="" width="300" height="400">
+      </div>
+
+      <ul class="coffres">
+        @for (b of boites; track b.nom; let i = $index) {
+          <li>
+            <button type="button" class="coffre" [class.coffre--ouvert]="i < ouvertes()" [disabled]="i !== ouvertes()" (click)="ouvrir(i)" [attr.aria-label]="'Ouvrir la boîte : ' + b.nom">
+              <span class="coffre__couvercle"></span>
+              <span class="coffre__corps"></span>
+              <span class="coffre__nom">{{ b.nom }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+
+      <div class="legende" aria-live="polite">
+        @if (derniere(); as d) {
+          <p><strong>{{ d.nom }}.</strong> {{ d.texte }}</p>
+          @if (ouvertes() === boites.length) {
+            <button type="button" class="reset" (click)="refermer()">Tout refermer</button>
+          }
+        } @else {
+          <p>Tout est noir. Pas une étoile, pas une lune. Les trois boîtes du vieux chef attendent, bien fermées.</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Illustrations -->
+  <section class="galerie section" id="illustrations" [style.--fond]="fond(10)">
+    <div class="interieur">
+      <p class="etiquette">Les illustrations</p>
+      <h2>Un conte à regarder autant qu’à lire</h2>
+      <ul class="galerie-trois">
+        @for (i of conte().illustrations; track i.src; let n = $index) {
+          <li appApparition class="cadre" [style.transition-delay.ms]="n * 120">
+            <img [src]="i.src" [alt]="i.alt" loading="lazy" width="1400" height="788">
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Personnages -->
+  <section class="gens section" id="personnages" aria-labelledby="titre-gens" [style.--fond]="deco('maison')">
+    <div class="interieur">
+      <p class="etiquette">Les personnages</p>
+      <h2 id="titre-gens">Ceux de la maison du chef</h2>
+      <p class="chapeau">Choisis un personnage pour le découvrir.</p>
+      <app-personnages-conte [personnages]="conte().personnages" idBase="corbeau" />
+    </div>
+  </section>
+
+  <!-- Origine -->
+  <section class="origine section">
+    <div class="interieur">
+      <p class="etiquette">L’origine</p>
+      <h2>{{ conte().origine.titre }}</h2>
+      <aside class="oeuvre" appApparition>
+        <p class="oeuvre__etiquette">Une version écrite</p>
+        <p class="oeuvre__titre">Tlingit Myths and Texts</p>
+        <p class="oeuvre__auteur">John R. Swanton · 1909 · d’après la tradition orale des peuples du Nord-Ouest du Pacifique</p>
+      </aside>
+      <div class="origine__colonnes">
+        @for (p of conte().origine.paragraphes; track p) {
+          <p appApparition>{{ p }}</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Fiche -->
+  <section class="fiche-section section" id="fiche">
+    <div class="interieur centre">
+      <p class="etiquette">En un coup d’œil</p>
+      <h2>La fiche du conte</h2>
+      <app-fiche-conte [titre]="conte().titre" [infos]="conte().infos" />
+    </div>
+  </section>
+
+  <section class="appel section" [style.--fond]="deco('maison')">
+    <div class="interieur centre">
+      <h2>Envie de voir se lever le soleil ?</h2>
+      <p>Ouvre l’application et lis l’histoire en entier.</p>
+      <button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="installer()">Télécharger l’application</button>
+    </div>
+  </section>
+</main>

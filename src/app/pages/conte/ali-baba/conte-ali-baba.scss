@@ -1,0 +1,286 @@
+@use '../../../shared/conte-monde' as cm;
+
+@include cm.base;
+@include cm.galerie-trois;
+
+:host {
+  --nuit: #0e1a3a;
+  --nuit2: #172a58;
+  --turquoise: #1fa6a0;
+  --or: #e6b450;
+  --or-clair: #ffe29a;
+  --terre: #b5532c;
+  --creme: #fbf3e0;
+  color: #fff;
+  background: var(--nuit);
+}
+
+h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; letter-spacing: 0.01em; }
+h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--or-clair); }
+.etiquette { color: var(--turquoise); }
+
+/* Zellige : petits losanges dorés sur fond indigo */
+$zellige: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'><g fill='none' stroke='%23e6b450' stroke-opacity='.35' stroke-width='1.5'><path d='M24 2l22 22-22 22L2 24z'/><path d='M24 12l12 12-12 12-12-12z'/></g></svg>");
+
+/* ---------- Ouverture ---------- */
+.ouverture {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 4.5rem 1.25rem 6rem;
+  background:
+    linear-gradient(180deg, rgb(8 14 36 / 0.78), rgb(14 26 58 / 0.55) 55%, rgb(8 14 36 / 0.92)),
+    url('/assets/contes/ali-baba/deco/rocher.webp') center / cover;
+
+  &__interieur {
+    max-width: 1150px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  &__texte h1 { margin: 0.5rem 0 0.8rem; font-size: clamp(3rem, 8vw, 5.4rem); line-height: 1; color: #fff; text-shadow: 0 4px 22px #000, 0 0 40px rgb(230 180 80 / 0.5); }
+  &__accroche { font-size: 1.3rem; line-height: 1.5; color: #fff; text-shadow: 0 2px 8px #000; max-width: 28em; }
+  &__origine { margin-top: 0.9rem; font-size: 0.92rem; color: #ddd2b0; text-shadow: 0 1px 6px #000; max-width: 34em; }
+  &__actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-top: 1.6rem; }
+}
+.pays-badge { padding: 0.4rem 1rem 0.4rem 0.5rem; border-radius: 999px; background: rgb(8 14 36 / 0.6); border: 1px solid rgb(230 180 80 / 0.6); }
+.pastilles li { padding: 0.25rem 0.9rem; border-radius: 999px; background: rgb(8 14 36 / 0.65); border: 1px solid rgb(230 180 80 / 0.55); color: var(--or-clair); font-size: 0.9rem; }
+
+.formule {
+  border: 3px solid var(--or);
+  border-radius: 999px;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(#26407e, var(--nuit));
+  color: var(--or-clair);
+  font-weight: 700;
+  font-size: 1.08rem;
+  font-family: Georgia, serif;
+  font-style: italic;
+  box-shadow: 0 5px 0 #070d22, 0 0 22px rgb(230 180 80 / 0.4);
+  &:hover { transform: translateY(-2px); }
+  &:focus-visible { outline: 3px solid var(--or-clair); outline-offset: 3px; }
+}
+
+/* La porte du rocher : deux battants taillés dans la même image */
+.entree {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border-radius: 46% 46% 10px 10px / 34% 34% 10px 10px;
+  border: 6px solid var(--or);
+  box-shadow: 0 0 0 4px #070d22, 0 24px 50px rgb(0 0 0 / 0.6), 0 0 60px rgb(230 180 80 / 0.25);
+  background: #1a1206;
+
+  &__grotte { position: absolute; inset: 0; display: grid; place-items: center; background: url('/assets/contes/ali-baba/deco/grotte.webp') center / cover; }
+  &__grotte img { width: 78%; height: auto; border: 3px solid var(--or); border-radius: 6px; box-shadow: 0 10px 30px #000; transform: scale(0.9); transition: transform 1.2s ease; }
+  &--ouverte &__grotte img { transform: scale(1); }
+
+  &__aide { position: absolute; left: 0; right: 0; bottom: 0.5rem; z-index: 3; text-align: center; font-size: 0.9rem; font-style: italic; color: #fff; text-shadow: 0 1px 8px #000, 0 0 3px #000; padding: 0 1rem; }
+}
+.battant {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.5%;
+  z-index: 2;
+  background: url('/assets/contes/ali-baba/deco/rocher.webp') no-repeat;
+  background-size: 200% 100%;
+  transition: transform 1.6s cubic-bezier(0.7, 0, 0.2, 1);
+  box-shadow: inset 0 0 40px rgb(0 0 0 / 0.55);
+
+  &--g { left: 0; background-position: left center; }
+  &--d { right: 0; background-position: right center; }
+}
+.entree--ouverte .battant--g { transform: translateX(-102%); }
+.entree--ouverte .battant--d { transform: translateX(102%); }
+@media (prefers-reduced-motion: reduce) {
+  .battant, .entree__grotte img { transition: none; }
+}
+
+/* ---------- Le tapis : deux bordures tissées le long de la page, une frise de zelliges entre les parties ---------- */
+.ab { position: relative; }
+.ab::before, .ab::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(14px, 3.2vw, 56px);
+  z-index: 6;
+  background: var(--tapis) center top / 240px auto repeat-y;
+  box-shadow: inset 0 0 0 2px var(--or), 0 0 22px rgb(0 0 0 / 0.55);
+  pointer-events: none;
+}
+.ab::before { left: 0; border-right: 4px solid var(--nuit); }
+.ab::after { right: 0; border-left: 4px solid var(--nuit); }
+.section { padding-inline: clamp(1.4rem, 6vw, 5rem); }
+.frise {
+  position: relative;
+  z-index: 3;
+  height: 54px;
+  background: var(--tuile) center / 108px 108px repeat-x;
+  border-block: 4px solid var(--or);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.5);
+}
+
+/* ---------- Pays : un mihrab (niche à arc) et trois lanternes suspendues ---------- */
+.pays {
+  background: linear-gradient(rgb(14 26 58 / 0.86), rgb(10 18 44 / 0.93)), var(--tuile) center / 340px 340px;
+  &__grille { display: grid; grid-template-columns: 320px 1fr; gap: 3.5rem; align-items: end; }
+  &__intro { margin: 0.8rem 0 1.4rem; font-size: 1.15rem; line-height: 1.6; max-width: 40em; }
+}
+.mihrab {
+  padding: 14px;
+  border-radius: 170px 170px 8px 8px;
+  background: linear-gradient(var(--or), #8a6420);
+  box-shadow: 0 22px 44px rgb(0 0 0 / 0.55);
+  &__arc {
+    padding: 3.2rem 1.4rem 1.6rem;
+    text-align: center;
+    border-radius: 150px 150px 4px 4px;
+    background: radial-gradient(ellipse at 50% 18%, #2c4a96, var(--nuit) 70%);
+    border: 3px solid var(--nuit);
+  }
+  img { width: 78%; height: auto; border-radius: 4px; box-shadow: 0 6px 18px #000; border: 2px solid var(--or-clair); }
+  &__nom { margin-top: 1rem; font-family: Georgia, serif; font-size: 2rem; font-weight: 700; color: var(--or-clair); }
+  &__natif { font-size: 1.2rem; }
+  &__ou { margin-top: 0.4rem; font-size: 0.9rem; color: #cfd6ee; }
+}
+.lanternes { display: flex; flex-wrap: wrap; gap: 1.2rem; margin: 0; padding: 0; list-style: none; align-items: flex-start; }
+.lanternes li {
+  position: relative;
+  display: grid;
+  gap: 0.1rem;
+  min-width: 140px;
+  padding: 1.1rem 1rem 0.9rem;
+  margin-top: 34px;
+  text-align: center;
+  border-radius: 40px 40px 56px 56px / 28px 28px 40px 40px;
+  background: radial-gradient(ellipse at 50% 40%, #ffe9b0, #e6b450 55%, #a2701c);
+  color: #2b1a05;
+  border: 3px solid #5a3a08;
+  box-shadow: 0 0 34px rgb(255 214 120 / 0.55);
+  &::before { content: ''; position: absolute; left: 50%; bottom: 100%; width: 3px; height: 34px; background: var(--or); }
+  &:nth-child(2) { margin-top: 62px; &::before { height: 62px; } }
+  &:nth-child(3) { margin-top: 20px; &::before { height: 20px; } }
+}
+.lanterne__natif { font-size: 2rem; line-height: 1.2; color: #4a1a06; }
+.lanterne__translit { font-weight: 700; }
+.lanterne__sens { font-size: 0.9rem; }
+.mots-note { margin-top: 1rem; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--turquoise); }
+
+/* ---------- Histoire : une fenêtre sur le souk, un médaillon de tapis ---------- */
+.histoire { background: linear-gradient(rgb(8 14 36 / 0.82), rgb(8 14 36 / 0.9)), var(--fond) center / cover; }
+.histoire__pile { display: grid; justify-items: center; }
+.fenetre {
+  width: min(780px, 100%);
+  margin: 0;
+  border-radius: 50% 50% 12px 12px / 38% 38% 12px 12px;
+  overflow: hidden;
+  border: 8px solid var(--or);
+  box-shadow: 0 0 0 5px var(--nuit), 0 26px 50px rgb(0 0 0 / 0.6);
+  img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+}
+.medaillon {
+  position: relative;
+  width: min(900px, 100%);
+  margin-top: -3rem;
+  padding: 3.2rem clamp(1.4rem, 5vw, 4.5rem) 2.6rem;
+  text-align: center;
+  color: #3b2a12;
+  background: linear-gradient(rgb(251 243 224 / 0.98), rgb(251 243 224 / 0.98));
+  border: 6px double var(--terre);
+  border-radius: 20px;
+  box-shadow: 0 0 0 8px var(--nuit2), 0 0 0 11px var(--or), 0 24px 50px rgb(0 0 0 / 0.55);
+  h2 { color: #7a2f10; }
+  .etiquette { color: #8a5a10; }
+  &__legende { margin-top: 1rem; font-style: italic; font-size: 0.95rem; color: #6a5230; }
+}
+.citation { margin: 1.2rem auto; max-width: 30em; padding: 0.6rem 0; border-block: 2px solid var(--or); font-family: Georgia, serif; font-size: 1.35rem; font-style: italic; color: #1d2a4d; }
+.resume { font-size: 1.15rem; line-height: 1.75; text-align: left; max-width: 38em; margin: 0 auto; }
+
+/* ---------- Les quarante jarres ---------- */
+.jarres {
+  background: linear-gradient(rgb(6 10 28 / 0.84), rgb(6 10 28 / 0.9)), url('/assets/contes/ali-baba/deco/jarres.webp') center / cover;
+  &__chapeau { max-width: 40em; margin: 0.6rem 0 1.2rem; font-size: 1.1rem; }
+  &__parole { min-height: 3.2em; padding: 0.7rem 1.1rem; border-radius: 12px; background: rgb(8 14 36 / 0.85); border-left: 4px solid var(--or); font-style: italic; font-size: 1.05rem; }
+  &__bas { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; margin-top: 1.2rem; }
+  &__compte { font-size: 1.1rem; }
+  &__reset { border: 2px solid var(--or); background: transparent; color: var(--or-clair); border-radius: 999px; padding: 0.4rem 1.1rem; font-weight: 700; }
+}
+.cour { margin-top: 1.4rem; padding: 1.2rem 0.6rem 0.4rem; border-radius: 16px; background: rgb(8 14 36 / 0.55); border: 2px dashed rgb(230 180 80 / 0.4); display: grid; gap: 0.5rem; }
+.rang { display: grid; grid-template-columns: repeat(8, 1fr); gap: 0.4rem; }
+.jarre {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  padding: 0.2rem 0 0.1rem;
+  border: 0;
+  background: none;
+  transition: transform 0.15s;
+  &:hover { transform: translateY(-3px); }
+  &:focus-visible { outline: 3px solid var(--or-clair); outline-offset: 2px; border-radius: 12px; }
+
+  &__couvercle { width: 38%; height: 7px; border-radius: 50% 50% 0 0; background: #8a3b1a; }
+  &__panse { width: min(54px, 90%); aspect-ratio: 0.82; border-radius: 50% 50% 46% 46% / 40% 40% 60% 60%; background: radial-gradient(circle at 35% 28%, #e08a52, var(--terre) 55%, #6e2a10); box-shadow: inset 0 -6px 10px rgb(0 0 0 / 0.35), 0 4px 8px rgb(0 0 0 / 0.5); }
+  &__bulle { position: absolute; top: -6px; right: 14%; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--or-clair); color: #3b2606; font-weight: 700; font-size: 0.8rem; animation: tremble 0.5s ease-in-out infinite alternate; }
+  &__corde { position: absolute; left: 22%; right: 22%; top: 28%; height: 8px; border-radius: 4px; background: repeating-linear-gradient(90deg, #d8b878 0 4px, #8a6a30 4px 8px); transform: rotate(-6deg); }
+
+  &--chuchote &__panse { box-shadow: inset 0 -6px 10px rgb(0 0 0 / 0.35), 0 0 16px 3px rgb(255 226 154 / 0.8); }
+  &--scellee &__panse { filter: saturate(0.5) brightness(0.8); }
+}
+@keyframes tremble { from { transform: rotate(-12deg); } to { transform: rotate(12deg); } }
+
+/* ---------- Galerie ---------- */
+.galerie {
+  background: linear-gradient(rgb(14 26 58 / 0.8), rgb(14 26 58 / 0.9)), var(--fond) center / cover;
+  .niche img { border-radius: 50% 50% 6px 6px / 30% 30% 6px 6px; border: 5px solid var(--or); box-shadow: 0 0 0 4px var(--nuit), 0 14px 28px rgb(0 0 0 / 0.5); }
+  .niche:nth-child(2) { margin-top: -1.6rem; }
+  .niche:nth-child(odd) { margin-top: 1.2rem; }
+}
+
+/* ---------- Personnages ---------- */
+.gens {
+  background: linear-gradient(rgb(14 26 58 / 0.86), rgb(8 14 36 / 0.93)), var(--fond) center / cover;
+  --pc-fond: rgb(8 14 36 / 0.85);
+  --pc-texte: #fff;
+  --pc-accent: var(--or);
+  --pc-bord: var(--or);
+  --pc-rayon: 18px;
+  --pc-vignette: 12px;
+}
+.chapeau { margin: 0.6rem 0 1.6rem; font-size: 1.1rem; }
+
+/* ---------- Origine (papier) ---------- */
+.origine {
+  color: #3b2a12;
+  background: #fbf3e0;
+  h2 { color: #7a2f10; }
+  .etiquette { color: #8a5a10; }
+}
+.oeuvre { margin: 1.4rem 0; padding: 1rem 1.3rem; border-radius: 10px; background: #fff; border: 2px solid var(--or); box-shadow: 0 8px 20px rgb(0 0 0 / 0.15); }
+.oeuvre__etiquette { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terre); font-weight: 700; }
+.oeuvre__titre { font-family: Georgia, serif; font-size: 1.3rem; font-weight: 700; margin: 0.2rem 0; }
+.origine__colonnes { columns: 2 22em; column-gap: 2.4rem; font-size: 1.08rem; line-height: 1.7; p { margin: 0 0 1rem; break-inside: avoid; } }
+
+/* ---------- Fiche ---------- */
+.fiche-section { background: linear-gradient(rgb(14 26 58 / 0.84), rgb(14 26 58 / 0.9)), var(--tapis) center / 520px auto; h2 { margin-bottom: 1.4rem; } --fc-fond: #fff6e3; --fc-texte: #1d2a4d; --fc-accent: var(--or); --fc-accent-texte: #8a5a10; }
+
+/* ---------- Appel ---------- */
+.appel {
+  background: linear-gradient(rgb(6 10 28 / 0.62), rgb(6 10 28 / 0.82)), var(--fond) center / cover;
+  p { margin: 0.8rem 0 1.6rem; font-size: 1.2rem; text-shadow: 0 2px 8px #000; }
+}
+
+@media (max-width: 900px) {
+  .ouverture__interieur, .pays__grille { grid-template-columns: 1fr; gap: 2rem; }
+  .ouverture { padding-top: 3rem; }
+  .entree { order: -1; }
+  .mihrab { max-width: 300px; margin: 0 auto; }
+  .lanternes { justify-content: center; }
+  .rang { grid-template-columns: repeat(5, 1fr); }
+}
+@media (max-width: 600px) {
+  .section { padding: 3.5rem 1rem; }
+}

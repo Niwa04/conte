@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rufus, chat malgré lui — Le conte complet</title>
+<meta name="description" content="Rufus, chat malgré lui : le lore, les personnages, les lieux et le texte à feuilleter page par page.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;line-height:1.7}
+img{display:block;max-width:100%}
+button{font:inherit;cursor:pointer;color:inherit}
+[hidden]{display:none!important}
+.voile{position:fixed;inset:0;background:#05080cee;display:grid;place-items:center;z-index:99;padding:22px;cursor:zoom-out}
+.voile figure{margin:0;max-width:min(1100px,100%);text-align:center}
+.voile img{max-height:80vh;width:auto;margin:auto;border-radius:12px;box-shadow:0 20px 70px #000a}
+.voile figcaption{color:#fff;margin-top:12px;font-size:1.05rem}
+img[data-z]{cursor:zoom-in}
+.texte hr{border:0;text-align:center;margin:1.1em 0}
+.texte hr::before{content:"✦  ✦  ✦";letter-spacing:.4em;opacity:.7}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+:root{--creme:#fff4e4;--bois:#a56a3a;--bois-d:#6d4223;--orange:#ff9b54;--orange-d:#d9661a;--neige:#d8ebff;--neige-d:#8fbbe6;--charbon:#3a2a22;--turq:#25b0ab;--rose:#ffb8a8}
+body{background:var(--creme);color:var(--charbon);font-family:"Baloo 2",system-ui,sans-serif;font-size:1.08rem}
+/* ───── Ouverture : deux mondes ───── */
+.monde{position:relative;overflow:hidden;min-height:580px;background:linear-gradient(105deg,#ffd7a8 0 50%,var(--neige) 50% 100%)}
+.maison{position:absolute;left:0;top:0;bottom:0;width:52%;background:
+  repeating-linear-gradient(90deg,#00000008 0 2px,transparent 2px 70px),
+  radial-gradient(circle at 25% 80%,#ff9b5455,transparent 55%);}
+.cheminee{position:absolute;left:5%;bottom:0;width:140px;height:170px;border-radius:70px 70px 0 0;background:#7a4a2a;box-shadow:inset 0 0 0 10px #5a3519}
+.cheminee::after{content:"";position:absolute;left:30px;right:30px;bottom:10px;height:90px;border-radius:40px 40px 0 0;background:radial-gradient(circle at 50% 100%,#ffe27a,#ff7a1f 55%,#7a2b0a);animation:feu 1.4s ease-in-out infinite alternate}
+@keyframes feu{from{filter:brightness(.9)}to{filter:brightness(1.25)}}
+.montagnes{position:absolute;right:0;top:0;bottom:0;width:52%;background:
+  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='260' viewBox='0 0 600 260' preserveAspectRatio='none'><path d='M0 260 L120 70 L180 130 L260 20 L360 150 L430 90 L600 260Z' fill='%23b7d4f2'/><path d='M260 20 L232 62 L252 56 L270 74 L284 52 L300 64Z' fill='white'/><path d='M120 70 L98 104 L116 98 L134 112Z' fill='white'/></svg>") no-repeat 0 100%/100% 62%}
+.flocons{position:absolute;inset:0}
+.fl{position:absolute;top:-10px;width:7px;height:7px;border-radius:50%;background:#fff;opacity:.9;animation:neige var(--d) linear var(--r) infinite}
+@keyframes neige{to{transform:translate(var(--x),620px)}}
+.monde__in{position:relative;z-index:2;width:min(1100px,100% - 32px);margin:0 auto;padding:52px 0 100px;display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:center}
+.gauche{text-align:left}.droite{text-align:left}
+.monde h1{grid-column:1/-1;text-align:center;font-weight:800;font-size:clamp(2.2rem,6vw,4.4rem);line-height:1;margin:0 0 6px;color:var(--charbon);text-shadow:3px 3px 0 #fff}
+.monde h1 em{font-style:normal;color:var(--orange-d)}
+.etiq-monde{font-family:"Gaegu",cursive;font-size:1.6rem;font-weight:700}
+.gauche .etiq-monde{color:var(--bois-d)}.droite .etiq-monde{color:#33608f}
+.bulle-txt{font-size:1.02rem;line-height:1.45;margin:4px 0 0;max-width:19em}
+/* la médaille du collier */
+.collier{position:relative;justify-self:center;padding-top:34px}
+.collier::before{content:"";position:absolute;top:0;left:50%;width:6px;height:40px;margin-left:-3px;background:var(--turq);border-radius:3px}
+.medaille{width:min(440px,84vw);aspect-ratio:16/9;border-radius:34px;padding:12px;background:linear-gradient(135deg,#ffe29a,#e0a93a 45%,#fff2bd 60%,#b8832a);box-shadow:0 18px 30px #0005;animation:balance 5s ease-in-out infinite;transform-origin:50% -20px}
+@keyframes balance{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.medaille img{width:100%;height:100%;border-radius:24px;object-fit:cover;border:4px solid #fff7e0}
+.grelot{position:absolute;right:-14px;bottom:-14px;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff2bd,#e0a93a 60%,#8a6218);box-shadow:0 5px 8px #0005;display:grid;place-items:center;font-size:1.2rem;border:0}
+.compteurs{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.compteurs span{background:#fff;border:2px dashed var(--bois);border-radius:30px;padding:2px 16px;font-weight:700;color:var(--bois-d)}
+/* onglets : deux gamelles */
+.gamelles{position:relative;z-index:4;display:flex;justify-content:center;gap:18px;margin-top:-38px;flex-wrap:wrap}
+.gamelle{border:0;font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.05rem;color:#fff;padding:12px 34px 18px;border-radius:12px 12px 50% 50%/12px 12px 70% 70%;background:linear-gradient(180deg,#6fb4ee,#3f80c4);box-shadow:0 8px 0 #2b5f94,0 14px 18px #0004}
+.gamelle:nth-child(2){background:linear-gradient(180deg,#ffb27a,var(--orange-d));box-shadow:0 8px 0 #9c4510,0 14px 18px #0004}
+.gamelle[aria-selected=true]{transform:translateY(-6px) scale(1.06);filter:saturate(1.2)}
+main{width:min(1100px,100% - 24px);margin:0 auto;padding:48px 0 80px}
+h2{font-weight:800;font-size:clamp(1.8rem,3.6vw,2.6rem);margin:0 0 2px;text-align:center;color:var(--orange-d)}
+.mot{font-family:"Gaegu",cursive;font-size:1.5rem;text-align:center;margin:0 0 24px;color:var(--bois-d)}
+/* cartes à retourner : carnet de santé */
+.cartes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+.carte{perspective:1200px;height:560px}
+.carte__in{position:relative;width:100%;height:100%;transition:transform .7s;transform-style:preserve-3d}
+.carte.retournee .carte__in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:22px;border:4px solid var(--bois);box-shadow:0 14px 26px #5a35193a;overflow:hidden}
+.recto{background:#fff;display:flex;flex-direction:column;align-items:center;padding:18px 14px 16px;cursor:pointer}
+.recto .ident{align-self:stretch;display:flex;justify-content:space-between;font-family:"Gaegu",cursive;font-weight:700;font-size:1.05rem;color:var(--bois-d)}
+.recto .photo{flex:1;width:100%;display:grid;place-items:center;border-radius:14px;margin:8px 0;background:radial-gradient(circle at 50% 40%,#fff,var(--neige) 85%)}
+.recto .photo img{max-height:330px;width:auto;margin:auto;mix-blend-mode:multiply}
+.recto h3{margin:0;font-weight:800;font-size:1.7rem;text-align:center;line-height:1.05}
+.recto .patte{font-family:"Gaegu",cursive;color:var(--orange-d);font-size:1.15rem;margin-top:4px}
+.verso{transform:rotateY(180deg);background:linear-gradient(180deg,#fff9ee,#ffe9c8);padding:16px 16px 14px;overflow:auto}
+.verso h3{margin:0 0 4px;font-weight:800;font-size:1.45rem;color:var(--orange-d)}
+.verso p{margin:0 0 8px;font-size:.96rem;line-height:1.4}
+.verso .etq{font-family:"Gaegu",cursive;font-weight:700;font-size:1.15rem;color:var(--bois-d);margin:8px 0 4px;border-bottom:2px dotted var(--bois)}
+.entourage{display:flex;flex-direction:column;gap:6px}
+.copain{display:grid;grid-template-columns:50px 1fr;gap:8px;align-items:center;background:#fff;border-radius:12px;padding:4px 8px 4px 4px}
+.copain img{width:50px;height:56px;object-fit:contain;mix-blend-mode:multiply}
+.copain b{display:block;line-height:1;font-size:.95rem}.copain small{display:block;line-height:1.2;font-size:.74rem}
+.lieux-v{display:grid;grid-template-columns:repeat(auto-fit,minmax(88px,1fr));gap:6px}
+.lieux-v figure{margin:0;text-align:center;font-size:.72rem;line-height:1.1}
+.lieux-v img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;border:2px solid #fff;box-shadow:0 2px 5px #0003}
+.retour{margin-top:8px;border:0;background:var(--orange-d);color:#fff;border-radius:20px;padding:3px 14px;font-weight:700;font-size:.85rem}
+.objets{display:none}
+/* ───── Le journal de Rufus ───── */
+.parcours{position:relative;margin:0 0 22px;padding:30px 24px 14px;background:linear-gradient(90deg,#ffe0b8,#ffe9d4 45%,var(--neige) 55%,#c9e2fb);border-radius:22px;border:3px solid var(--bois)}
+.parcours .rail{position:relative;height:14px;border-radius:10px;background:repeating-linear-gradient(90deg,var(--bois) 0 14px,transparent 14px 26px);opacity:.45;margin:18px 28px 6px}
+.parcours .lib{display:flex;justify-content:space-between;font-family:"Gaegu",cursive;font-weight:700;font-size:1.25rem}
+.parcours .lib span:first-child{color:var(--bois-d)}.parcours .lib span:last-child{color:#33608f}
+.rufus-pion{position:absolute;top:2px;left:calc(28px + (100% - 56px)*var(--p,0));width:48px;height:48px;margin-left:-24px;border-radius:50%;border:3px solid var(--orange-d);overflow:hidden;background:#fff;box-shadow:0 5px 10px #0004;transition:left .5s}
+.rufus-pion img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.rufus-pion::after{content:attr(data-e);position:absolute;inset:auto -40px -20px -40px;text-align:center}
+.repere{position:absolute;top:0;font-size:1.6rem}
+.page-j{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:22px;align-items:start}
+.cadre-j{position:relative;border:6px solid #fff;border-radius:24px;overflow:hidden;box-shadow:0 0 0 4px var(--bois),0 18px 30px #5a351944;transform:rotate(-1deg)}
+.cadre-j img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.cadre-j .no{position:absolute;left:12px;top:12px;background:var(--orange-d);color:#fff;font-weight:800;border-radius:30px;padding:2px 14px}
+.bulle{position:relative;background:#fff;border:4px solid var(--charbon);border-radius:30px;padding:20px 24px;font-family:"Baloo 2",sans-serif;font-size:clamp(1.05rem,1.7vw,1.22rem);line-height:1.55;box-shadow:6px 8px 0 #3a2a2233}
+.bulle::before{content:"";position:absolute;left:-26px;top:46px;border:14px solid transparent;border-right:24px solid var(--charbon)}
+.bulle::after{content:"";position:absolute;left:-17px;top:49px;border:11px solid transparent;border-right:20px solid #fff}
+.bulle p{margin:0 0 .5em}.bulle p.d{padding-left:1em;text-indent:-1em;color:#9c3d0b}
+.pas{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:20px;flex-wrap:wrap}
+.btn{border:0;font-family:"Baloo 2",sans-serif;font-weight:800;color:#fff;padding:10px 24px;border-radius:30px;background:linear-gradient(180deg,#6fb4ee,#3f80c4);box-shadow:0 6px 0 #2b5f94}
+.btn--o{background:linear-gradient(180deg,#ffb27a,var(--orange-d));box-shadow:0 6px 0 #9c4510}.btn[disabled]{opacity:.35;pointer-events:none}
+.pattes{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:360px}
+.pattes button{width:16px;height:16px;border:0;padding:0;background:#e9c9a4;border-radius:50% 50% 45% 45%}
+.pattes button.fait{background:#d58a4a}.pattes button[aria-current=true]{background:var(--orange-d);transform:scale(1.5)}
+.pied{text-align:center;font-family:"Gaegu",cursive;font-size:1.1rem;color:var(--bois-d);padding:0 16px 40px}
+@media(max-width:860px){.monde__in{grid-template-columns:1fr;text-align:center}.gauche,.droite{text-align:center}.bulle-txt{margin-inline:auto}.collier{order:-1}.page-j{grid-template-columns:1fr}.bulle::before,.bulle::after{display:none}.monde{background:linear-gradient(180deg,#ffd7a8 0 55%,var(--neige) 55%)}.maison{width:100%;height:55%;bottom:auto}.montagnes{width:100%;top:55%}}
+
+/*VISUEL*/
+.bandeau{height:clamp(90px,15vw,170px);border-radius:14px;margin:0 0 24px;background:linear-gradient(180deg,rgba(0,0,0,.10),rgba(0,0,0,.50)),var(--bandeau) center/cover;box-shadow:0 10px 24px rgba(0,0,0,.45)}
+.orn{height:clamp(70px,11vw,130px);width:min(1100px,100% - 24px);margin:0 auto 26px;border-radius:14px;background:var(--orn) center/cover;box-shadow:0 10px 24px rgba(0,0,0,.4)}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(var(--voile-h),var(--voile-b)),var(--bg-page) center/cover no-repeat}
+body[data-vue=lore]{--bg-page:var(--bg-lore)}body[data-vue=lire]{--bg-page:var(--bg-lire)}
+body{--voile-h:rgba(255,244,228,.84);--voile-b:rgba(255,244,228,.92)}
+:root{--orn:url(/assets/recueils/rufus/orn.webp);--bg-lore:url(/assets/recueils/rufus/lore.webp);--bg-lire:url(/assets/recueils/rufus/lire.webp)}
+.maison{background:linear-gradient(rgba(255,215,168,.35),rgba(255,215,168,.15)),url(/assets/recueils/rufus/hero.webp) center/cover}
+.montagnes{background:linear-gradient(rgba(216,235,255,.25),rgba(216,235,255,.1)),url(/assets/recueils/rufus/lore.webp) center/cover}
+.cheminee{display:none}
+.gauche .etiq-monde,.gauche .bulle-txt{background:rgba(255,244,228,.9);border-radius:16px;padding:6px 14px;display:inline-block}
+.droite .etiq-monde,.droite .bulle-txt{background:rgba(232,243,255,.92);border-radius:16px;padding:6px 14px;display:inline-block}
+.monde h1{background:rgba(255,244,228,.85);border-radius:20px;padding:6px 22px;justify-self:center;grid-column:1/-1}
+.cadre-j img{aspect-ratio:16/9}
+.lieux-v img{aspect-ratio:16/9}
+.page-j{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}
+@media(max-width:860px){.page-j{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<style>
+@font-face{font-family:'Contract';src:url('/fonts/ContractSans.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'Contract';src:url('/fonts/ContractSans-Bold.ttf') format('truetype');font-weight:700;font-display:swap}
+/* Copie de l'en-tête de l'accueil (home.scss) : même dégradé, même filet or, même badge suspendu */
+.entete{--mdc-royal:#1a3fa6;--mdc-navy:#12296f;--mdc-gold:#d9a93a;--mdc-gold-clair:#f3d27a;position:sticky;top:0;z-index:80;background:linear-gradient(#1f48b8,var(--mdc-navy));border-bottom:3px solid var(--mdc-gold);box-shadow:0 0 0 1px #0a1a52,0 6px 18px rgb(0 0 0/.35);font-family:'Contract','Segoe UI',system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+.entete *{box-sizing:border-box}
+.entete__interieur{max-width:1200px;margin:0 auto;padding:.5rem 1.25rem;min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.marque{position:relative;z-index:3;align-self:flex-start;margin-bottom:-48px;display:block}
+.marque__badge{display:block;height:104px;width:auto;max-width:none;filter:drop-shadow(0 6px 8px rgb(0 0 0/.45));transition:transform .3s}
+.marque:hover .marque__badge{transform:rotate(-3deg) scale(1.05)}
+.navigation{display:flex;align-items:center;gap:1.5rem}
+.navigation a:not(.bouton){color:var(--mdc-gold-clair);font-weight:700;text-decoration:none}
+.navigation a:not(.bouton):hover{color:#fff;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+.entete .bouton{position:relative;display:inline-block;overflow:hidden;padding:.5rem 1.2rem;border-radius:999px;border:3px solid var(--mdc-gold);background:linear-gradient(#f8dc8a,var(--mdc-gold) 55%,#b9831d);border-color:#fff3c9;color:#3b2606;text-shadow:0 1px 0 rgb(255 255 255/.5);font-weight:700;font-size:1rem;text-decoration:none;box-shadow:inset 0 0 0 2px rgb(255 255 255/.18),0 5px 0 #0a1a52,0 12px 20px rgb(0 0 0/.28);transition:transform .12s,box-shadow .12s}
+.entete .bouton:hover{transform:translateY(-3px) scale(1.03)}
+.entete .bouton:focus-visible{outline:3px solid var(--mdc-gold-clair);outline-offset:3px}
+.burger{display:none;width:44px;height:44px;border:2px solid var(--mdc-gold);border-radius:12px;background:var(--mdc-navy);padding:11px 9px;flex-direction:column;justify-content:space-between}
+.burger span{display:block;height:3px;border-radius:2px;background:var(--mdc-gold-clair)}
+@media(max-width:900px){
+  .marque__badge{height:84px}.marque{margin-bottom:-36px}.burger{display:flex}
+  .navigation{display:none;position:absolute;inset:100% 0 auto 0;flex-direction:column;align-items:stretch;padding:1rem 1.25rem 1.5rem;background:var(--mdc-navy);border-bottom:3px solid var(--mdc-gold);text-align:center}
+  .navigation.navigation--ouverte{display:flex}
+}
+</style>
+<header class="entete">
+  <div class="entete__interieur">
+    <a class="marque" href="/" aria-label="La Maison des Contes, accueil">
+      <img class="marque__badge" src="/assets/badge-maison-des-contes.webp" alt="La Maison des Contes" width="277" height="352">
+    </a>
+    <button type="button" class="burger" aria-expanded="false" aria-controls="navigation" aria-label="Menu" onclick="var n=document.getElementById('navigation');var o=n.classList.toggle('navigation--ouverte');this.setAttribute('aria-expanded',o)">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="navigation" class="navigation" aria-label="Principale">
+      <a href="/#interactif">Lecture interactive</a>
+      <a href="/#collection">Collection</a>
+      <a href="/#test">Tester</a>
+      <a href="/#bibliotheque">Bibliothèque</a>
+      <a href="/contes">Nos contes</a>
+      <a href="/#tarifs">Tarifs</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/connexion">Se connecter</a>
+      <a class="bouton" href="/webgl-build/game.html">Télécharger l’app</a>
+    </nav>
+  </div>
+</header>
+
+<header class="monde">
+  <div class="maison"></div><div class="cheminee"></div><div class="montagnes"></div><div class="flocons" id="flocons"></div>
+  <div class="monde__in">
+    <h1>Rufus, <em>chat malgré lui</em></h1>
+    <div class="gauche"><div class="etiq-monde">Dedans : le code d’honneur des chats</div><p class="bulle-txt">« Un vrai chat ne vient jamais quand on l’appelle. »</p></div>
+    <div class="collier"><div class="medaille"><img src="https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/cover/e264594f-3b65-4778-9cc9-cdc9637185a0.png" alt="Couverture : Rufus, chat malgré lui"></div><button class="grelot" id="grelot" aria-label="Faire miauler Rufus" title="Faire miauler Rufus">🔔</button></div>
+    <div class="droite"><div class="etiq-monde">Dehors : la forêt enneigée</div><p class="bulle-txt">« Moi, je voudrais devenir chien de traîneau. »</p></div>
+    <div class="compteurs"><span>18 pages illustrées</span></div>
+  </div>
+</header>
+<div class="gamelles" role="tablist" aria-label="Sections">
+  <button class="gamelle" role="tab" data-top="lore">LES PENSIONNAIRES</button>
+  <button class="gamelle" role="tab" data-top="lire">LE JOURNAL DE RUFUS</button>
+</div>
+<main>
+  <div class="bandeau" id="bandeau"></div>
+  <section id="p-lore" hidden>
+    <h2>La maison de Rufus</h2>
+    <p class="mot">Touche une carte pour la retourner et lire son carnet.</p>
+    <div class="cartes" id="cartes"></div>
+  </section>
+  <section id="p-lire" hidden><div id="journal"></div></section>
+</main>
+<div class="orn" aria-hidden="true"></div>
+<p class="pied">« Rufus, chat malgré lui » · La Maison des Contes · contenu en brouillon</p>
+<script id="data" type="application/json">{"titre":"Rufus, chat malgré lui","unite":"Conte","mode":"conte","labels":{"persos":"Les personnages","autres":"Les silhouettes","objets":"Les objets"},"persos":[{"main":{"title":"Rufus","desc":"Rufus est un petit chat plein d'énergie et très affectueux, qui rêve de devenir un chien de traîneau. Il cherche sa place dans sa famille et veut comprendre comment montrer son amour à son humain.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/character/cf558ffc-ec57-4bc2-9d3c-4c3a3ba51777.png"},"formes":[],"entourage":[{"title":"L’humain de Rufus","desc":"L’humain de Rufus est un adulte gentil qui prend soin de ses chats et s’inquiète pour eux. Il aime beaucoup Rufus et essaie de comprendre ce dont il a besoin pour être heureux.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/character/9bc04b4a-5f30-4e66-84bd-b988e9ac794c.png"}],"lieux":[{"title":"La maison","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/62a741ad-0483-4c6c-9cf6-4d577adff633.png"},{"title":"La fenêtre sur le quartier","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/8bcb54e4-44a9-4f42-affb-d75985ad56ff.png"},{"title":"Dans la neige","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/158ede76-0ea9-4f47-b7c8-f0eb705f2492.png"}]},{"main":{"title":"Cachemire","desc":"Cachemire est le frère de Rufus, un chat sérieux et un peu hautain qui aime donner des conseils. Il pense qu'un vrai chat doit toujours rester digne et ne pas trop montrer ses sentiments.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/character/63011d85-d5f5-41c3-a417-c1fed130b8d0.png"},"formes":[],"entourage":[],"lieux":[{"title":"L’arbre à chat","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/101ff3c3-982a-4255-ad33-c73e6e4a88a5.png"}]},{"main":{"title":"Blanche","desc":"Blanche est la sœur de Rufus, douce et malicieuse, qui lui apprend à miauler comme un vrai chat. Elle aime discuter avec ses frères et lui explique comment se comporter comme un chat.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/character/54a26b62-294b-4455-83ae-6aca4217676a.png"},"formes":[],"entourage":[],"lieux":[{"title":"Le salon","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/e1ceb901-9a36-4e29-983a-164de65a155b.png"}]},{"main":{"title":"Le gros chien du vétérinaire","desc":"Le gros chien du vétérinaire est très doux et adore jouer avec son ami le chat roux. Il montre à Rufus que chiens et chats peuvent très bien s’entendre.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/character/86493b9a-77e3-4b87-810b-56f968ce1aa3.png"},"formes":[],"entourage":[{"title":"Le chat roux du vétérinaire","desc":"Le chat roux du vétérinaire est joyeux et aime beaucoup discuter avec le gros chien. Il explique à Rufus que chacun peut montrer son affection à sa façon.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/character/d7da2270-0013-4a21-bf53-44d22b7fd5f8.png"},{"title":"Le vétérinaire de Rufus","desc":"Le vétérinaire est un docteur pour animaux, calme et attentionné, qui écoute les inquiétudes de l’humain de Rufus. Il aide à comprendre pourquoi Rufus est si différent des autres chats.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/character/74c71595-8fd9-458a-a7b6-3f3c10ba087b.png"}],"lieux":[{"title":"Chez le vétérinaire","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/b9ad948d-3b1e-4044-8846-354e7884ba41.png"},{"title":"La salle d’attente","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/2b64316d-488b-461d-a5ad-c9a78079277d.png"}]}],"figurants":[],"objets":[],"fonds":{"persos":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/101ff3c3-982a-4255-ad33-c73e6e4a88a5.png","autres":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/2b64316d-488b-461d-a5ad-c9a78079277d.png","lieux":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/4a90e674-0e17-4e36-8e4d-00993b75dd86.png","objets":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/4a90e674-0e17-4e36-8e4d-00993b75dd86.png"},"eps":[{"titre":"Rufus, chat malgré lui","part":0,"cover":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/62a741ad-0483-4c6c-9cf6-4d577adff633.png","pages":[{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/62a741ad-0483-4c6c-9cf6-4d577adff633.png","b":[["p","Je m’appelle Rufus, j’habite avec ma famille de chats dans une maison au pied des montagnes. Toute la journée, Cachemire et Blanche, mes frère et sœur, s’allongent près du feu. Quand ils sont de bonne humeur (mais surtout quand ils ont faim), ils se lèvent enfin pour se frotter aux jambes de notre humain et ronronnent très fort, jusqu’à ce qu’il leur serve une petite tasse de lait. Puis, fatigués par tant d’efforts, ils reprennent leur activité favorite : dormir. Moi, je n’arrive pas à rester en place."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/976d30d1-b64b-4a42-ae8c-6f742ef0800c.png","b":[["p","Quand notre humain rentre du travail, je me jette sur lui, fou de joie. Je saute, je le suis partout dans le couloir. D’accord, c’est vrai : ce n’est pas vraiment ce que font les chats d’habitude. En plus, je ne sais pas vraiment miauler. Pourtant j’ai une leçon de miaulement tous les matins avec Blanche :"],["d","— Plus aigu, Rufus ! Plus désagréable ! m’a-t-elle dit, hier encore. Il faut que ça donne vraiment envie à notre humain de se lever, même quand il est en train de dormir !"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/101ff3c3-982a-4255-ad33-c73e6e4a88a5.png","b":[["p","Je fais de mon mieux, mais c’est loin d’être assez désagréable pour que notre humain nous donne de la pâtée. Blanche soupire. Elle se met à miauler, et l’instant d’après notre humain remplit la gamelle d’une pâtée de poisson. Cachemire et Blanche dévorent tout en trois secondes. Après ça, mes frère et sœur se roulent en boule tout en haut de l’arbre à chat. Soudain, notre humain nous appelle pour un câlin. Je suis déjà prêt à bondir sur ses genoux, mais Cachemire ouvre un œil plein de jugement :"],["d","— Tiens-toi tranquille, Rufus !"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/a9dd8e11-73cb-4016-b63b-27cc37a67c1c.png","b":[["p","Un vrai chat ne vient jamais quand on l’appelle. Tu devrais le savoir. Notre humain nous appelle, les yeux pleins d’espoir. Cachemire lève la tête d’un air supérieur et se met à faire sa toilette, comme s’il avait mieux à faire. Bien sûr, notre humain ne comprend pas notre langage. Tant mieux pour lui. Il verrait le caractère impossible de mes frère et sœur. Blanche intervient à son tour :"],["d","— Toi aussi tu dois ignorer notre humain avec élégance. Et ne t’inquiète pas, notre gamelle continuera d’être remplie. Les humains ne sont pas du tout rancuniers, contrairement aux chats."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/e1ceb901-9a36-4e29-983a-164de65a155b.png","b":[["d","— Mais… Il a l’air si triste, dis-je, en regardant notre humain assis tout seul sur le canapé."],["d","— Triste ? Parce que toi tu n’es pas triste quand l’humain te réveille pour quelques caresses ridicules que tu peux très bien avoir en échange d’un peu de lait ? Ça y est, c’est mon tour. Mon humain m’appelle. Je sens que je vais craquer. Cachemire et Blanche me fixent sévèrement depuis l’arbre à chat. Ils me jugent. Il ne faut pas que je cède à la tentation du câlin. Pourtant, mes pattes me démangent."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/5e629d08-3b29-4cac-93f0-a6433bd4eca2.png","b":[["p","Je plante mes griffes dans le tapis pour rester immobile. Je tiens bien trois secondes, avant de foncer sur mon humain en remuant la queue et en lui donnant de grandes léchouilles. Mon frère et ma sœur me lancent un regard noir depuis l’arbre à chat. L’air de dire que je ne serai jamais comme eux. Parfois, j’ai du mal à les comprendre, tous les deux. À les écouter, ils n’aiment pas vraiment notre humain. Ils se conduisent de façon si hautaine !"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/8bcb54e4-44a9-4f42-affb-d75985ad56ff.png","b":[["p","Je suis si différent d’eux, et c’est comme ça que j’en ai déduit qu’au fond de moi je suis un chien. Oui, un chien. Je m’approche de la fenêtre."],["d","— Rufus, reviens ! dit Blanche. C’est bientôt l’heure de la sieste du matin."],["d","— Je n’ai pas envie de dormir, merci. Dehors, des chiens partent en promenade avec leurs humains. La chance !"],["d","— Tout ça pour faire ton intéressant… Les vrais chats dorment tout le temps… Bon, si tu ne veux pas dormir, dit Blanche, tu peux au moins juger les gens par la fenêtre, dit-elle d’un air comploteur."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/f6bd1124-acc4-4784-a9e8-56950aff7b4e.png","b":[["d","— Ce n’est pas comme ça que je vais réaliser mon rêve ! dis-je."],["d","— Ton rêve ? répètent Cachemire et Blanche. Je mords ma langue râpeuse. Jamais je n’aurais dû leur dire. J’hésite et puis je me lance. De toute façon, il fallait bien que je leur dise un jour :"],["d","— Je voudrais devenir chien de traîneau. Cachemire a tous ses poils qui se hérissent."],["d","— On aura vraiment tout entendu… se moque-t-il. Blanche s’étouffe et recrache une énorme boule de poils."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/158ede76-0ea9-4f47-b7c8-f0eb705f2492.png","b":[["p","J’ai oublié que le mot « chien » est interdit de notre vocabulaire par le code d’honneur des félins. Cachemire et Blanche ne disent jamais ce mot. Moi, je pense au rêve que ça doit être de faire partie d’un attelage qui fonce à travers la forêt enneigée."],["d","— Rufus ! Tu es un chat ! Tu ne peux pas être un « sac à puces » de traîneau ! Déjà, tu t’enfoncerais dans la neige. Et puis les « sacs à puces » te croqueraient. Tu as oublié la guerre ?"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/2a8ae08e-1518-495a-909b-8dc9f3959755.png","b":[["d","— Mais pourquoi les chiens voudraient la guerre ?"],["d","— Les « sacs à puces » tu veux dire ? s’étrangle Cachemire. Mais parce qu’ils sont jaloux, voyons ! Jaloux que nous soyons les préférés des humains, depuis que les Égyptiens se sont mis à nous vénérer. Nous les chats, on n’a pas besoin de donner la pa-patte. On ne fait aucun effort, pourtant les humains nous adorent quand même. C’est tellement facile pour nous, les chats…"],["d","— Il paraît que les humains nous trouvent mignons, dit Blanche. L’autre jour, j’ai cassé un vase."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/233fa916-5c04-4f09-b1a1-6d35a0a71a5e.png","b":[["p","J’ai fait une tête mignonne pour ne pas me faire disputer ! J’ai même eu des caresses, tu te rends compte, Rufus ? Des caresses ! Si tu veux mon avis, les humains sont vraiment stupides ! Ils ne voient même pas qu’on les manipule tout le temps… Je n’écoute plus vraiment. Je guette par la fenêtre le rassemblement de chiens du quartier. Ils n’ont pas l’air aussi méchants que Cachemire et Blanche le prétendent. Ils ont l’air de vraiment s’amuser, eux. Blanche me signale ensuite que c’est l’heure de ma leçon de miaulement."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/4a90e674-0e17-4e36-8e4d-00993b75dd86.png","b":[["p","Alors, je me prête au jeu et je miaule. Comme ça ne marche pas, Blanche me demande de recommencer. Cette fois, un bruit atroce sort de ma gorge. Blanche et Cachemire font la grimace. Soudain, l’humain arrive vraiment vite, mais pas pour nous donner de la pâtée. Il tient la caisse à chat dans sa main. Oh non ! Je n’aime pas ça du tout. Cachemire et Blanche me regardent avec de grands yeux quitter la maison dans la caisse à chat. J’arrive devant un bâtiment tout vitré où il est écrit « V-E-T-E-R-I-N-A-I-R-E »."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/b9ad948d-3b1e-4044-8846-354e7884ba41.png","b":[["p","Mais, je ne sais pas ce que ça veut dire, car je ne sais pas lire. Il y a plein de chaises, avec des humains qui attendent leur animal. Mon humain s’adresse à un vieil homme qui a les mains froides. Je crois qu’il lui dit qu’il s’inquiète pour mon comportement. Alors le vieil humain est docteur ? Il va bien voir que j’ai un problème. Mais alors, ça veut dire que je vais enfin savoir si je suis un chat ou un chien ? On pose ma caisse à chat derrière un bureau."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/2b64316d-488b-461d-a5ad-c9a78079277d.png","b":[["p","Là, je vois quelque chose d’incroyable : un gros chien dort contre un chat roux. Je bondis tellement je suis surpris. Ils ne le font pas parce qu’ils sont obligés, on dirait qu’ils aiment la compagnie de l’autre. Je n’avais jamais vu ça."],["d","— Vous… Amis ? je demande, sans y croire."],["d","— Tu as vu un fantôme ou quoi ? répond le chat."],["d","— Et la guerre alors ? Les chiens qui nous détestent parce qu’ils sont vraiment jaloux ?"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/2b2a03a4-a1f7-4d07-b8e1-a7d62b133d2a.png","b":[["p","Le chat ne se met pas à cracher ou à devenir fou quand je prononce le mot « chien »."],["d","— C’est n’importe quoi, tout ça ! dit le gros chien. Les humains apprécient les chiens autant que les chats. Certains aiment les chats, d’autres les chiens. Certains humains ont même les deux !"],["d","— Mais mon frère et ma sœur disent que les chiens nous pourchassent… dis-je. Le gros chien secoue le museau :"],["d","— Les chiens aboient sur les chats pour s’amuser, mais c’est pour plaisanter. Les chats prennent tout mal, ils n’ont aucun sens de l’humour."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/ac36fae6-9b31-4f9b-b393-7b714e181dc7.png","b":[["p","Ils sont trop fiers pour admettre qu’eux aussi ils aiment s’amuser. Nous avons des différences, mais il y a une chose qui nous rassemble : chats et chiens, nous adorons les humains !"],["d","— Moi, je crois que mes frère et sœur n’aiment pas vraiment notre humain…"],["d","— Je te jure sur ma gamelle qu’ils ne savent juste pas comment exprimer leur affection, dit le chat roux. Ils ont trop de fierté pour admettre qu’ils sont attachés à lui. Parole de chat. Je rentre à la maison."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/b6cc7afd-e614-4a76-9996-797c85a0b8cc.png","b":[["p","Le vieil humain à juste dit au mien que j’étais un animal « très actif » et que je m’ennuyais. Alors, mon humain m’a acheté plein de jouets et maintenant j’ai droit à des promenades en harnais, dans la neige. Je suis sûr que bientôt je deviendrai un vrai chien de traîneau, même si au fond, j’ignore encore si je suis un chien ou un chat. Mais ce que je sais, c’est que Cachemire et Blanche, eux aussi, ils l’aiment notre humain. Ils ne savent juste pas comment lui montrer."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/e0dfe678-01bd-4c4a-83e0-89e76ef90a1a/imports/page/ae61a82f-522f-4291-a2be-90f88a79eaa0.png","b":[["p","Sinon, pourquoi dormiraient-ils sur les genoux de notre humain quand il s’endort sur le canapé ? J’ai appris une chose chez le docteur des animaux, c’est que tout le monde peut aimer ou être aimé à sa façon. Lors de mes promenades, j’ai parlé de cette histoire d’amitié aux autres. Les chats et les chiens du quartier ont vu qu’ils n’avaient rien à craindre les uns des autres. Avec tout ça, j’ai reçu le prix Nobel de la gamelle de la paix."]]}]}],"parties":["Rufus, chat malgré lui"]}</script>
+<script>
+var DEFAUT='#lore/0';
+var D=JSON.parse(document.getElementById('data').textContent);
+function $(s,r){return (r||document).querySelector(s)}
+function $$(s,r){return [].slice.call((r||document).querySelectorAll(s))}
+function h(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+/* texte d'une page : une réplique par ligne, séparateurs ✦ */
+function texte(blocs){return blocs.map(function(b){return b[0]==='s'?'<hr>':'<p class="'+b[0]+'">'+h(b[1])+'</p>'}).join('')}
+/* lightbox : toute image marquée data-z s'ouvre en grand */
+(function(){
+  var v=document.createElement('div');v.className='voile';v.id='voile';v.hidden=true;
+  v.innerHTML='<figure><img alt=""><figcaption></figcaption></figure>';document.body.appendChild(v);
+  window.zoom=function(src,txt){$('img',v).src=src;$('figcaption',v).textContent=txt||'';v.hidden=false};
+  v.addEventListener('click',function(){v.hidden=true});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')v.hidden=true});
+  document.addEventListener('click',function(e){var im=e.target.closest('img[data-z]');if(im){zoom(im.currentSrc||im.src,im.alt)}});
+})();
+/* navigation par hash (#lore/…, #lire/e/p) ; le gabarit définit render() et DEFAUT */
+var route=location.hash||DEFAUT;
+function parse(){return route.slice(1).split('/')}
+function go(hash){route=hash;try{if(location.hash!==hash)history.pushState(null,'',hash)}catch(e){}render()}
+function reroute(){route=location.hash||DEFAUT;render()}
+window.addEventListener('hashchange',reroute);window.addEventListener('popstate',reroute);
+/* lecture : page courante et tourne-page */
+function borne(e,p){e=Math.min(Math.max(+e||1,1),D.eps.length);var n=D.eps[e-1].pages.length;p=Math.min(Math.max(+p||1,1),n);return[e,p]}
+function voisin(e,p,d){p+=d;if(p>D.eps[e-1].pages.length){if(e>=D.eps.length)return null;return[e+1,1]}if(p<1){if(e<=1)return null;return[e-1,D.eps[e-2].pages.length]}return[e,p]}
+
+(function(){var f=$('#flocons');for(var i=0;i<40;i++){var e=document.createElement('i');e.className='fl';e.style.cssText='left:'+(Math.random()*100)+'%;--d:'+(7+Math.random()*8)+'s;--r:-'+(Math.random()*12)+'s;--x:'+(Math.random()*80-40)+'px;width:'+(4+Math.random()*6)+'px;height:'+(4+Math.random()*6)+'px';f.appendChild(e)}})();
+/* un miaulement raté (Web Audio, seulement au clic) */
+var essais=0,ctx=null;
+$('#grelot').addEventListener('click',function(){
+  try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();var t=ctx.currentTime,o=ctx.createOscillator(),v=ctx.createOscillator(),vg=ctx.createGain(),g=ctx.createGain();
+  var chien=(++essais%3===0);o.type=chien?'sawtooth':'triangle';
+  if(chien){o.frequency.setValueAtTime(190,t);o.frequency.exponentialRampToValueAtTime(110,t+.32)}else{o.frequency.setValueAtTime(520,t);o.frequency.linearRampToValueAtTime(980,t+.22);o.frequency.exponentialRampToValueAtTime(420,t+.55)}
+  v.frequency.value=chien?9:6.5;vg.gain.value=chien?10:34;v.connect(vg);vg.connect(o.frequency);
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.35,t+.04);g.gain.exponentialRampToValueAtTime(.0001,t+(chien?.4:.6));
+  o.connect(g);g.connect(ctx.destination);o.start(t);v.start(t);o.stop(t+.65);v.stop(t+.65)}catch(e){}
+  this.title=essais%3===0?'Ouaf ?! Mais c’est un chat…':'Miaou… enfin presque.';
+});
+function render(){
+  var p=parse(),top=p[0]==='lire'?'lire':'lore';
+  $$('[data-top]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.top===top)});
+  $('#p-lore').hidden=top!=='lore';$('#p-lire').hidden=top!=='lire';document.body.dataset.vue=top;$('#bandeau').style.setProperty('--bandeau','url('+(top==='lore'?D.fonds.persos:D.fonds.lieux)+')');document.documentElement.style.setProperty('--fond-persos','url('+D.fonds.persos+')');
+  if(top==='lore')lore();else lire(+p[1]||1,+p[2]||1);
+}
+var rendu=false;
+function lore(){
+  if(rendu)return;rendu=true;
+  var N=['chat n°1','chat n°2','chat n°3','chien ?'],P=['Rufus','Cachemire','Blanche','Chien'];
+  $('#cartes').innerHTML=D.persos.map(function(g,i){var m=g.main,
+   aut=g.entourage.map(function(x){return '<div class="copain"><img src="'+h(x.img)+'" alt="'+h(x.title)+'" data-z><div><b>'+h(x.title)+'</b><small>'+h(x.desc)+'</small></div></div>'}).join(''),
+   lx=g.lieux.map(function(l){return '<figure><img src="'+h(l.img)+'" alt="'+h(l.title)+'" data-z loading="lazy">'+h(l.title)+'</figure>'}).join('');
+   return '<div class="carte" data-c="'+i+'"><div class="carte__in"><div class="face recto" data-flip="'+i+'"><div class="ident"><span>CARNET DE SANTÉ</span><span>n°'+(i+1)+'</span></div><div class="photo"><img src="'+h(m.img)+'" alt="'+h(m.title)+'"></div><h3>'+h(m.title)+'</h3><div class="patte">🐾 touche pour retourner</div></div>'+
+   '<div class="face verso"><h3>'+h(m.title)+'</h3><p>'+h(m.desc)+'</p>'+(aut?'<div class="etq">Ses proches</div><div class="entourage">'+aut+'</div>':'')+(lx?'<div class="etq">Ses coins préférés</div><div class="lieux-v">'+lx+'</div>':'')+'<button class="retour" data-flip="'+i+'">↺ retourner</button></div></div></div>'}).join('');
+}
+function lire(e,pg){
+  var r=borne(e,pg);e=r[0];pg=r[1];var ep=D.eps[e-1],page=ep.pages[pg-1],n=ep.pages.length,pre=voisin(e,pg,-1),sui=voisin(e,pg,1),p=n>1?(pg-1)/(n-1):0,rufus=D.persos[0].main.img;
+  $('#journal').innerHTML='<div class="parcours" style="--p:'+p+'"><div class="lib"><span>🛋️ chat sur le canapé</span><span>chien de traîneau 🛷</span></div><div class="rail"></div><div class="rufus-pion" style="--p:'+p+'"><img src="'+h(rufus)+'" alt="Rufus"></div></div>'+
+   '<div class="page-j"><figure class="cadre-j" style="margin:0"><img src="'+h(page.i)+'" alt="Illustration '+pg+'" data-z><span class="no">page '+pg+' / '+n+'</span></figure><div class="bulle texte">'+texte(page.b)+'</div></div>'+
+   '<div class="pas"><button class="btn" data-n="-1"'+(pre?'':' disabled')+'>← avant</button><div class="pattes" aria-label="Pages">'+ep.pages.map(function(_,i){return '<button class="'+(i+1<pg?'fait':'')+'" aria-label="Page '+(i+1)+'" aria-current="'+(i+1===pg)+'" data-pg="'+(i+1)+'"></button>'}).join('')+'</div><button class="btn btn--o" data-n="1"'+(sui?'':' disabled')+'>la suite →</button></div>';
+  window._cur=[e,pg];if(sui){var im=new Image();im.src=D.eps[sui[0]-1].pages[sui[1]-1].i}
+}
+document.addEventListener('click',function(ev){
+  var t=ev.target.closest('[data-top],[data-flip],[data-pg],[data-n]');if(!t)return;
+  if(ev.target.closest('img[data-z]'))return;
+  if(t.dataset.top)return go(t.dataset.top==='lore'?'#lore/0':'#lire/1/1');
+  if(t.dataset.flip!==undefined){var c=t.closest('.carte');return c.classList.toggle('retournee')}
+  if(t.dataset.pg)return go('#lire/'+window._cur[0]+'/'+t.dataset.pg);
+  if(t.dataset.n){var v=voisin(window._cur[0],window._cur[1],+t.dataset.n);if(v){go('#lire/'+v[0]+'/'+v[1]);$('#journal').scrollIntoView({block:'start'})}}
+});
+document.addEventListener('keydown',function(e){if(!$('#p-lire').hidden&&$('#voile').hidden){var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(d){var v=voisin(window._cur[0],window._cur[1],d);if(v)go('#lire/'+v[0]+'/'+v[1])}}});
+render();
+</script>
+</body>
+</html>

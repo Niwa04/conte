@@ -1,0 +1,232 @@
+@use '../../../shared/conte-monde' as cm;
+
+@include cm.base;
+@include cm.galerie-trois;
+
+:host {
+  /* Les cinq couleurs coréennes (obangsaek) : bleu, rouge, jaune, blanc, noir */
+  --bleu: #1f4e8c;
+  --rouge: #c8342c;
+  --jaune: #e8b830;
+  --vert: #2e7d5b;
+  --encre: #2b2118;
+  --hanji: #f7f0e0;
+  --hanji-fonce: #eadcc0;
+  color: var(--encre);
+  background: var(--hanji);
+}
+
+/* Papier hanji : fibres claires sur crème */
+$hanji: repeating-linear-gradient(97deg, rgb(255 255 255 / 0.35) 0 2px, transparent 2px 9px), repeating-linear-gradient(8deg, rgb(120 90 40 / 0.05) 0 1px, transparent 1px 11px);
+/* Dancheong : bande ornementale rouge, verte et bleue */
+$dancheong: repeating-linear-gradient(90deg, #c8342c 0 18px, #2e7d5b 18px 36px, #1f4e8c 36px 54px, #e8b830 54px 62px);
+
+h1, h2, h3 { font-family: 'Segoe UI', system-ui, sans-serif; letter-spacing: 0.01em; }
+h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--bleu); }
+.etiquette { color: var(--rouge); }
+.section { background-color: var(--hanji); background-image: $hanji; }
+
+/* Fenêtre à treillis (munsal) autour des images */
+.cadre-lattis {
+  position: relative;
+  border: 10px solid #5a3a1c;
+  border-radius: 6px;
+  box-shadow: 0 16px 34px rgb(60 30 10 / 0.4), inset 0 0 0 2px #8a5a2c;
+  img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+  &::after { content: ''; position: absolute; inset: 0; pointer-events: none; background:
+    repeating-linear-gradient(90deg, transparent 0 calc(25% - 3px), rgb(90 58 28 / 0.55) calc(25% - 3px) 25%),
+    repeating-linear-gradient(0deg, transparent 0 calc(33.3% - 3px), rgb(90 58 28 / 0.55) calc(33.3% - 3px) 33.3%); opacity: 0.55; }
+}
+
+/* ---------- Ouverture ---------- */
+.ouverture {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 4.5rem 1.25rem 6.5rem;
+  background:
+    linear-gradient(180deg, rgb(247 240 224 / 0.35), rgb(247 240 224 / 0.82) 80%, var(--hanji)),
+    url('/assets/contes/heungbu-et-nolbu/deco/hanok.webp') center / cover;
+  border-bottom: 10px solid transparent;
+  border-image: $dancheong 10;
+
+  &__interieur { max-width: 1150px; margin: 0 auto; display: grid; grid-template-columns: 1.15fr 1fr; gap: 3rem; align-items: center; }
+  &__texte { padding: 1.6rem 1.8rem; border-radius: 14px; background: rgb(247 240 224 / 0.9); border: 2px solid #5a3a1c; box-shadow: 0 14px 30px rgb(60 30 10 / 0.3); }
+  &__hangeul { margin-top: 0.8rem; font-size: 1.1rem; letter-spacing: 0.4em; color: var(--rouge); font-weight: 700; }
+  h1 { margin: 0.2rem 0 0.6rem; font-size: clamp(2.6rem, 6vw, 4.2rem); line-height: 1.05; color: var(--bleu); }
+  &__accroche { font-size: 1.25rem; line-height: 1.5; }
+  &__origine { margin-top: 0.8rem; font-size: 0.92rem; color: #6a5236; }
+  &__actions { margin-top: 1.4rem; }
+}
+.pays-badge { padding: 0.3rem 0.9rem 0.3rem 0.4rem; border: 2px solid var(--rouge); border-radius: 999px; background: #fff; }
+.pastilles li { padding: 0.2rem 0.85rem; border-radius: 6px; background: #fff; border: 1.5px solid var(--bleu); color: var(--bleu); font-weight: 700; font-size: 0.9rem; }
+
+.hirondelle {
+  position: absolute;
+  top: 12%;
+  left: -140px;
+  width: 110px;
+  fill: #14233f;
+  z-index: 2;
+  animation: traverse 16s linear infinite;
+  filter: drop-shadow(0 3px 3px rgb(0 0 0 / 0.3));
+}
+@keyframes traverse {
+  0% { transform: translate(0, 40px) rotate(6deg) scaleY(1); }
+  25% { transform: translate(35vw, -10px) rotate(-4deg) scaleY(0.8); }
+  50% { transform: translate(65vw, 30px) rotate(5deg) scaleY(1); }
+  100% { transform: translate(115vw, -20px) rotate(-3deg) scaleY(0.85); }
+}
+@media (prefers-reduced-motion: reduce) { .hirondelle { animation: none; left: 8%; } }
+
+/* ---------- Frise dancheong entre les parties ---------- */
+.frise-danch { height: 40px; background: var(--danch) center / 80px 80px repeat-x; border-block: 5px solid #5a3a1c; box-shadow: 0 4px 12px rgb(60 30 10 / 0.3); }
+
+/* ---------- Pays : un patchwork bojagi, un sceau et trois pièces cousues ---------- */
+.pays {
+  background: linear-gradient(rgb(247 240 224 / 0.82), rgb(247 240 224 / 0.9)), var(--bojagi) center / 520px auto;
+  &__grille { display: grid; grid-template-columns: 260px 1fr; gap: 3rem; align-items: center; }
+  &__intro { margin: 0.8rem 0 1.6rem; padding: 1rem 1.3rem; font-size: 1.15rem; line-height: 1.65; max-width: 40em; background: #fff; border-left: 8px solid var(--bleu); border-radius: 4px; box-shadow: 0 6px 14px rgb(90 40 20 / 0.15); }
+}
+.sceau {
+  text-align: center;
+  padding: 1.3rem;
+  background: #fff;
+  border: 4px double var(--rouge);
+  border-radius: 8px;
+  transform: rotate(-2deg);
+  box-shadow: 0 10px 22px rgb(90 40 20 / 0.25);
+  img { width: 100%; height: auto; border: 1px solid #ddd; }
+  &__nom { margin-top: 0.8rem; font-size: 1.7rem; font-weight: 700; color: var(--rouge); }
+  &__natif { font-size: 1.15rem; }
+  &__ou { margin-top: 0.3rem; font-size: 0.9rem; color: #6a5236; }
+}
+.mots-titre { font-size: 0.85rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rouge); margin-bottom: 0.6rem; font-weight: 700; }
+.mots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 0; padding: 0; list-style: none; transform: rotate(-1deg); }
+.mots li {
+  display: grid; gap: 0.1rem; padding: 1.3rem 0.6rem; text-align: center; border: 2px dashed rgb(255 255 255 / 0.9); outline: 1px solid rgb(0 0 0 / 0.1); color: #fff; box-shadow: inset 0 0 0 4px rgb(255 255 255 / 0.18);
+  background: var(--bleu);
+  &:nth-child(2) { background: var(--rouge); transform: translateY(14px); }
+  &:nth-child(3) { background: var(--vert); }
+}
+.mots__natif { font-size: 2.3rem; line-height: 1.2; }
+.mots__romanisation { font-weight: 700; }
+.mots__sens { font-size: 0.9rem; }
+
+/* ---------- Histoire : colonne en hangeul, rouleau de papier, image derrière un treillis ---------- */
+.histoire {
+  background: linear-gradient(rgb(247 240 224 / 0.9), rgb(247 240 224 / 0.94)), var(--fond) center / cover;
+  &__grille { display: grid; grid-template-columns: 90px minmax(0, 1.3fr) minmax(0, 1fr); gap: 2.2rem; align-items: start; }
+  &__colonne { writing-mode: vertical-rl; margin: 0; padding: 1.2rem 0.6rem; font-size: 2.6rem; font-weight: 700; letter-spacing: 0.3em; color: #fff; background: var(--rouge); border: 3px double #fff; outline: 3px solid var(--rouge); border-radius: 6px; text-align: center; }
+  &__visuel { position: sticky; top: 2rem; margin: 0; figcaption { margin-top: 0.7rem; text-align: center; font-style: italic; color: #6a5236; } }
+}
+.rouleau {
+  &__rouleau { height: 24px; border-radius: 12px; background: linear-gradient(#a06a34, #5a3a1c); box-shadow: 0 6px 10px rgb(60 30 10 / 0.35); position: relative; z-index: 2; margin-inline: -10px; }
+  &__papier { margin: -6px 0; padding: 2.4rem clamp(1.4rem, 3vw, 2.6rem) 2.2rem; background: #fffdf5 $hanji; border-inline: 2px solid #d8c9a0; box-shadow: inset 0 0 40px rgb(140 100 40 / 0.18); }
+}
+.citation { margin: 1.2rem 0; padding: 0.4rem 0 0.4rem 1.2rem; border-left: 5px solid var(--rouge); font-size: 1.3rem; font-style: italic; color: var(--bleu); }
+.resume { font-size: 1.15rem; line-height: 1.8; }
+
+/* ---------- Les deux courges ---------- */
+.courges {
+  color: #fff;
+  background: linear-gradient(rgb(26 18 8 / 0.82), rgb(26 18 8 / 0.9)), var(--fond) center / cover;
+  h2 { color: #ffe9a8; }
+  .etiquette { color: var(--jaune); }
+  &__chapeau { max-width: 42em; margin: 0.6rem 0 2rem; font-size: 1.12rem; line-height: 1.6; }
+  &__bas { margin-top: 1.4rem; text-align: center; }
+  &__reset { border: 2px solid var(--jaune); background: transparent; color: #ffe9a8; border-radius: 999px; padding: 0.45rem 1.2rem; font-weight: 700; }
+}
+.deux { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+.courge {
+  display: grid;
+  justify-items: center;
+  gap: 0.6rem;
+  padding: 1.3rem 1rem 1.5rem;
+  border-radius: 16px;
+  background: rgb(247 240 224 / 0.12);
+  border: 2px solid rgb(232 184 48 / 0.6);
+  text-align: center;
+  h3 { color: #ffe9a8; font-size: 1.3rem; }
+
+  &__bouton { position: relative; width: 180px; height: 200px; border: 0; background: none; padding: 0; display: grid; place-items: center; }
+  &__bouton:focus-visible { outline: 3px solid #ffe9a8; outline-offset: 4px; border-radius: 16px; }
+  &__tige { position: absolute; top: 2px; left: 50%; width: 14px; height: 30px; margin-left: -7px; background: #5b7a2a; border-radius: 8px 8px 0 0; transform: rotate(8deg); }
+  &__corps { position: relative; width: 150px; height: 170px; margin-top: 18px; display: grid; }
+  &__moitie { position: absolute; left: 0; right: 0; background: radial-gradient(circle at 35% 30%, #fff6c8, #e8c866 60%, #b88a28); transition: transform 0.5s ease; box-shadow: inset 0 -8px 14px rgb(120 80 10 / 0.35); }
+  &__moitie--h { top: 0; height: 52%; border-radius: 50% 50% 18% 18% / 70% 70% 20% 20%; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); transform: translateY(calc(var(--ecart) * -1)) rotate(calc(var(--ecart) * -0.12deg)); }
+  &__moitie--b { bottom: 0; height: 52%; border-radius: 18% 18% 50% 50% / 20% 20% 70% 70%; transform: translateY(var(--ecart)); width: 120%; left: -10%; }
+  &__moitie--h { width: 80%; left: 10%; }
+  &__scie { position: absolute; left: -22px; right: -22px; top: 49%; height: 10px; background: repeating-linear-gradient(90deg, #cfd3d8 0 6px, #8b9199 6px 8px); border-radius: 3px; opacity: 0; }
+  &__scie--va { opacity: 1; animation: scie 0.5s ease-in-out infinite alternate; }
+
+  &__coups { font-weight: 700; color: #ffe9a8; min-height: 1.5em; }
+  &__phrase { max-width: 22em; font-style: italic; color: #f2e5c0; }
+  &__contenu { margin: 0; display: grid; gap: 0.5rem; animation: apparait 0.8s ease both; }
+  &__contenu img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 10px; border: 3px solid var(--jaune); box-shadow: 0 0 26px rgb(232 184 48 / 0.6); }
+  &__contenu figcaption { font-style: italic; line-height: 1.5; }
+
+  &--nolbu.courge--ouverte &__contenu img { border-color: #a46be0; box-shadow: 0 0 26px rgb(164 107 224 / 0.7); }
+  &--nolbu { border-color: rgb(164 107 224 / 0.6); }
+}
+@keyframes scie { from { transform: translateX(-12px); } to { transform: translateX(12px); } }
+@keyframes apparait { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .courge__scie--va, .courge__contenu { animation: none; } }
+
+/* ---------- Galerie ---------- */
+.galerie {
+  background: linear-gradient(rgb(247 240 224 / 0.88), rgb(247 240 224 / 0.93)), var(--fond) center / cover;
+  .fenetre { position: relative; padding-top: 22px; }
+  .fenetre::before { content: ''; position: absolute; top: 0; left: -6px; right: -6px; height: 22px; background: var(--danch) center / 44px 44px; border: 3px solid #5a3a1c; border-radius: 4px 4px 0 0; }
+  .fenetre img { border: 8px solid #5a3a1c; border-top: 0; border-radius: 0 0 4px 4px; box-shadow: 0 12px 26px rgb(60 30 10 / 0.4); }
+  .fenetre:nth-child(2) { margin-top: 2rem; }
+}
+
+/* ---------- Personnages ---------- */
+.gens {
+  color: #fff;
+  background: linear-gradient(rgb(18 38 78 / 0.9), rgb(14 28 60 / 0.95)), var(--danch) center / 220px 220px;
+  h2 { color: #ffe9a8; }
+  .etiquette { color: var(--jaune); }
+  --pc-fond: rgb(14 28 60 / 0.88);
+  --pc-texte: #fff;
+  --pc-accent: var(--jaune);
+  --pc-bord: var(--jaune);
+  --pc-rayon: 10px;
+  --pc-vignette: 10px;
+}
+.chapeau { margin: 0.6rem 0 1.6rem; font-size: 1.1rem; }
+
+/* ---------- Origine ---------- */
+.origine {
+  border-top: 10px solid transparent;
+  border-image: $dancheong 10;
+}
+.oeuvre { margin: 1.4rem 0; padding: 1rem 1.3rem; background: #fff; border: 3px double var(--rouge); border-radius: 6px; box-shadow: 0 8px 20px rgb(90 40 20 / 0.18); }
+.oeuvre__etiquette { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rouge); font-weight: 700; }
+.oeuvre__titre { font-size: 1.35rem; font-weight: 700; margin: 0.2rem 0; color: var(--bleu); }
+.origine__colonnes { columns: 2 22em; column-gap: 2.4rem; font-size: 1.08rem; line-height: 1.7; p { margin: 0 0 1rem; break-inside: avoid; } }
+
+/* ---------- Fiche ---------- */
+.fiche-section { h2 { margin-bottom: 1.4rem; } --fc-fond: #fff; --fc-texte: #2b2118; --fc-accent: var(--rouge); --fc-accent-texte: #9a2a22; }
+
+/* ---------- Appel ---------- */
+.appel {
+  color: #fff;
+  background: linear-gradient(rgb(26 18 8 / 0.55), rgb(26 18 8 / 0.82)), var(--fond) center / cover;
+  h2 { color: #fff; text-shadow: 0 2px 10px #000; }
+  p { margin: 0.8rem 0 1.6rem; font-size: 1.2rem; text-shadow: 0 2px 8px #000; }
+}
+
+@media (max-width: 900px) {
+  .ouverture__interieur, .histoire__grille, .pays__grille { grid-template-columns: 1fr; gap: 2rem; }
+  .histoire__colonne { writing-mode: horizontal-tb; letter-spacing: 0.2em; font-size: 1.8rem; padding: 0.6rem; }
+  .histoire__visuel { position: static; }
+  .ouverture__livre { order: -1; }
+  .sceau { max-width: 260px; margin: 0 auto; }
+  .mots { grid-template-columns: 1fr; }
+  .deux { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .section { padding: 3.5rem 1rem; }
+}

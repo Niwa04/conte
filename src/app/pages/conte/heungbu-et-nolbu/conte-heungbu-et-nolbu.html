@@ -1,0 +1,179 @@
+<main class="hn" [style.--bojagi]="deco('motif')" [style.--danch]="deco('tuile')">
+  <!-- Ouverture : le village de Heungbu et l'hirondelle qui traverse -->
+  <section class="ouverture">
+    <svg class="hirondelle" viewBox="0 0 120 60" aria-hidden="true">
+      <path d="M2 30c20-4 34-2 42 8 4-14 10-24 16-30 2 12 6 22 14 28 14-8 30-8 44-6-14 6-28 14-40 14l-8 10-4-12c-22 0-46-6-64-12z" />
+    </svg>
+    <div class="ouverture__interieur">
+      <div class="ouverture__livre">
+        <div class="cadre-lattis">
+          <img [src]="conte().couverture" [alt]="conte().couvertureAlt" width="1400" height="788" fetchpriority="high">
+        </div>
+      </div>
+      <div class="ouverture__texte">
+        <div class="pays-badge">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <span><strong>Corée</strong> <span lang="ko">한국</span></span>
+        </div>
+        <p class="ouverture__hangeul" lang="ko" aria-hidden="true">흥부와 놀부</p>
+        <h1>{{ conte().titre }}</h1>
+        <p class="ouverture__accroche">{{ conte().accroche }}</p>
+        <p class="ouverture__origine">{{ conte().mentionOrigine }}</p>
+        <ul class="pastilles">
+          @for (e of conte().etiquettes; track e) { <li>{{ e }}</li> }
+        </ul>
+        <div class="ouverture__actions">
+          <a class="bouton bouton--vert bouton--brille" [href]="appUrl">Lire dans l’application</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Le pays : la Corée -->
+  <div class="frise-danch" aria-hidden="true"></div>
+  <section class="pays section" aria-labelledby="titre-pays">
+    <div class="interieur pays__grille">
+      <div class="sceau">
+        <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+        <p class="sceau__nom">Corée</p>
+        <p class="sceau__natif" lang="ko">한국 · Hanguk</p>
+        <p class="sceau__ou">Dynastie Joseon · la campagne</p>
+      </div>
+      <div class="pays__texte">
+        <p class="etiquette">Un conte venu de Corée</p>
+        <h2 id="titre-pays">Des toits en tuiles, des toits en chaume</h2>
+        <p class="pays__intro">Le conte se passe en Corée, dans une campagne de rizières et de collines où les maisons ont des toits recourbés. Au printemps, les hirondelles reviennent faire leur nid sous les avant-toits.</p>
+        <p class="mots-titre">Trois mots à retenir</p>
+        <ul class="mots">
+          @for (m of mots; track m.romanisation) {
+            <li appApparition>
+              <span class="mots__natif" lang="ko">{{ m.hangeul }}</span>
+              <span class="mots__romanisation">{{ m.romanisation }}</span>
+              <span class="mots__sens">{{ m.sens }}</span>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- L'histoire : un rouleau de papier, le titre en colonne, l'image derrière un treillis -->
+  <section class="histoire section" id="histoire" [style.--fond]="fond(7)">
+    <div class="interieur histoire__grille">
+      <p class="histoire__colonne" lang="ko" aria-hidden="true">흥부와 놀부</p>
+      <div class="rouleau">
+        <div class="rouleau__rouleau rouleau__rouleau--haut" aria-hidden="true"></div>
+        <div class="rouleau__papier">
+          <p class="etiquette">L’histoire</p>
+          <h2>Deux frères, deux héritages</h2>
+          <blockquote appApparition class="citation"><p>{{ conte().citation }}</p></blockquote>
+          <p appApparition class="resume">{{ conte().resume }}</p>
+        </div>
+        <div class="rouleau__rouleau rouleau__rouleau--bas" aria-hidden="true"></div>
+      </div>
+      <figure appApparition class="histoire__visuel">
+        <div class="cadre-lattis"><img [src]="conte().imageHistoire.src" [alt]="conte().imageHistoire.alt" loading="lazy" width="1400" height="788"></div>
+        <figcaption>{{ conte().imageHistoire.legende }}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Les deux courges -->
+  <section class="courges section" aria-labelledby="titre-courges" [style.--fond]="deco('courge')">
+    <div class="interieur">
+      <p class="etiquette">À toi de scier</p>
+      <h2 id="titre-courges">Deux courges, deux surprises</h2>
+      <p class="courges__chapeau">Comme dans le chant du pansori, on scie une courge en rythme : <span lang="ko">슬근 슬근</span>… Touche une courge pour donner un coup de scie. Trois coups, et elle s’ouvre.</p>
+
+      <div class="deux">
+        @for (c of courges(); track c.id; let n = $index) {
+          <article class="courge" [class.courge--ouverte]="c.coups >= 3" [class.courge--nolbu]="c.id === 'nolbu'">
+            <h3>{{ c.titre }}</h3>
+            <button type="button" class="courge__bouton" (click)="scier(n)" [attr.aria-label]="c.titre + ' : donner un coup de scie (' + c.coups + ' sur 3)'">
+              <span class="courge__tige"></span>
+              <span class="courge__corps" [style.--ecart.px]="c.coups >= 3 ? 26 : c.coups * 3">
+                <span class="courge__moitie courge__moitie--h"></span>
+                <span class="courge__moitie courge__moitie--b"></span>
+                <span class="courge__scie" [class.courge__scie--va]="c.coups > 0 && c.coups < 3" aria-hidden="true"></span>
+              </span>
+            </button>
+            <p class="courge__coups" aria-live="polite">
+              @if (c.coups < 3) { {{ c.coups }} / 3 coups de scie }
+              @else { Ouverte ! }
+            </p>
+            @if (c.coups >= 3) {
+              <figure class="courge__contenu">
+                <img [src]="page(c.page)" alt="" loading="lazy" width="1400" height="788">
+                <figcaption>{{ c.ouverture }}</figcaption>
+              </figure>
+            } @else {
+              <p class="courge__phrase">{{ c.fermee }}</p>
+            }
+          </article>
+        }
+      </div>
+      @if (touchee()) { <p class="courges__bas"><button type="button" class="courges__reset" (click)="recommencer()">Tout refermer</button></p> }
+    </div>
+  </section>
+
+  <!-- Illustrations -->
+  <section class="galerie section" id="illustrations" [style.--fond]="fond(1)">
+    <div class="interieur">
+      <p class="etiquette">Les illustrations</p>
+      <h2>Un conte à regarder autant qu’à lire</h2>
+      <ul class="galerie-trois">
+        @for (i of conte().illustrations; track i.src; let n = $index) {
+          <li appApparition class="fenetre" [style.transition-delay.ms]="n * 120">
+            <img [src]="i.src" [alt]="i.alt" loading="lazy" width="1400" height="788">
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <div class="frise-danch" aria-hidden="true"></div>
+  <!-- Personnages et voix -->
+  <section class="gens section" id="personnages" aria-labelledby="titre-gens" [style.--fond]="fond(10)">
+    <div class="interieur">
+      <p class="etiquette">Les personnages</p>
+      <h2 id="titre-gens">Une famille, un frère et un oiseau</h2>
+      <p class="chapeau">Choisis un personnage pour le découvrir.</p>
+      <app-personnages-conte [personnages]="conte().personnages" idBase="heungbu" />
+    </div>
+  </section>
+
+  <!-- Origine -->
+  <section class="origine section">
+    <div class="interieur">
+      <p class="etiquette">L’origine</p>
+      <h2>{{ conte().origine.titre }}</h2>
+      <aside class="oeuvre" appApparition>
+        <p class="oeuvre__etiquette">L’œuvre d’origine</p>
+        <p class="oeuvre__titre"><span lang="ko">흥부가</span> · Heungbuga</p>
+        <p class="oeuvre__auteur">Pansori, chant narratif coréen · fin de la dynastie Joseon (XIXe siècle) · auteur inconnu</p>
+      </aside>
+      <div class="origine__colonnes">
+        @for (p of conte().origine.paragraphes; track p) {
+          <p appApparition>{{ p }}</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Fiche -->
+  <section class="fiche-section section" id="fiche">
+    <div class="interieur centre">
+      <p class="etiquette">En un coup d’œil</p>
+      <h2>La fiche du conte</h2>
+      <app-fiche-conte [titre]="conte().titre" [infos]="conte().infos" />
+    </div>
+  </section>
+
+  <section class="appel section" [style.--fond]="deco('hanji')">
+    <div class="interieur centre">
+      <h2>Prêt à scier la courge ?</h2>
+      <p>Ouvre l’application et découvre Heungbu et Nolbu en entier.</p>
+      <button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="installer()">Télécharger l’application</button>
+    </div>
+  </section>
+</main>

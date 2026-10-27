@@ -31,7 +31,7 @@ export interface PersonnageConte {
 export interface FicheConte {
   slug: string;
   /** Mise en page propre au conte ; absent = gabarit classique (Aïcha). */
-  gabarit?: 'momotaro' | 'hamelin';
+  gabarit?: string;
   titre: string;
   accroche: string;
   mentionOrigine: string;
@@ -52,6 +52,8 @@ export interface FicheConte {
   origine: { titre: string; paragraphes: string[] };
   infos: InfoConte[];
 }
+
+import { MONDE } from './monde';
 
 const DOSSIER = 'assets/contes/aicha-et-la-gazelle-enchantee';
 const MOMO = 'assets/contes/momotaro';
@@ -247,7 +249,8 @@ export const CONTES: FicheConte[] = [
       { libelle: 'Langue', valeur: 'Français', icone: 'langue' },
       { libelle: 'Date de sortie', valeur: 'À annoncer', icone: 'date', ton: 'attente' }
     ]
-  }
+  },
+  ...MONDE
 ];
 
 export function trouverConte(slug: string): FicheConte | undefined {

@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Archibald et le carnet emprunté — Le recueil complet</title>
+<meta name="description" content="Archibald et le carnet emprunté : le lore, les personnages, les lieux et le texte à feuilleter page par page.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Special+Elite&family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;line-height:1.7}
+img{display:block;max-width:100%}
+button{font:inherit;cursor:pointer;color:inherit}
+[hidden]{display:none!important}
+.voile{position:fixed;inset:0;background:#05080cee;display:grid;place-items:center;z-index:99;padding:22px;cursor:zoom-out}
+.voile figure{margin:0;max-width:min(1100px,100%);text-align:center}
+.voile img{max-height:80vh;width:auto;margin:auto;border-radius:12px;box-shadow:0 20px 70px #000a}
+.voile figcaption{color:#fff;margin-top:12px;font-size:1.05rem}
+img[data-z]{cursor:zoom-in}
+.texte hr{border:0;text-align:center;margin:1.1em 0}
+.texte hr::before{content:"✦  ✦  ✦";letter-spacing:.4em;opacity:.7}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+:root{--nuit:#06252a;--nuit2:#0b3a40;--vert:#4df0a8;--vert-d:#1d9e70;--laiton:#d9a441;--laiton-d:#8a6420;--papier:#f6efdc;--crayon:#3b3a36;--ecarlate:#d8402c;--bois:#7a5230}
+body{background:var(--nuit);color:#e8f5ef;font-family:"Fredoka",system-ui,sans-serif}
+/* ───── Accueil : la ville des étagères ───── */
+.scene{position:relative;overflow:hidden;min-height:560px;background:radial-gradient(900px 500px at 70% 30%,#1fb87f55,transparent 70%),linear-gradient(180deg,#05242a,#0a3a3c 70%,#0d4a45)}
+.scene__etageres{position:absolute;inset:0;background:
+  repeating-linear-gradient(180deg,transparent 0 118px,#00000055 118px 122px,var(--bois) 122px 130px,#00000066 130px 134px),
+  repeating-linear-gradient(90deg,#ffffff06 0 3px,transparent 3px 60px);opacity:.55}
+.scene__lueur{position:absolute;inset:0;background:radial-gradient(circle at 20% 110%,#4df0a855,transparent 55%)}
+.flotte{position:absolute;font-size:2rem;opacity:.5;pointer-events:none;filter:drop-shadow(0 0 10px #4df0a8aa);animation:flotte var(--d) ease-in-out var(--r) infinite alternate}
+@keyframes flotte{from{transform:translateY(0) rotate(-8deg)}to{transform:translateY(-26px) rotate(10deg)}}
+.scene__in{position:relative;z-index:2;width:min(1100px,100% - 32px);margin:0 auto;padding:54px 0 90px;display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center}
+.plaque{display:inline-block;background:linear-gradient(135deg,#f3d68a,var(--laiton) 45%,#f8e3a4 60%,var(--laiton-d));color:#3a2606;font-family:"Special Elite",monospace;padding:6px 18px;border-radius:6px;box-shadow:0 6px 16px #0006;transform:rotate(-1.5deg);letter-spacing:.06em;font-size:.95rem}
+.scene h1{font-family:"Special Elite",monospace;font-weight:400;font-size:clamp(2.1rem,5vw,3.6rem);line-height:1.1;margin:.4em 0 .3em;text-shadow:0 0 22px #4df0a899}
+.scene h1 em{font-style:normal;color:var(--vert)}
+.accroche{font-family:"Caveat",cursive;font-size:1.7rem;line-height:1.25;color:#cdeee0;max-width:26em;margin:0 0 20px}
+.compteurs{display:flex;gap:10px;flex-wrap:wrap}
+.compteurs span{border:2px dashed #4df0a888;border-radius:8px;padding:3px 14px;font-family:"Special Elite",monospace;font-size:.9rem;color:var(--vert)}
+.photo{justify-self:center;background:#f6efdc;padding:12px 12px 40px;border-radius:4px;box-shadow:0 24px 50px #000a;transform:rotate(3deg);position:relative;width:min(430px,100%)}
+.photo::before,.photo::after{content:"";position:absolute;top:-14px;width:90px;height:28px;background:#f5d98a99;border:1px solid #e1be5a66}
+.photo::before{left:-18px;transform:rotate(-35deg)}.photo::after{right:-18px;transform:rotate(35deg)}
+.photo img{width:100%;border:1px solid #0003}
+.photo b{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-family:"Caveat",cursive;font-size:1.5rem;color:#3b3a36;font-weight:700}
+/* onglets : étiquettes de consigne */
+.etiquettes{position:relative;z-index:3;display:flex;gap:14px;justify-content:center;margin:-34px auto 0;flex-wrap:wrap;padding:0 12px}
+.etiquette{position:relative;border:0;background:var(--papier);color:var(--crayon);font-family:"Special Elite",monospace;font-size:1.05rem;padding:14px 30px 12px 44px;clip-path:polygon(22px 0,100% 0,100% 100%,22px 100%,0 50%);box-shadow:0 8px 18px #0008;transition:transform .15s}
+.etiquette::before{content:"";position:absolute;left:16px;top:50%;width:11px;height:11px;border-radius:50%;background:var(--nuit);transform:translateY(-50%)}
+.etiquette:hover{transform:translateY(-3px)}
+.etiquette[aria-selected=true]{background:var(--vert);color:#04302a;transform:translateY(-6px)}
+main{width:min(1100px,100% - 24px);margin:0 auto;padding:36px 0 80px}
+h2{font-family:"Special Elite",monospace;font-weight:400;font-size:clamp(1.5rem,3vw,2.1rem);color:var(--laiton);margin:0 0 4px}
+.sous-titre{font-family:"Caveat",cursive;font-size:1.5rem;color:#9fd9c3;margin:0 0 22px}
+/* étagère de personnages */
+.etagere{display:flex;gap:10px;align-items:flex-end;justify-content:center;padding:10px 20px 0;border-bottom:16px solid var(--bois);background:linear-gradient(180deg,transparent,#00000033);border-radius:10px 10px 0 0;box-shadow:0 14px 0 -4px #00000066;flex-wrap:wrap}
+.objet{position:relative;border:0;background:var(--papier);border-radius:8px 8px 0 0;padding:8px 8px 0;width:clamp(120px,24vw,200px);text-align:center;transition:transform .2s}
+.objet img{width:100%;height:clamp(150px,26vw,230px);object-fit:contain;mix-blend-mode:multiply}
+.objet .tag{display:block;margin:4px auto 0;background:var(--papier);color:var(--crayon);font-family:"Caveat",cursive;font-weight:700;font-size:1.25rem;line-height:1;padding:5px 10px;border-radius:3px;transform-origin:50% 0;transform:rotate(-2deg);box-shadow:0 4px 8px #0006;position:relative}
+.objet .tag::before{content:"";position:absolute;left:50%;top:-12px;width:2px;height:12px;background:#d9d2b8}
+.objet:hover{transform:translateY(-8px)}
+.objet[aria-selected=true]{transform:translateY(-14px)}
+.objet[aria-selected=true]{box-shadow:0 0 0 3px var(--vert),0 0 26px #4df0a8}
+.objet[aria-selected=true] .tag{background:var(--vert)}
+/* fiche de consigne */
+.consigne{margin-top:30px;display:grid;grid-template-columns:230px 1fr;gap:28px;background:linear-gradient(160deg,#0e4a4a,#0a3436);border:2px solid #4df0a855;border-radius:16px;padding:22px;box-shadow:0 0 40px #4df0a822 inset}
+.consigne__img{background:#f6efdc;border-radius:12px;padding:8px;align-self:start}
+.consigne__img img{margin:auto;max-height:300px;width:auto;mix-blend-mode:multiply}
+.consigne h3{font-family:"Special Elite",monospace;font-weight:400;font-size:2rem;color:var(--vert);margin:0 0 4px}
+.consigne p{margin:0 0 14px}
+.etq{font-family:"Special Elite",monospace;color:var(--laiton);font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;margin:16px 0 8px}
+.autour{display:flex;gap:10px;flex-wrap:wrap}
+.carte-obj{display:grid;grid-template-columns:62px 1fr;gap:10px;background:#f6efdc;color:var(--crayon);border-radius:4px;padding:8px 12px 8px 8px;flex:1 1 230px;position:relative;box-shadow:0 5px 12px #0006}
+.carte-obj::before{content:"";position:absolute;top:8px;right:10px;width:9px;height:9px;border-radius:50%;background:var(--nuit);box-shadow:inset 0 0 0 2px #d9d2b8}
+.carte-obj img{width:62px;height:82px;object-fit:contain;mix-blend-mode:multiply}
+.carte-obj b{font-family:"Caveat",cursive;font-size:1.35rem;line-height:1}
+.carte-obj small{display:block;font-family:"Special Elite",monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#0f6b4a}
+.carte-obj p{margin:2px 0 0;font-size:.78rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+/* panneaux de direction + portail */
+.directions{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:22px;align-items:center}
+.panneaux{display:grid;gap:10px}
+.panneau{position:relative;text-align:left;border:0;padding:10px 30px 10px 18px;background:linear-gradient(180deg,#a0703f,#7a5230);color:#fff4dc;font-family:"Special Elite",monospace;font-size:1rem;clip-path:polygon(0 0,calc(100% - 22px) 0,100% 50%,calc(100% - 22px) 100%,0 100%);box-shadow:0 6px 12px #0006;transition:transform .15s,background .15s}
+.panneau:nth-child(even){margin-left:26px}
+.panneau:hover,.panneau[aria-current=true]{background:linear-gradient(180deg,#4df0a8,#1d9e70);color:#04302a;transform:translateX(6px)}
+.portail{position:relative;width:250px;height:250px;border-radius:50%;overflow:hidden;border:6px solid var(--laiton);box-shadow:0 0 0 6px #0004,0 0 40px #4df0a8aa,inset 0 0 30px #4df0a8;animation:ondule 6s ease-in-out infinite;justify-self:center}
+.portail img{width:100%;height:100%;object-fit:cover}
+@keyframes ondule{0%,100%{border-radius:50% 48% 52% 50%}50%{border-radius:48% 52% 50% 52%}}
+.portail figcaption{position:absolute;left:0;right:0;bottom:0;background:#000a;color:#fff;font-family:"Caveat",cursive;font-size:1.2rem;text-align:center;padding:6px}
+.portail{margin:0}
+.rare{margin-top:14px;max-width:620px;display:grid;grid-template-columns:260px 1fr;gap:20px;align-items:center;background:var(--papier);color:var(--crayon);border-radius:10px;padding:14px;transform:rotate(-.6deg);box-shadow:0 14px 30px #0008}
+.rare img{width:100%;border-radius:6px;aspect-ratio:4/3;object-fit:cover}
+.rare b{font-family:"Caveat",cursive;font-size:2rem}
+/* ───── Lecture : le carnet de croquis ───── */
+.salle{display:grid;grid-template-columns:230px minmax(0,1fr);gap:26px;align-items:start}
+.tiroirs{display:grid;gap:12px;position:sticky;top:84px}
+.tiroir{position:relative;text-align:left;border:0;background:linear-gradient(180deg,#a97c48,#7a5230);color:#fff4dc;padding:16px 56px 16px 18px;border-radius:6px;font-family:"Special Elite",monospace;font-size:.9rem;line-height:1.25;box-shadow:0 6px 0 #4a2f16,0 10px 14px #0007}
+.tiroir::after{content:"";position:absolute;right:14px;top:50%;width:26px;height:8px;border-radius:5px;background:var(--laiton);transform:translateY(-50%);box-shadow:inset 0 -2px 0 #0003}
+.tiroir small{display:block;color:#f3d68a;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
+.tiroir[aria-selected=true]{background:linear-gradient(180deg,#4df0a8,#1d9e70);color:#04302a;transform:translateX(8px)}
+.tiroir[aria-selected=true] small{color:#04302a}
+.feuille{background:var(--papier);color:var(--crayon);border-radius:4px;padding:26px clamp(16px,3vw,34px) 28px;box-shadow:0 22px 44px #000a;position:relative;background-image:repeating-linear-gradient(180deg,transparent 0 31px,#6aa4c622 31px 32px)}
+.feuille::before{content:"";position:absolute;left:0;top:0;bottom:0;width:26px;background:radial-gradient(circle at 13px 26px,var(--nuit) 0 6px,transparent 7px) 0 0/26px 52px repeat-y;opacity:.8}
+.feuille__tete{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0 0 12px 20px;flex-wrap:wrap}
+.feuille__tete h3{font-family:"Special Elite",monospace;font-weight:400;font-size:1.25rem;margin:0}
+.feuille__tete span{font-family:"Caveat",cursive;font-size:1.5rem;color:var(--ecarlate);font-weight:700}
+.croquis{margin:0 0 18px 20px;position:relative;background:#fff;padding:8px;box-shadow:0 8px 18px #0004;transform:rotate(-.5deg)}
+.croquis::before,.croquis::after{content:"";position:absolute;top:-10px;width:70px;height:22px;background:#f5d98acc;border:1px solid #e1be5a66}
+.croquis::before{left:-14px;transform:rotate(-30deg)}.croquis::after{right:-14px;transform:rotate(30deg)}
+.croquis img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.feuille .texte{margin-left:20px;font-family:"Caveat",cursive;font-size:clamp(1.35rem,2.4vw,1.7rem);line-height:1.45}
+.feuille .texte p{margin:0 0 .5em}
+.feuille .texte p.d{padding-left:1em;text-indent:-1em;color:#1f4d7a}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 0 20px}
+.btn{border:0;background:var(--nuit2);color:#fff;font-family:"Special Elite",monospace;padding:10px 18px;border-radius:4px;clip-path:polygon(0 0,100% 0,96% 50%,100% 100%,0 100%,4% 50%);box-shadow:0 6px 0 #00000055}
+.btn[disabled]{opacity:.35;pointer-events:none}
+.btn--ok{background:#0f6b4a}
+.compte{font-family:"Caveat",cursive;font-size:1.4rem;color:#555}
+.points{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:300px}
+.points button{width:11px;height:11px;border-radius:50%;border:0;padding:0;background:#c9c0a6}
+.points button[aria-current=true]{background:var(--ecarlate);transform:scale(1.4)}
+.pied{text-align:center;color:#6fa593;font-family:"Special Elite",monospace;font-size:.85rem;padding:0 16px 40px}
+@media(max-width:860px){.scene__in{grid-template-columns:1fr}.photo{order:-1;width:min(340px,86%)}.consigne,.directions,.salle,.rare{grid-template-columns:1fr}.tiroirs{position:static;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.tiroir[aria-selected=true]{transform:none}.consigne__img{max-width:230px}}
+
+/*VISUEL*/
+.bandeau{height:clamp(90px,15vw,170px);border-radius:14px;margin:0 0 24px;background:linear-gradient(180deg,rgba(0,0,0,.10),rgba(0,0,0,.50)),var(--bandeau) center/cover;box-shadow:0 10px 24px rgba(0,0,0,.45)}
+.orn{height:clamp(70px,11vw,130px);width:min(1100px,100% - 24px);margin:0 auto 26px;border-radius:14px;background:var(--orn) center/cover;box-shadow:0 10px 24px rgba(0,0,0,.4)}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(var(--voile-h),var(--voile-b)),var(--bg-page) center/cover no-repeat}
+body[data-vue=lore]{--bg-page:var(--bg-lore)}body[data-vue=lire]{--bg-page:var(--bg-lire)}
+body{--voile-h:rgba(4,28,32,.84);--voile-b:rgba(4,28,32,.93)}
+:root{--orn:url(/assets/recueils/archibald/orn.webp);--bg-lore:url(/assets/recueils/archibald/lore.webp);--bg-lire:url(/assets/recueils/archibald/lire.webp)}
+.scene::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,36,42,.78),rgba(10,58,60,.55) 55%,rgba(5,36,42,.92)),url(/assets/recueils/archibald/hero.webp) center/cover}
+.scene__etageres{opacity:.22}
+.portail{width:100%;max-width:380px;height:auto;aspect-ratio:16/9;border-radius:26px;animation:none}
+.directions{grid-template-columns:minmax(0,1fr) minmax(0,380px)}
+.consigne{background:linear-gradient(rgba(10,52,54,.93),rgba(8,40,42,.95)),var(--fond-persos) center/cover}
+@media(max-width:860px){.directions{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<style>
+@font-face{font-family:'Contract';src:url('/fonts/ContractSans.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'Contract';src:url('/fonts/ContractSans-Bold.ttf') format('truetype');font-weight:700;font-display:swap}
+/* Copie de l'en-tête de l'accueil (home.scss) : même dégradé, même filet or, même badge suspendu */
+.entete{--mdc-royal:#1a3fa6;--mdc-navy:#12296f;--mdc-gold:#d9a93a;--mdc-gold-clair:#f3d27a;position:sticky;top:0;z-index:80;background:linear-gradient(#1f48b8,var(--mdc-navy));border-bottom:3px solid var(--mdc-gold);box-shadow:0 0 0 1px #0a1a52,0 6px 18px rgb(0 0 0/.35);font-family:'Contract','Segoe UI',system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+.entete *{box-sizing:border-box}
+.entete__interieur{max-width:1200px;margin:0 auto;padding:.5rem 1.25rem;min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.marque{position:relative;z-index:3;align-self:flex-start;margin-bottom:-48px;display:block}
+.marque__badge{display:block;height:104px;width:auto;max-width:none;filter:drop-shadow(0 6px 8px rgb(0 0 0/.45));transition:transform .3s}
+.marque:hover .marque__badge{transform:rotate(-3deg) scale(1.05)}
+.navigation{display:flex;align-items:center;gap:1.5rem}
+.navigation a:not(.bouton){color:var(--mdc-gold-clair);font-weight:700;text-decoration:none}
+.navigation a:not(.bouton):hover{color:#fff;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+.entete .bouton{position:relative;display:inline-block;overflow:hidden;padding:.5rem 1.2rem;border-radius:999px;border:3px solid var(--mdc-gold);background:linear-gradient(#f8dc8a,var(--mdc-gold) 55%,#b9831d);border-color:#fff3c9;color:#3b2606;text-shadow:0 1px 0 rgb(255 255 255/.5);font-weight:700;font-size:1rem;text-decoration:none;box-shadow:inset 0 0 0 2px rgb(255 255 255/.18),0 5px 0 #0a1a52,0 12px 20px rgb(0 0 0/.28);transition:transform .12s,box-shadow .12s}
+.entete .bouton:hover{transform:translateY(-3px) scale(1.03)}
+.entete .bouton:focus-visible{outline:3px solid var(--mdc-gold-clair);outline-offset:3px}
+.burger{display:none;width:44px;height:44px;border:2px solid var(--mdc-gold);border-radius:12px;background:var(--mdc-navy);padding:11px 9px;flex-direction:column;justify-content:space-between}
+.burger span{display:block;height:3px;border-radius:2px;background:var(--mdc-gold-clair)}
+@media(max-width:900px){
+  .marque__badge{height:84px}.marque{margin-bottom:-36px}.burger{display:flex}
+  .navigation{display:none;position:absolute;inset:100% 0 auto 0;flex-direction:column;align-items:stretch;padding:1rem 1.25rem 1.5rem;background:var(--mdc-navy);border-bottom:3px solid var(--mdc-gold);text-align:center}
+  .navigation.navigation--ouverte{display:flex}
+}
+</style>
+<header class="entete">
+  <div class="entete__interieur">
+    <a class="marque" href="/" aria-label="La Maison des Contes, accueil">
+      <img class="marque__badge" src="/assets/badge-maison-des-contes.webp" alt="La Maison des Contes" width="277" height="352">
+    </a>
+    <button type="button" class="burger" aria-expanded="false" aria-controls="navigation" aria-label="Menu" onclick="var n=document.getElementById('navigation');var o=n.classList.toggle('navigation--ouverte');this.setAttribute('aria-expanded',o)">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="navigation" class="navigation" aria-label="Principale">
+      <a href="/#interactif">Lecture interactive</a>
+      <a href="/#collection">Collection</a>
+      <a href="/#test">Tester</a>
+      <a href="/#bibliotheque">Bibliothèque</a>
+      <a href="/contes">Nos contes</a>
+      <a href="/#tarifs">Tarifs</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/connexion">Se connecter</a>
+      <a class="bouton" href="/webgl-build/game.html">Télécharger l’app</a>
+    </nav>
+  </div>
+</header>
+
+<header class="scene">
+  <div class="scene__etageres"></div><div class="scene__lueur"></div>
+  <div class="scene__in">
+    <div>
+      <span class="plaque">BUREAU DES OBJETS PERDUS</span>
+      <h1>Archibald et le <em>carnet emprunté</em></h1>
+      <p class="accroche">Archibald a le don de perdre ses affaires... mais cette fois, c'est le carnet de sa maman qui disparaît ! Pour le retrouver, il va découvrir un monde secret où les objets perdus vivent de drôles d'aventures.</p>
+      <div class="compteurs"><span>3 contes</span><span>31 pages illustrées</span></div>
+    </div>
+    <div class="photo"><img src="https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-anthology-covers/80d1ffee-c939-46b3-b191-75b1c17f7482/fc464cbe-9351-42b1-9575-672e8ba8df05.png" alt="Couverture : Archibald et le carnet emprunté"><b>« Cherchez, on a peut-être trouvé »</b></div>
+  </div>
+</header>
+<div class="etiquettes" role="tablist" aria-label="Sections">
+  <button class="etiquette" role="tab" id="t-lore" data-top="lore">Les étagères</button>
+  <button class="etiquette" role="tab" id="t-lire" data-top="lire">Le carnet de croquis</button>
+</div>
+<main>
+  <div class="bandeau" id="bandeau"></div>
+  <section id="p-lore" hidden>
+    <h2>Le monde d’Archibald</h2>
+    <p class="sous-titre">Tout ce qui a été trouvé, étiqueté et rangé par le farfadet.</p>
+    <div class="etagere" id="etagere" role="tablist"></div>
+    <div id="consigne"></div>
+    <div id="rare"></div>
+  </section>
+  <section id="p-lire" hidden>
+    <div class="salle">
+      <nav class="tiroirs" id="tiroirs" aria-label="Contes"></nav>
+      <div id="feuille"></div>
+    </div>
+  </section>
+</main>
+<div class="orn" aria-hidden="true"></div>
+<p class="pied">« Archibald et le carnet emprunté » · La Maison des Contes · contenu en brouillon</p>
+<script id="data" type="application/json">{"titre":"Archibald et le carnet emprunté","unite":"Conte","mode":"recueil","labels":{"persos":"Les personnages","autres":"Les silhouettes","objets":"Les objets"},"persos":[{"main":{"title":"Archibald","desc":"Archibald est un garçon de dix ans, un peu timide et rêveur, qui raconte l'histoire. Il veut qu'on le remarque et part à l'aventure pour retrouver un carnet très important.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/character/848e0123-e8d0-40a6-9a9c-4a3986a5c266.png"},"formes":[],"entourage":[{"title":"La mère d’Archibald","desc":"La mère d’Archibald est une artiste talentueuse qui crée des bandes dessinées très appréciées. Elle aime beaucoup son fils, même si elle ne se doute pas de tout ce qu'il vit.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/character/70779c48-9cd1-4521-8744-1200a3e75393.png"},{"title":"Auguste","desc":"Auguste est un camarade de classe d’Archibald, toujours prêt à partager ses trouvailles. Il aime montrer des choses étonnantes à ses amis à l’école.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/character/0a9f6f5b-ea78-4c3a-b020-cc3aabe96b92.png"},{"title":"Suzy","desc":"Suzy est une camarade gentille et curieuse qui aime lire et poser des questions. Grâce à l'aventure d’Archibald, elle apprend à mieux le connaître.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/character/f101ee19-6a37-40f8-9efc-d77a9a84268a.png"}],"lieux":[{"title":"Sa chambre","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/88df6fd6-abc3-46a4-9b5f-55a7c426b85d.png"},{"title":"L’école","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/0105a728-d73a-4ac1-ab02-15859d3f9af8.png"},{"title":"Le bureau de sa mère","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/715bf039-b52c-4d21-b32f-4c25f081d2fa.png"}]},{"main":{"title":"Le farfadet","desc":"Le farfadet est un petit être malicieux qui garde les objets perdus et aide Archibald dans sa quête. Il connaît tous les secrets du monde des choses égarées et devient un précieux guide.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/character/3132b500-423e-4725-b092-953f8d6f399d.png"},"formes":[],"entourage":[{"title":"Le président du jury","desc":"Le président du jury est un farfadet très sage qui décide si les objets précieux peuvent être rendus à leur propriétaire. Il écoute Archibald avec attention lors d'un moment important.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/character/80d86c08-05fa-452d-bc7d-48d60e35a42e.png"}],"lieux":[{"title":"Le monde des objets perdus","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/c2f314c1-1ff6-4041-bc45-169c2552617f.png"},{"title":"La forêt de métal","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/08dc5202-6d42-4053-b86f-472be766cfb1.png"},{"title":"La tour des choses inestimables","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/cc9274c2-a709-422b-8a6d-418ceeeb661f.png"}]},{"main":{"title":"Écharpe","desc":"Écharpe est une écharpe spéciale, tricotée avec amour, qui prend vie dans le monde des objets perdus. Elle montre son affection à Archibald et l'accompagne dans son aventure.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/character/3d8a1b86-dd61-433a-9da9-092ef1a6fc6f.png"},"formes":[],"entourage":[],"lieux":[{"title":"Le monde des objets perdus","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/c9d0dfe3-3c0c-46fd-8ee3-a74ea030e3d8.png"}]}],"figurants":[],"objets":[{"title":"Le carnet de croquis","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/715bf039-b52c-4d21-b32f-4c25f081d2fa.png"}],"fonds":{"persos":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/0105a728-d73a-4ac1-ab02-15859d3f9af8.png","autres":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/e228eb39-e8e6-4e66-a2f8-d43f290442e1.png","lieux":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/7faa3513-0ae5-4d77-97b5-cad9d709b930.png","objets":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/715bf039-b52c-4d21-b32f-4c25f081d2fa.png"},"eps":[{"titre":"Archibald et le carnet emprunté","part":0,"cover":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/27f29d11-a629-41ab-be5e-3ad24aec912c.png","pages":[{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/27f29d11-a629-41ab-be5e-3ad24aec912c.png","b":[["p","Je m’appelle Archibald et je vais vous raconter à quel point je suis dans le pétrin. D’abord, il faut savoir que ma mère est illustratrice. Pas n’importe laquelle : l’illustratrice de Mortelle Babelle, la bande dessinée que tout le monde lit à l’école. Mais ça, les autres dans ma classe ne le savent pas. Quand on a fini notre travail en avance, on peut sortir un livre, si on veut. Auguste et Suzy ont sorti un numéro de Mortelle Babelle. Soudain, Suzy s’est retournée en comprenant que je l’observais. J’ai détourné le regard pour faire semblant de terminer mon exercice."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/e228eb39-e8e6-4e66-a2f8-d43f290442e1.png","b":[["p","J’ai envie de disparaître sous ma table. Le pire dans tout ça, c’est que si ça arrivait pour de vrai, je crois bien qu’il n’y aurait que la maîtresse qui s’en rendrait compte. À l’école, je ne suis ni le meilleur au loup glacé ni celui qui fait rire tout le monde. Quand je dois parler devant un groupe, un rien me fait rougir. Avec tout ça, j’ai l’impression que les autres ne me remarquent pas. Je me sens invisible. Au fond, j’aimerais bien qu’on s’intéresse un peu plus à moi…"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/715bf039-b52c-4d21-b32f-4c25f081d2fa.png","b":[["p","Je repense à Auguste, qui a connu son heure de gloire le jour où il a ramené son lapin à l’école, et j’ai une idée. En rentrant chez moi, je me suis introduit dans le bureau de ma mère. C’est là qu’elle s’enferme pour plancher sur sa bande dessinée. Alors, j’ai emprunté"],["d","— j’insiste sur le mot emprunté"],["d","— son carnet de croquis. Celui où elle dessine toutes ses nouvelles idées pour les prochains numéros de Mortelle Babelle. Si je me débrouille pour remettre le carnet à sa place avant qu’elle en ait besoin, c’est gagné."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/0dd4b8dc-bf60-4c8b-bcfa-f438757d727a.png","b":[["d","— Archichou, ça va ? Tu as l’air tout pâle. Gloups ! Ma mère est apparue à l’autre bout du couloir, sans un bruit. Il n’y a que les mamans et les ninjas qui savent faire ça. J’ai caché le carnet sous mon pull, mort de trouille. Est-ce qu’elle se doute de quelque chose ?"],["d","— J’ai… un peu mal au ventre, ai-je dit en plaquant les mains sur le carnet dissimulé sous mon pull. Ça a fait un petit bruit de carton qu’on tapote. Ma mère a jeté un œil à ma chambre, un vrai champ de bataille."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/fdb45440-438c-4c9c-98ba-f6d452669cd5.png","b":[["d","— Allonge-toi un peu alors, et quand ça ira mieux, pense à ranger. Sinon, tu vas encore mettre des heures à retrouver tes affaires. Qu’est-ce que les adultes sont maniaques du rangement ! Enfin, elle est repartie. Moi, j’ai soufflé. Par chance, elle ne s’est rendu compte de rien, enfin pour l’instant… Avec tout ça, vous allez penser que je suis un voleur doublé d’un menteur. Sachez que Mortelle Babelle n’a jamais rien fait pour moi."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/0105a728-d73a-4ac1-ab02-15859d3f9af8.png","b":[["p","Cette héroïne prend beaucoup trop de place dans la vie de ma mère et de mes camarades ; moi, je veux juste lui donner l’occasion de se rattraper. Le lendemain, à l’école, le carnet a fait sensation. Il est passé de mains en mains, les yeux de mes camarades ont brillé en découvrant les dessins, et ils ont rigolé avec les nouvelles bêtises de Mortelle Babelle. Même si je n’aime pas trop parler devant les autres, pour une fois, on remarque que j’existe. À la récré, un cercle se forme autour de moi."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/c86a1110-15ef-4652-b11a-d6369ff05934.png","b":[["p","Je réponds à toutes les questions, le sourire aux lèvres. Même Suzy me parle. Suzy, qui ne m’avait jamais adressé la parole. Bien sûr, je rougis comme une tomate, mais au moins, on se met à s’intéresser à moi. En rentrant à la maison, j’évite de croiser ma mère. Ni vu ni connu, je cache son carnet sous une montagne de vêtements. Même un archéologue mettrait des siècles avant de le retrouver !"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/cfcf15c1-538d-48d8-9da4-7d5096148762.png","b":[["p","Le problème, c’est qu’à force de sortir ce carnet, de lui trouver une nouvelle cachette encore plus sûre, de penser aux anniversaires auxquels on a promis de m’inviter… je l’ai perdu. Perdu, comme ça, sans m’en rendre compte. Tous les dessins. Quel idiot ! Ce carnet, c’est le travail de ma mère ! Et il n’y en a pas deux comme lui…"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/88df6fd6-abc3-46a4-9b5f-55a7c426b85d.png","b":[["p","Il est dans ma chambre, forcément dans ma chambre… Je regarde la pièce. On dirait qu’une tornade est passée par-là. Et bien sûr, je ne peux pas demander de l’aide à ma mère. Elle n’a pas tort : j’ai un vrai talent pour égarer mes affaires. Parfois, j’ai l’impression que les objets disparaissent volontairement… pas vous ? Allez, Archibald. Tu peux y arriver, me dis-je pour me donner du courage… Je commence par fouiller dans mon sac. Rien. Après une heure de recherche intensive, je me mets à genoux pour regarder sous le lit."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/86910a03-54e7-4cdc-86e3-b46d54ca06fc.png","b":[["p","Et là, entre des moutons de poussière et un vieux manuel de maths, je l’aperçois enfin, éclairé par ma lampe torche : le carnet. Quel soulagement ! Mais à cet instant précis, il se passe quelque chose de vraiment, vraiment bizarre. Une petite flaque apparaît dans le plancher et le carnet commence à s’y enfoncer doucement, comme pris dans des sables mouvants. C’est alors qu’une main vert kaki, avec de longues griffes, jaillit de nulle part et attrape le carnet. Elle l’emporte avec elle."],["d","— Hé ! Au voleur !"]]}]},{"titre":"Archibald et le monde des objets perdus","part":0,"cover":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/c2f314c1-1ff6-4041-bc45-169c2552617f.png","pages":[{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/c2f314c1-1ff6-4041-bc45-169c2552617f.png","b":[["p","Je rampe à plat ventre sous mon lit et je passe la tête là où la drôle de main se trouvait à peine deux secondes plus tôt. Je me penche en avant et je sens le vide m’aspirer. Sans comprendre, je bascule. Je me frotte la tête. Quand je me relève, ce n’est plus ma chambre. Je suis stupéfait. Je suis dans une immense ville éclairée de lumières vertes. Des piles d’objets en tout genre et des étagères immenses remplacent les bâtiments. Devant moi se tient la créature à la main verte."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/e0cfa4dc-6d7d-49c9-954b-f892d04a169e.png","b":[["p","Avec ses grands yeux, elle a l’air plus surprise que méchante."],["d","— Oh non, non, non… marmonne-t-elle. Un humain. Ici, dans le monde des objets perdus… Cette créature n’a pas l’air de se rendre compte que je l’entends."],["d","— Le monde des objets perdus, vous avez dit ? Mais vous êtes qui, au juste ?"],["d","— Un farfadet des choses perdues. Et toi, un humain qui doit absolument rentrer chez lui !"],["d","— Pas sans le carnet que vous m’avez volé ! Je remarque qu’il ne l’a plus dans ses mains et mes yeux s’écarquillent. Panique."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/5d0bef06-20bd-470e-a50c-e0abd28ec68a.png","b":[["d","— Je regrette, dit le farfadet, c’est trop tard. Ton carnet a été déclaré perdu, il a basculé dans mon monde. Il fallait le traiter mieux que ça, tu ne crois pas ? Maintenant, retourne d’où tu viens. Tu n’as qu’à emprunter le portail vers ta chambre. Il me montre de son doigt griffu le passage liquide qui flotte juste au-dessus de ma tête. Ce farfadet ne sait vraiment pas à qui il a affaire."],["d","— Écoutez, vous voulez que je parte d’ici sans faire d’histoires, pas vrai ? Alors on fait un marché : le carnet et je disparais."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/edd0ddd9-7f25-4542-b326-8bc8a3ea1ec5.png","b":[["p","Je lui tends une main et je serre sa longue main verte."],["d","— Hum… marché conclu, convient-il. Mais il faudrait déjà que je sache où il se trouve. Je fais de mon mieux pour ne pas me mettre en colère :"],["d","— Attendez une seconde, vous me l’avez volé parce que je l’ai perdu, et maintenant c’est vous qui l’avez perdu ? Vous vous fichez de moi…"],["d","— Ce n’est pas tout à fait ça, reprend le farfadet en agitant ses grandes mains devant son visage. Ton carnet était malheureux. C’est lui qui m’a appelé."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/c9d0dfe3-3c0c-46fd-8ee3-a74ea030e3d8.png","b":[["p","D’ailleurs, ce n’est pas le premier objet abandonné que je viens chercher dans ta chambre… Tu n’as même pas remarqué qu’il manquait celui-là ? Aussitôt, je sens quelque chose contre ma jambe. On dirait un serpent de laine tout triste. Je reconnais alors l’écharpe de mamie, que j’avais perdue. Depuis tout ce temps, elle est ici ? L’écharpe s’enroule autour de ma jambe et grimpe sur moi."],["d","— Mais elle bouge ! m’écrié-je."],["d","— Évidemment. Ici, les choses sont libres d’aller où elles veulent. C’est bien pour ça que j’ignore où est passé ton carnet."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/d01e025f-61a0-4ea4-be64-e47d93ff5769.png","b":[["p","En tout cas, on dirait que tu as manqué à ton écharpe. C’est parce qu’elle tient à toi qu’elle t’a retrouvé. Comment s’appelle-t-elle ?"],["d","— C’est juste une écharpe. Les écharpes n’ont pas de nom."],["d","— Mais enfin, toutes les choses ont un nom. Oh, je vois, dit le farfadet avec un air satisfait. Tu l’as simplement appelée « Écharpe ». C’est vrai que ça sonne bien, c’est un joli prénom. Je me frappe le front. Je ne connais pas d’autres farfadets pour l’instant, mais celui-ci raconte n’importe quoi. Je lui annonce que je vais me débrouiller tout seul."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/0b444b5a-4ef7-43c9-b02c-483aa82072f8.png","b":[["p","Toute cette discussion n’a été qu’une perte de temps. Et pendant ce temps, mon carnet s’est peut-être enfui à l’autre bout du monde des objets perdus."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/7faa3513-0ae5-4d77-97b5-cad9d709b930.png","b":[["p","Je regarde dans toutes les directions. Je vois des croisements et des étagères partout, accessibles grâce à de grandes échelles. D’autres portails, comme celui par lequel je suis arrivé ici, se forment dans les airs. Je vois apparaître un bout de plastique qui ressemble à une télécommande. Elle flotte dans les airs, comme si elle avait traversé la surface d’un lac invisible. Un farfadet se précipite pour la récupérer. Voilà quelqu’un qui ne pourra plus jamais se servir de sa télé…"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/6dc19a3d-1892-41ba-a966-aaecf5769b2b.png","b":[["p","Je tente de déchiffrer les panneaux qui indiquent des directions invraisemblables : « Par ici, pièces de monnaie tombées entre les coussins du canapé » « Par-là, montagne de chaussettes orphelines"],["d","— neige de coton au sommet » J’avance vers les « cadeaux jamais déballés ». Je n’imaginais pas qu’on pouvait perdre tout ça… Et comment ne pas se perdre soi-même dans un endroit pareil ?"],["d","— Si tu veux que je t’aide, dit le farfadet en surgissant devant moi, il faut juste que tu m’en dises plus sur ton carnet."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/24ccb1da-b818-4c33-b6c9-63bbc62b0ba0.png","b":[["p","Ce que vous faites ensemble d’habitude, votre plus beau souvenir à deux… Je lève les yeux au ciel. Je vois passer un vol de livres. Le farfadet m’indique que ce sont les livres empruntés à la bibliothèque et qui n’ont jamais été rendus."],["d","— Ainsi, tu n’as aucun lien avec cette chose ? me demande le farfadet, déçu."],["d","— C’est ma mère qui y tient, pas moi. Ce carnet, c’est toute sa vie… Et moi, je vais me faire tuer…"]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/08dc5202-6d42-4053-b86f-472be766cfb1.png","b":[["p","Sans que je comprenne pourquoi, les yeux du farfadet s’illuminent :"],["d","— Pourquoi tu ne l’as pas dit plus tôt ? Il est sûrement gardé dans la Tour des Choses Inestimables !"],["d","— Il y a vraiment un endroit pour ça ?"],["d","— Tu n’as pas encore compris qu’il y a un endroit pour tout ? Il m’explique qu’on conserve dans cette tour les objets les plus précieux de son monde ; pas ceux qui valent cher, mais ceux qui comptent vraiment pour leur propriétaire. Nous coupons à travers une forêt de métal."]]}]},{"titre":"Archibald et la tour des choses inestimables","part":0,"cover":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/cc9274c2-a709-422b-8a6d-418ceeeb661f.png","pages":[{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/cc9274c2-a709-422b-8a6d-418ceeeb661f.png","b":[["p","Des clefs perdues, certaines cuivrées, d’autres argentées, remplacent les feuilles des arbres. Le vent les caresse dans un léger tintement. Au bout d’un moment, la tour immense des choses inestimables se dresse devant nous. Je passe une grille et je gravis une spirale de marches, le farfadet sur mes talons. Franchement, il pourrait faire apparaître un passage pour nous téléporter au sommet, ce serait plus rapide !"],["d","— Tu dois prouver que tu as vraiment envie de récupérer ton carnet, dit-il. Désolé si ça te demande du mal ! dit-il comme s’il lisait dans mes pensées."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/4d3b2598-3631-40fa-beb7-da301d2fd2e9.png","b":[["p","Tout en haut de la tour, il y a une grande porte."],["d","— Qu’est-ce qu’il y a derrière ?"],["d","— Le jury des choses inestimables. Mais je te préviens, il ne laisse presque jamais personne repartir avec ce qu’il demande… J’ai une boule dans la gorge. Je vais devoir parler devant une salle pleine ? Le farfadet me met en garde en baissant la voix :"],["d","— Je prends un gros risque en te faisant venir ici. Je le fais pour ton carnet… et un peu pour toi aussi."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/bde5ecd4-0fad-4af7-99de-6c39c60d0baf.png","b":[["p","Le lien entre un objet abandonné et son propriétaire est très fragile. Si tu dis quelque chose de travers, ton carnet pourrait se vexer… et disparaître pour de bon… dans l’oubli… Et moi, je perdrai ma place ici, parce que j’aurai échoué dans ma mission. Je prends mon courage à deux mains et je pousse la porte."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/133115f0-11fc-4876-bfad-e7924639425b.png","b":[["p","Un demi-cercle de farfadets assis dans de gros fauteuils me dévisage. Devant eux, une foule d’objets spectateurs attend que je parle. Je me racle la gorge :"],["d","— Je… euh… je voudrais récupérer mon carnet… Le farfadet du milieu me regarde de haut :"],["d","— Tu peux reprendre Echarpe, ton écharpe. Aussi étrange que cela puisse paraître, tu comptes pour elle. Mais pour ce qui est de l’autre objet… qu’est-ce qui prouve qu’il a encore une importance pour toi ? J’ai l’impression d’être dans un tribunal, comme dans les films que maman regarde. Les mots se coincent dans ma gorge."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/a4257131-1e52-47d6-8c6c-4efa96a26df1.png","b":[["p","Un silence tombe sur la salle ; même les objets semblent retenir leur souffle."],["d","— Mon garçon ? Je sens Echarpe, mon écharpe, me réchauffer. C’est sa façon à elle de m’encourager. L’idée que mes paroles n’échappent à personne me terrifie, mais celle de perdre mon carnet pour toujours, encore plus. Et puis, je ne peux pas attirer d’ennuis au farfadet qui a voulu m’aider. Alors je prends une grande inspiration et je parle. J’explique que ce n’est pas moi qui tiens à cet objet. Une exclamation parcourt la salle."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/f668b9a3-55e5-4c3d-a962-dcc8edb7d26a.png","b":[["p","Je parle des dessins, de ma mère, du temps qu’elle met pour les faire. Puis, un peu coupable, j’avoue m’en être servi pour épater les copains. Je vois quelques objets hocher la tête, ou ce qui leur sert de tête. Les farfadets échangent des regards. Et là, je comprends quelque chose, et mes yeux se remplissent de larmes. Pas parce que j’ai peur de parler en public, mais parce que je me rends compte que ce carnet compte aussi pour moi. Grâce à lui, les autres se sont enfin intéressés à moi."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/d4da2bdf-9839-431b-b2f5-260b20d5c7eb.png","b":[["p","Jamais je n’aurais pensé me mettre dans un état pareil pour un simple tas de feuilles. Et soudain, quelque chose file dans les airs et survole le jury. C’est mon carnet ! Il plane jusqu’à moi et se pose dans ma main, comme un oiseau apprivoisé."],["d","— Je crois que tu as retrouvé ce que tu étais venu chercher, dit le farfadet en m’attirant vers la porte… Il claque des doigts et fait apparaître un nouveau portail juste au-dessus de ma tête. À travers, je devine le dessous de mon lit. Je m’y hisse et me cogne contre le sommier."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/0c653a96-3bbc-44bd-9fb5-1b519c1b9f15.png","b":[["p","Mais je suis soulagé. Dans ma main, il y a le carnet à dessins de ma mère. Je jette un œil sous mon lit : le passage s’est déjà refermé. Je m’empresse de remettre le carnet à sa place, dans le bureau de ma mère. J’accroche Echarpe à son porte-manteau et je lui promets de la porter cet hiver. Ce jour-là, je range ma chambre de fond en comble : les livres avec les livres, les vêtements dans l’armoire."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/3746f673-b4f8-42c9-a584-4e80322510b9.png","b":[["p","Je prépare un carton avec les objets à donner, afin qu’ils aient une seconde vie auprès d’un enfant qui saura les apprécier. Ma mère n’a rien remarqué. Elle est étonnée, car ma chambre n’a jamais été aussi bien rangée. Maintenant, j’ai une bande de copains avec qui je joue le mercredi après-midi. Il faut quand même que je vous avoue que je me suis trompé sur un point : ils ne se sont pas mis à m’apprécier parce que je leur ai montré les dessins de Mortelle Babelle, mais parce qu’ils ont appris à me connaître grâce à cette BD."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/b8ee0a35-3718-41d3-8189-3ca2f8992400/imports/page/36c0780e-c5d1-4eb4-913b-0ff4ffa20c6c.png","b":[["p","Un peu comme une amie qui aurait fait les présentations… Ils ne savaient juste pas comment s’y prendre, et moi non plus. Je repense souvent au farfadet qui m’a aidé. Bien sûr, il m’arrive encore de perdre des choses. Mais je les retrouve avant qu’elles ne basculent dans le monde des objets perdus. Même si, secrètement, j’aimerais bien y retourner un jour…"]]}]}],"parties":["Archibald et le carnet emprunté"]}</script>
+<script>
+var DEFAUT='#lore/0';
+var D=JSON.parse(document.getElementById('data').textContent);
+function $(s,r){return (r||document).querySelector(s)}
+function $$(s,r){return [].slice.call((r||document).querySelectorAll(s))}
+function h(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+/* texte d'une page : une réplique par ligne, séparateurs ✦ */
+function texte(blocs){return blocs.map(function(b){return b[0]==='s'?'<hr>':'<p class="'+b[0]+'">'+h(b[1])+'</p>'}).join('')}
+/* lightbox : toute image marquée data-z s'ouvre en grand */
+(function(){
+  var v=document.createElement('div');v.className='voile';v.id='voile';v.hidden=true;
+  v.innerHTML='<figure><img alt=""><figcaption></figcaption></figure>';document.body.appendChild(v);
+  window.zoom=function(src,txt){$('img',v).src=src;$('figcaption',v).textContent=txt||'';v.hidden=false};
+  v.addEventListener('click',function(){v.hidden=true});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')v.hidden=true});
+  document.addEventListener('click',function(e){var im=e.target.closest('img[data-z]');if(im){zoom(im.currentSrc||im.src,im.alt)}});
+})();
+/* navigation par hash (#lore/…, #lire/e/p) ; le gabarit définit render() et DEFAUT */
+var route=location.hash||DEFAUT;
+function parse(){return route.slice(1).split('/')}
+function go(hash){route=hash;try{if(location.hash!==hash)history.pushState(null,'',hash)}catch(e){}render()}
+function reroute(){route=location.hash||DEFAUT;render()}
+window.addEventListener('hashchange',reroute);window.addEventListener('popstate',reroute);
+/* lecture : page courante et tourne-page */
+function borne(e,p){e=Math.min(Math.max(+e||1,1),D.eps.length);var n=D.eps[e-1].pages.length;p=Math.min(Math.max(+p||1,1),n);return[e,p]}
+function voisin(e,p,d){p+=d;if(p>D.eps[e-1].pages.length){if(e>=D.eps.length)return null;return[e+1,1]}if(p<1){if(e<=1)return null;return[e-1,D.eps[e-2].pages.length]}return[e,p]}
+
+/* objets perdus qui flottent */
+(function(){var s=$('.scene'),o=['🧦','🔑','🧤','📕','🧩','🕶️','🎒','🧸'];for(var i=0;i<14;i++){var e=document.createElement('span');e.className='flotte';e.textContent=o[i%o.length];
+ e.style.cssText='left:'+(i<9?(58+Math.random()*38):(Math.random()*5))+'%;top:'+(Math.random()*88)+'%;--d:'+(3+Math.random()*4)+'s;--r:-'+(Math.random()*4)+'s;font-size:'+(1.3+Math.random()*1.5)+'rem';s.appendChild(e)}})();
+var sel=0,lieuSel=0;
+function render(){
+  var p=parse(),top=p[0]==='lire'?'lire':'lore';
+  $$('[data-top]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.top===top)});
+  $('#p-lore').hidden=top!=='lore';$('#p-lire').hidden=top!=='lire';document.body.dataset.vue=top;$('#bandeau').style.setProperty('--bandeau','url('+(top==='lore'?D.fonds.persos:D.fonds.lieux)+')');document.documentElement.style.setProperty('--fond-persos','url('+D.fonds.persos+')');
+  if(top==='lore'){sel=Math.min(+p[1]||0,D.persos.length-1);lieuSel=0;lore()}else lire(+p[1]||1,+p[2]||1);
+}
+function lore(){
+  $('#etagere').innerHTML=D.persos.map(function(g,i){return '<button class="objet" role="tab" aria-selected="'+(i===sel)+'" data-p="'+i+'"><img src="'+h(g.main.img)+'" alt=""><span class="tag">'+h(g.main.title)+'</span></button>'}).join('');
+  var g=D.persos[sel],m=g.main;
+  var aut=g.entourage.map(function(x){return '<article class="carte-obj"><img src="'+h(x.img)+'" alt="'+h(x.title)+'" data-z loading="lazy"><div><small>Dans son entourage</small><b>'+h(x.title)+'</b><p>'+h(x.desc)+'</p></div></article>'}).join('');
+  var lx=g.lieux,l=lx[Math.min(lieuSel,lx.length-1)];
+  $('#consigne').innerHTML='<article class="consigne"><div class="consigne__img"><img src="'+h(m.img)+'" alt="'+h(m.title)+'" data-z></div><div><h3>'+h(m.title)+'</h3><p>'+h(m.desc)+'</p>'+
+    (aut?'<div class="etq">Autour de '+h(m.title)+'</div><div class="autour">'+aut+'</div>':'')+
+    (lx.length?'<div class="etq">Où le trouver ?</div><div class="directions"><div class="panneaux">'+lx.map(function(x,i){return '<button class="panneau" aria-current="'+(i===lieuSel)+'" data-l="'+i+'">'+h(x.title)+'</button>'}).join('')+'</div><figure class="portail"><img src="'+h(l.img)+'" alt="'+h(l.title)+'" data-z><figcaption>'+h(l.title)+'</figcaption></figure></div>':'')+
+    '</div></article>';
+  $('#rare').innerHTML=D.objets.length?'<div class="etq" style="margin-top:36px">Pièces rares de la consigne</div>'+D.objets.map(function(x){return '<div class="rare"><img src="'+h(x.img)+'" alt="'+h(x.title)+'" data-z loading="lazy"><b>'+h(x.title)+'</b></div>'}).join(''):'';
+}
+function lire(e,pg){
+  var r=borne(e,pg);e=r[0];pg=r[1];var ep=D.eps[e-1],page=ep.pages[pg-1],multi=D.eps.length>1;
+  $('#tiroirs').innerHTML=multi?D.eps.map(function(x,i){return '<button class="tiroir" aria-selected="'+(i+1===e)+'" data-ep="'+(i+1)+'"><small>Tiroir '+(i+1)+'</small>'+h(x.titre)+'</button>'}).join(''):'';
+  $('.salle').style.gridTemplateColumns=multi?'':'1fr';
+  var pre=voisin(e,pg,-1),sui=voisin(e,pg,1);
+  $('#feuille').innerHTML='<article class="feuille"><div class="feuille__tete"><h3>'+h(ep.titre)+'</h3><span>croquis '+pg+' / '+ep.pages.length+'</span></div>'+
+   '<figure class="croquis"><img src="'+h(page.i)+'" alt="Illustration '+pg+'" data-z></figure><div class="texte">'+texte(page.b)+'</div>'+
+   '<div class="nav"><button class="btn" data-n="-1"'+(pre?'':' disabled')+'>← feuille précédente</button><div class="points">'+ep.pages.map(function(_,i){return '<button aria-label="Croquis '+(i+1)+'" aria-current="'+(i+1===pg)+'" data-pg="'+(i+1)+'"></button>'}).join('')+'</div><button class="btn btn--ok" data-n="1"'+(sui?'':' disabled')+'>'+(sui&&sui[0]!==e?'tiroir suivant →':'feuille suivante →')+'</button></div></article>';
+  window._cur=[e,pg];var im=new Image();if(sui)im.src=D.eps[sui[0]-1].pages[sui[1]-1].i;
+}
+document.addEventListener('click',function(ev){
+  var t=ev.target.closest('[data-top],[data-p],[data-l],[data-ep],[data-pg],[data-n]');if(!t)return;
+  if(t.dataset.top)return go(t.dataset.top==='lore'?'#lore/0':'#lire/1/1');
+  if(t.dataset.p!==undefined)return go('#lore/'+t.dataset.p);
+  if(t.dataset.l!==undefined){lieuSel=+t.dataset.l;return lore()}
+  if(t.dataset.ep)return go('#lire/'+t.dataset.ep+'/1');
+  if(t.dataset.pg)return go('#lire/'+window._cur[0]+'/'+t.dataset.pg);
+  if(t.dataset.n){var v=voisin(window._cur[0],window._cur[1],+t.dataset.n);if(v){go('#lire/'+v[0]+'/'+v[1]);$('#feuille').scrollIntoView({block:'start'})}}
+});
+document.addEventListener('keydown',function(e){if(!$('#p-lire').hidden&&$('#voile').hidden){var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(d){var v=voisin(window._cur[0],window._cur[1],d);if(v)go('#lire/'+v[0]+'/'+v[1])}}});
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+@use '../../../shared/conte-monde' as cm;
+
+@include cm.base;
+@include cm.galerie-trois;
+
+:host {
+  --abysse: #06223a;
+  --turquoise: #1fb5b0;
+  --corail: #ee6b5a;
+  --glace: #dff3fa;
+  --indigo: #1a2a6c;
+  --nuit: #04141f;
+  color: var(--glace);
+  background: var(--abysse);
+}
+
+h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; }
+h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); color: #fff; }
+.etiquette { color: #7ee0d8; }
+
+/* ---------- Ouverture ---------- */
+.ouverture {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 4.5rem 1.25rem 7.5rem;
+  background:
+    linear-gradient(180deg, rgb(4 20 31 / 0.15), rgb(4 20 31 / 0.88)),
+    var(--fond) center / cover;
+
+  &__interieur { max-width: 1150px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.1fr; gap: 3rem; align-items: center; }
+  &__texte h1 { margin: 0.5rem 0 0.7rem; font-size: clamp(2.3rem, 5.8vw, 4.2rem); line-height: 1.07; color: #fff; text-shadow: 0 4px 22px #000; }
+  &__accroche { font-size: 1.3rem; line-height: 1.5; color: #fff; text-shadow: 0 2px 8px #000; max-width: 28em; }
+  &__origine { margin-top: 0.9rem; font-size: 0.92rem; color: #d8eef6; text-shadow: 0 1px 6px #000; max-width: 34em; }
+  &__actions { margin-top: 1.5rem; }
+  &__livre img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border: 4px solid var(--glace); border-radius: 120px 120px 8px 8px / 70px 70px 8px 8px; box-shadow: 0 0 40px rgb(126 224 216 / 0.45), 0 22px 46px rgb(0 0 0 / 0.55); }
+}
+.vagues-glace { position: absolute; left: 0; right: 0; bottom: -1px; height: 44px; background:
+  radial-gradient(circle at 24px 44px, transparent 22px, var(--abysse) 23px) 0 0 / 48px 44px repeat-x; }
+
+.pays-badge { padding: 0.35rem 1rem 0.35rem 0.5rem; border-radius: 999px; background: rgb(4 20 31 / 0.75); border: 1px solid #7ee0d8; }
+.pastilles li { padding: 0.25rem 0.9rem; border-radius: 999px; background: rgb(4 20 31 / 0.8); border: 1px solid #7ee0d8; color: #c9f2ee; font-size: 0.9rem; }
+
+/* ---------- Dalles de glace : polygones irréguliers, bord clair, ombre portée ---------- */
+.dalle { position: relative; color: #06223a; background: linear-gradient(150deg, #f4fcff, #cfeaf4 55%, #b6dcea); filter: drop-shadow(0 18px 22px rgb(0 0 0 / 0.55)); }
+.dalle::before { content: ''; position: absolute; inset: 0; background: var(--cristaux) center / 220px 220px; opacity: 0.18; pointer-events: none; mix-blend-mode: multiply; }
+
+/* ---------- Pays : une dalle pour le drapeau, trois galets de pierre à savon ---------- */
+.pays {
+  overflow: hidden;
+  background: linear-gradient(rgb(4 20 31 / 0.78), rgb(6 34 58 / 0.92)), var(--fond) center / cover;
+  &__banquise { display: grid; grid-template-columns: 300px 1fr; gap: 3rem; align-items: center; }
+  &__intro { margin: 0.8rem 0 0; font-size: 1.15rem; line-height: 1.65; max-width: 40em; }
+}
+.dalle--pays { text-align: center; padding: 2.6rem 2rem 2.2rem; clip-path: polygon(6% 0, 100% 5%, 94% 62%, 100% 100%, 12% 96%, 0 46%);
+  img { width: 76%; height: auto; border: 3px solid #fff; border-radius: 2px; box-shadow: 0 4px 12px rgb(0 40 70 / 0.35); }
+  .dalle__nom { margin-top: 0.8rem; font-family: Georgia, serif; font-size: 1.5rem; font-weight: 700; color: var(--indigo); }
+  .dalle__natif { font-size: 1.1rem; }
+  .dalle__ou { font-size: 0.9rem; color: #2a5a74; } }
+.galets { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; gap: 1.4rem; margin: 2.4rem 0 0; padding: 0; list-style: none; }
+.galets li { display: grid; justify-items: center; align-content: center; gap: 0.05rem; width: 200px; height: 170px; padding: 0.8rem; text-align: center; color: #fff;
+  background: radial-gradient(ellipse at 35% 28%, #6a7480, #3a4250 55%, #232a35); border-radius: 62% 38% 56% 44% / 48% 56% 44% 52%; box-shadow: inset 0 -10px 16px rgb(0 0 0 / 0.4), 0 12px 20px rgb(0 0 0 / 0.55);
+  &:nth-child(2) { width: 230px; height: 190px; border-radius: 40% 60% 48% 52% / 56% 44% 56% 44%; background: var(--applique) center / 140px 140px; background-blend-mode: multiply; background-color: #3a4250; }
+  &:nth-child(3) { width: 180px; height: 160px; border-radius: 52% 48% 38% 62% / 44% 52% 48% 56%; } }
+.galet__syllabes { font-size: 2.6rem; line-height: 1.1; color: #fff; text-shadow: 0 2px 4px #000; }
+.galet__roman { font-weight: 700; font-size: 1.05rem; text-shadow: 0 1px 3px #000; }
+.galet__prononce { font-style: italic; font-size: 0.85rem; color: #d6e6ef; text-shadow: 0 1px 3px #000; }
+.galet__sens { font-size: 0.95rem; font-weight: 700; text-shadow: 0 1px 3px #000; }
+.mots-note { margin-top: 1.2rem; text-align: center; font-size: 0.85rem; color: #a8c8d8; }
+
+/* ---------- Histoire : deux dalles qui se chevauchent ---------- */
+.histoire { background: linear-gradient(rgb(6 34 58 / 0.86), rgb(14 62 94 / 0.92)), var(--fond) center / cover; overflow: hidden; }
+.histoire__dalles { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: start; }
+.histoire__visuel { position: relative; z-index: 1; margin: 0; figcaption { margin-top: 0.8rem; text-align: center; font-style: italic; color: #d6e6ef; } }
+.dalle--image { padding: 22px 26px 30px; clip-path: polygon(0 4%, 96% 0, 100% 88%, 10% 100%);
+  img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border: 3px solid #fff; } }
+.dalle--texte { z-index: 2; margin: 3.2rem 0 0 -4rem; padding: 2.6rem clamp(1.6rem, 3vw, 2.8rem) 2.6rem 3.4rem; clip-path: polygon(8% 0, 100% 4%, 96% 100%, 0 94%);
+  h2 { color: var(--indigo); } .etiquette { color: #0c6a6a; } }
+.citation { margin: 1.2rem 0; padding: 0.4rem 0 0.4rem 1.2rem; border-left: 4px solid var(--corail); font-family: Georgia, serif; font-size: 1.3rem; font-style: italic; color: #14306a; }
+.resume { font-size: 1.15rem; line-height: 1.75; }
+
+/* ---------- Le peigne ---------- */
+.peigne {
+  position: relative;
+  isolation: isolate;
+  background: var(--fond) center / cover;
+  &::before { content: ''; position: absolute; inset: 0; z-index: -1; background: rgb(4 20 31 / 0.7); }
+}
+.chapeau { margin: 0.6rem 0 1.4rem; font-size: 1.1rem; max-width: 46em; }
+
+.fond-marin { position: relative; overflow: hidden; max-width: 900px; aspect-ratio: 16 / 9; margin: 0 auto; border: 5px solid var(--glace); border-radius: 12px; background: linear-gradient(180deg, #0a4a6e, #041a2c); box-shadow: 0 0 40px rgb(126 224 216 / 0.3), 0 18px 40px rgb(0 0 0 / 0.55); isolation: isolate; }
+.sedna { position: absolute; left: 3%; bottom: 0; height: 92%; width: auto; filter: drop-shadow(0 6px 10px rgb(0 0 0 / 0.5)); }
+.scene { position: absolute; inset: 0; width: 100%; height: 100%; }
+.cheveux path { fill: none; stroke: #0b0b14; stroke-width: 14; stroke-linecap: round; opacity: 0.92; transition: stroke 0.8s; }
+.cheveux--libres path { stroke: #1a2038; stroke-width: 11; }
+.animal { opacity: 0; transform-box: fill-box; transition: opacity 1s ease; &--revenu { opacity: 1; } }
+.aurore-haut { position: absolute; z-index: -1; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1.4s ease; &--vive { opacity: 0.35; } }
+
+.noeud { position: absolute; width: clamp(34px, 6vw, 56px); aspect-ratio: 1; margin: calc(clamp(34px, 6vw, 56px) / -2) 0 0 calc(clamp(34px, 6vw, 56px) / -2); border-radius: 50%; border: 3px solid #7ee0d8; padding: 0;
+  background: radial-gradient(circle at 35% 35%, #3a3a58, #0b0b14); box-shadow: 0 0 14px rgb(126 224 216 / 0.65); animation: palpite 1.8s ease-in-out infinite;
+  &::after { content: ''; position: absolute; inset: 20%; border-radius: 50%; border: 3px solid #7ee0d8; border-right-color: transparent; transform: rotate(40deg); }
+  &:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  &--defait { animation: none; transform: scale(0); opacity: 0; transition: transform 0.6s, opacity 0.6s; pointer-events: none; } }
+@keyframes palpite { 50% { transform: scale(1.12); } }
+@media (prefers-reduced-motion: reduce) { .noeud, .animal, .aurore-haut { animation: none; transition: none; } }
+
+.commande { max-width: 900px; margin: 1.2rem auto 0; display: grid; gap: 0.8rem; justify-items: start;
+  &__msg { margin: 0; padding: 1rem 1.2rem; border-radius: 12px; background: rgb(223 243 250 / 0.97); color: #06223a; font-size: 1.12rem; line-height: 1.55; border-left: 8px solid #1fb5b0; &--stop { border-left-color: var(--corail); background: #ffe6e0; } } }
+.compte { margin: 0; font-weight: 700; color: #7ee0d8; }
+.reset { padding: 0.45rem 1.2rem; border-radius: 999px; border: 2px solid var(--glace); background: transparent; color: var(--glace); font-weight: 700; }
+
+/* ---------- Galerie ---------- */
+.galerie {
+  background: linear-gradient(rgb(4 20 31 / 0.8), rgb(4 20 31 / 0.9)), var(--fond) center / cover;
+  .cadre { padding: 14px; background: linear-gradient(150deg, #f4fcff, #b6dcea); clip-path: polygon(4% 0, 100% 3%, 97% 100%, 0 96%); filter: drop-shadow(0 12px 14px rgb(0 0 0 / 0.5)); }
+  .cadre img { border: 2px solid #fff; }
+  .cadre:nth-child(2) { margin-top: 1.6rem; }
+}
+
+/* ---------- Personnages ---------- */
+.gens {
+  background: linear-gradient(rgb(4 20 31 / 0.84), rgb(4 20 31 / 0.93)), var(--fond) center / cover;
+  --pc-fond: rgb(6 34 58 / 0.9);
+  --pc-texte: #fff;
+  --pc-accent: #7ee0d8;
+  --pc-bord: #7ee0d8;
+  --pc-rayon: 22px;
+  --pc-vignette: 50%;
+}
+
+/* ---------- Origine ---------- */
+.origine {
+  color: #06223a;
+  background: var(--glace);
+  border-top: 12px solid var(--turquoise);
+  h2 { color: var(--indigo); }
+  .etiquette { color: #0c6a6a; }
+}
+.oeuvre { margin: 1.4rem 0; padding: 1rem 1.3rem; background: #fff; border-left: 8px solid var(--turquoise); border-radius: 6px; box-shadow: 0 8px 20px rgb(0 0 0 / 0.12); }
+.oeuvre__etiquette { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: #0c6a6a; font-weight: 700; }
+.oeuvre__titre { font-family: Georgia, serif; font-size: 1.25rem; font-weight: 700; margin: 0.2rem 0; font-style: italic; }
+.origine__colonnes { columns: 2 22em; column-gap: 2.4rem; font-size: 1.08rem; line-height: 1.7; p { margin: 0 0 1rem; break-inside: avoid; } }
+
+/* ---------- Fiche ---------- */
+.fiche-section { overflow-x: clip; background: linear-gradient(rgb(26 42 108 / 0.9), rgb(14 26 72 / 0.94)), var(--applique) center / 280px 280px; h2 { margin-bottom: 1.4rem; } --fc-fond: #dff3fa; --fc-texte: #06223a; --fc-accent: #1fb5b0; --fc-accent-texte: #0c6a6a; }
+
+/* ---------- Appel ---------- */
+.appel {
+  background: linear-gradient(rgb(4 20 31 / 0.4), rgb(4 20 31 / 0.85)), var(--fond) center / cover;
+  p { margin: 0.8rem 0 1.6rem; font-size: 1.2rem; text-shadow: 0 2px 8px #000; }
+}
+
+@media (max-width: 900px) {
+  .ouverture__interieur, .histoire__dalles, .pays__banquise { grid-template-columns: 1fr; gap: 2rem; }
+  .dalle--texte { margin: -1rem 0 0; padding: 2.4rem 1.6rem; }
+  .dalle--pays { max-width: 320px; margin: 0 auto; }
+  .ouverture__livre { order: -1; }
+}
+@media (max-width: 600px) { .section { padding: 3.5rem 1rem; } }

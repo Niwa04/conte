@@ -175,7 +175,7 @@ h1,h2,h3,h4{font-family:var(--titre);font-weight:600;line-height:1.15;margin:0}
 
 /* ───── Lecteur ───── */
 .lecteur{display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;align-items:start}
-.sommaire{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto;padding-right:6px}
+.sommaire{position:sticky;top:84px;max-height:calc(100vh - 96px);overflow:auto;padding-right:6px}
 .sommaire h4{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rose-d);margin:14px 0 8px}
 .sommaire h4:first-child{margin-top:0}
 .ep{display:grid;grid-template-columns:62px 1fr;gap:10px;align-items:center;width:100%;text-align:left;border:1.5px solid transparent;background:#fff;border-radius:14px;padding:6px;margin-bottom:6px;color:var(--encre);font-family:var(--titre);font-size:.93rem;line-height:1.2;transition:all .15s}
@@ -231,6 +231,52 @@ h1,h2,h3,h4{font-family:var(--titre);font-weight:600;line-height:1.15;margin:0}
 </style>
 </head>
 <body>
+<style>
+@font-face{font-family:'Contract';src:url('/fonts/ContractSans.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'Contract';src:url('/fonts/ContractSans-Bold.ttf') format('truetype');font-weight:700;font-display:swap}
+/* Copie de l'en-tête de l'accueil (home.scss) : même dégradé, même filet or, même badge suspendu */
+.entete{--mdc-royal:#1a3fa6;--mdc-navy:#12296f;--mdc-gold:#d9a93a;--mdc-gold-clair:#f3d27a;position:sticky;top:0;z-index:80;background:linear-gradient(#1f48b8,var(--mdc-navy));border-bottom:3px solid var(--mdc-gold);box-shadow:0 0 0 1px #0a1a52,0 6px 18px rgb(0 0 0/.35);font-family:'Contract','Segoe UI',system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+.entete *{box-sizing:border-box}
+.entete__interieur{max-width:1200px;margin:0 auto;padding:.5rem 1.25rem;min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.marque{position:relative;z-index:3;align-self:flex-start;margin-bottom:-48px;display:block}
+.marque__badge{display:block;height:104px;width:auto;max-width:none;filter:drop-shadow(0 6px 8px rgb(0 0 0/.45));transition:transform .3s}
+.marque:hover .marque__badge{transform:rotate(-3deg) scale(1.05)}
+.navigation{display:flex;align-items:center;gap:1.5rem}
+.navigation a:not(.bouton){color:var(--mdc-gold-clair);font-weight:700;text-decoration:none}
+.navigation a:not(.bouton):hover{color:#fff;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+.entete .bouton{position:relative;display:inline-block;overflow:hidden;padding:.5rem 1.2rem;border-radius:999px;border:3px solid var(--mdc-gold);background:linear-gradient(#f8dc8a,var(--mdc-gold) 55%,#b9831d);border-color:#fff3c9;color:#3b2606;text-shadow:0 1px 0 rgb(255 255 255/.5);font-weight:700;font-size:1rem;text-decoration:none;box-shadow:inset 0 0 0 2px rgb(255 255 255/.18),0 5px 0 #0a1a52,0 12px 20px rgb(0 0 0/.28);transition:transform .12s,box-shadow .12s}
+.entete .bouton:hover{transform:translateY(-3px) scale(1.03)}
+.entete .bouton:focus-visible{outline:3px solid var(--mdc-gold-clair);outline-offset:3px}
+.burger{display:none;width:44px;height:44px;border:2px solid var(--mdc-gold);border-radius:12px;background:var(--mdc-navy);padding:11px 9px;flex-direction:column;justify-content:space-between}
+.burger span{display:block;height:3px;border-radius:2px;background:var(--mdc-gold-clair)}
+@media(max-width:900px){
+  .marque__badge{height:84px}.marque{margin-bottom:-36px}.burger{display:flex}
+  .navigation{display:none;position:absolute;inset:100% 0 auto 0;flex-direction:column;align-items:stretch;padding:1rem 1.25rem 1.5rem;background:var(--mdc-navy);border-bottom:3px solid var(--mdc-gold);text-align:center}
+  .navigation.navigation--ouverte{display:flex}
+}
+</style>
+<header class="entete">
+  <div class="entete__interieur">
+    <a class="marque" href="/" aria-label="La Maison des Contes, accueil">
+      <img class="marque__badge" src="/assets/badge-maison-des-contes.webp" alt="La Maison des Contes" width="277" height="352">
+    </a>
+    <button type="button" class="burger" aria-expanded="false" aria-controls="navigation" aria-label="Menu" onclick="var n=document.getElementById('navigation');var o=n.classList.toggle('navigation--ouverte');this.setAttribute('aria-expanded',o)">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="navigation" class="navigation" aria-label="Principale">
+      <a href="/#interactif">Lecture interactive</a>
+      <a href="/#collection">Collection</a>
+      <a href="/#test">Tester</a>
+      <a href="/#bibliotheque">Bibliothèque</a>
+      <a href="/contes">Nos contes</a>
+      <a href="/#tarifs">Tarifs</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/connexion">Se connecter</a>
+      <a class="bouton" href="/webgl-build/game.html">Télécharger l’app</a>
+    </nav>
+  </div>
+</header>
+
 <header class="hero" id="haut" style="--couv:url('https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-anthology-covers/2cce5f53-c56a-4e81-a2a9-19be65003320/a37cb961-d158-43fc-af3d-27daec95b4af.png')">
     <div class="hero__in">
     <div>
@@ -277,10 +323,10 @@ var persoIdx=0;
 (function(){var hero=$('.hero');for(var i=0;i<30;i++){var s=document.createElement('i');s.className='etincelle';
  s.style.cssText='left:'+(Math.random()*100)+'%;top:'+(Math.random()*85)+'%;--t:'+(8+Math.random()*18)+'px;--d:'+(2.5+Math.random()*3)+'s;--r:'+(Math.random()*4)+'s';hero.appendChild(s)}})();
 
-var route=location.hash||'#lire/1/1';
+var route=location.hash||'#lore/personnages';
 function parse(){return route.slice(1).split('/')}
 function go(hash){route=hash;try{if(location.hash!==hash)history.pushState(null,'',hash)}catch(e){}render()}
-function reroute(){route=location.hash||'#lire/1/1';render()}
+function reroute(){route=location.hash||'#lore/personnages';render()}
 
 function render(){
   var p=parse(),top=p[0]==='lore'?'lore':'lire';

@@ -1,0 +1,164 @@
+@use '../../../shared/conte-monde' as cm;
+
+@include cm.base;
+@include cm.galerie-trois;
+
+:host {
+  --bleu: #2c5f8a;
+  --bleu-nuit: #12304d;
+  --rouge: #c8102e;
+  --roseau: #c9a24b;
+  --neige: #f4f8fb;
+  --rose: #f2a7b8;
+  --ciel: #dcecf7;
+  color: var(--neige);
+  background: var(--bleu-nuit);
+}
+
+h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; }
+h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); color: #fff; }
+.etiquette { color: #ffd98a; }
+.sr-seul { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Papier découpé d'Andersen : festons blancs sur bleu */
+.decoupage { position: absolute; left: 0; right: 0; bottom: -1px; height: 36px; background:
+  radial-gradient(circle at 20px 0, var(--bleu-nuit) 19px, transparent 20px) 0 0 / 40px 36px repeat-x, var(--neige); }
+
+/* ---------- Ouverture ---------- */
+.ouverture {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 4.5rem 1.25rem 7.5rem;
+  background:
+    linear-gradient(180deg, rgb(18 48 77 / 0.2), rgb(18 48 77 / 0.88)),
+    var(--fond) center / cover;
+
+  &__interieur { max-width: 1150px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.1fr; gap: 3rem; align-items: center; }
+  &__texte h1 { margin: 0.5rem 0 0.7rem; font-size: clamp(2.6rem, 6.5vw, 4.6rem); line-height: 1.05; color: #fff; text-shadow: 0 4px 22px #000; }
+  &__accroche { font-size: 1.3rem; line-height: 1.5; color: #fff; text-shadow: 0 2px 8px #000; max-width: 28em; }
+  &__origine { margin-top: 0.9rem; font-size: 0.92rem; color: #e1eef8; text-shadow: 0 1px 6px #000; max-width: 34em; }
+  &__actions { margin-top: 1.5rem; }
+  &__livre img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border: 10px solid var(--neige); border-radius: 6px; box-shadow: 0 22px 46px rgb(0 0 0 / 0.55); transform: rotate(1.5deg); }
+}
+
+.pays-badge { padding: 0.35rem 1rem 0.35rem 0.5rem; border-radius: 999px; background: rgb(18 48 77 / 0.75); border: 1px solid var(--rouge); }
+.pastilles li { padding: 0.25rem 0.9rem; border-radius: 999px; background: rgb(18 48 77 / 0.8); border: 1px solid #ffd98a; color: #ffe8b8; font-size: 0.9rem; }
+
+/* ---------- Pays : un livre ouvert et trois cœurs tressés ---------- */
+.pays { background: linear-gradient(rgb(18 48 77 / 0.8), rgb(18 48 77 / 0.92)), var(--fond) center / cover; }
+.livre-ouvert { display: grid; grid-template-columns: 1fr 1.25fr; max-width: 1000px; margin: 0 auto; border-radius: 10px; box-shadow: 0 30px 60px rgb(0 0 0 / 0.55), 0 0 0 10px #8c1c2d; position: relative;
+  &::after { content: ''; position: absolute; top: 0; bottom: 0; left: 44.4%; width: 40px; margin-left: -20px; background: linear-gradient(90deg, transparent, rgb(60 40 20 / 0.28) 50%, transparent); pointer-events: none; }
+  &__page { padding: 2.4rem clamp(1.2rem, 3vw, 2.4rem); color: #12304d; background: #fbf8ef; }
+  &__page--g { text-align: center; border-radius: 10px 0 0 10px; background: linear-gradient(90deg, #fbf8ef, #efe8d6); }
+  &__page--d { border-radius: 0 10px 10px 0; background: linear-gradient(90deg, #efe8d6, #fbf8ef 12%); display: grid; align-content: center;
+    h2 { color: var(--bleu); } .etiquette { color: #a02438; } }
+  &__nom { margin-top: 1rem; font-family: Georgia, serif; font-size: 1.8rem; font-weight: 700; color: var(--bleu); }
+  &__natif { font-size: 0.95rem; color: #4a5a6a; } }
+.rosace { padding: 14px; background: var(--rosemaling) center / 150px 150px; border-radius: 50%; border: 4px solid var(--rouge); aspect-ratio: 1; display: grid; place-items: center; max-width: 230px; margin: 0 auto;
+  img { width: 74%; height: auto; border: 3px solid #fff; box-shadow: 0 0 0 1px #aab; } }
+.pays__intro { margin: 0.8rem 0 0; font-size: 1.15rem; line-height: 1.7; }
+.coeurs { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.6rem; margin: 2rem 0 0; padding: 0; list-style: none; }
+.coeurs li { width: 170px; height: 158px; clip-path: path('M85 150 C 11 100 0 56 23 28 C 45 0 79 11 85 40 C 91 11 125 0 147 28 C 170 56 159 100 85 150 Z');
+  background: repeating-linear-gradient(45deg, #c8102e 0 12px, #fff 12px 24px); position: relative; filter: drop-shadow(0 8px 10px rgb(0 0 0 / 0.5));
+  &:nth-child(2) { transform: translateY(16px); } }
+.coeur__papier { position: absolute; left: 11px; top: 10px; width: 148px; height: 136px; display: grid; align-content: center; justify-items: center; padding-bottom: 14px; text-align: center; color: #12304d; background: #fffdf6;
+  clip-path: path('M74 132 C 9.7 88 0 49 20 24.6 C 39.6 0 69 9.7 74 35 C 79 9.7 108.4 0 128 24.6 C 148 49 138.3 88 74 132 Z'); }
+.coeur__natif { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 700; color: #c8102e; line-height: 1.1; }
+.coeur__sens { font-size: 0.88rem; font-weight: 700; }
+.coeur__prononce { font-size: 0.78rem; font-style: italic; color: #4a5a6a; }
+.mots-note { margin-top: 1.2rem; text-align: center; font-size: 0.85rem; color: #b9d0e2; }
+
+/* ---------- Histoire : trois couches de papier découpé ---------- */
+.histoire { background: linear-gradient(rgb(23 59 94 / 0.88), rgb(44 95 138 / 0.9)), var(--fond) center / cover; }
+.histoire__grille { display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; align-items: center; }
+.couches { padding: 16px; background: var(--rouge); border-radius: 20px; box-shadow: 0 0 0 12px #fff, 0 0 0 24px var(--bleu), 0 24px 40px rgb(0 0 0 / 0.55); transform: rotate(-1.2deg);
+  img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px; } }
+.histoire__visuel { margin: 1.4rem; figcaption { margin-top: 2rem; text-align: center; font-style: italic; color: #cfe2f0; } }
+.feuille { position: relative; padding: 2.6rem clamp(1.4rem, 3vw, 2.6rem); color: #12304d; background: #fbf8ef;
+  mask: radial-gradient(circle at 14px 0, transparent 12px, #000 13px) 0 0 / 28px 51% repeat-x, radial-gradient(circle at 14px 100%, transparent 12px, #000 13px) 0 100% / 28px 51% repeat-x;
+  filter: drop-shadow(0 14px 18px rgb(0 0 0 / 0.5));
+  h2 { color: var(--bleu); } .etiquette { color: #a02438; } }
+.citation { margin: 1.2rem 0; padding: 0.4rem 0 0.4rem 1.2rem; border-left: 4px solid var(--rouge); font-family: Georgia, serif; font-size: 1.3rem; font-style: italic; color: #a02438; }
+.resume { font-size: 1.15rem; line-height: 1.75; }
+
+/* ---------- Saisons ---------- */
+.saisons { position: relative; isolation: isolate; overflow: hidden; }
+.fonds { position: absolute; inset: 0; z-index: -1; background: #12304d;
+  &__couche { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1.1s ease; &--visible { opacity: 1; } }
+  &::after { content: ''; position: absolute; inset: 0; background: rgb(18 48 77 / 0.62); } }
+@media (prefers-reduced-motion: reduce) { .fonds__couche { transition: none; } }
+
+.rivage { position: relative; overflow: hidden; max-width: 520px; aspect-ratio: 16 / 9; margin: 1.4rem auto 0; border-radius: 10px; border: 6px solid var(--neige); background: rgb(220 236 247 / 0.15); box-shadow: 0 14px 30px rgb(0 0 0 / 0.5);
+  .eau { position: absolute; left: 0; right: 0; bottom: 0; height: 42%; background: linear-gradient(rgb(70 130 180 / 0.75), rgb(25 60 105 / 0.92)); }
+  .oiseau { position: absolute; left: 50%; bottom: 38%; width: 22%; height: auto; transform: translateX(-50%); filter: drop-shadow(0 4px 5px rgb(0 0 0 / 0.4)); }
+  .reflet { position: absolute; left: 50%; bottom: -2%; width: 44%; height: auto; transform: translateX(-50%) scaleY(-1); opacity: 0; transition: opacity 1s ease; mask-image: linear-gradient(to top, rgb(0 0 0 / 0.1), #000 80%); }
+  &--regarde .reflet { opacity: 0.9; }
+  &--printemps { border-color: var(--rose); } }
+@media (prefers-reduced-motion: reduce) { .reflet { transition: none; } }
+
+.curseur { display: block; max-width: 520px; margin: 1rem auto 0; input { width: 100%; height: 30px; accent-color: var(--rouge); } }
+.noms { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; margin: 0.4rem 0 0; padding: 0; list-style: none; }
+.nom { padding: 0.45rem 1.2rem; border-radius: 999px; border: 2px solid var(--neige); background: rgb(18 48 77 / 0.8); color: #fff; font-weight: 700;
+  &:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+  &--actif { background: var(--neige); color: #12304d; } }
+
+.carnet { display: grid; grid-template-columns: 1.1fr 1fr; gap: 1.8rem; align-items: center; max-width: 960px; margin: 1.6rem auto 0; padding: 1.2rem; background: var(--neige); color: #12304d; border-radius: 6px; border-top: 10px solid var(--rouge); box-shadow: 0 18px 40px rgb(0 0 0 / 0.5);
+  &__image { margin: 0; }
+  &__image img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 4px; border: 4px solid #fff; box-shadow: 0 0 0 1px #aab; }
+  h3 { margin: 0 0 0.5rem; font-size: 1.45rem; color: var(--bleu); }
+  p { margin: 0; font-size: 1.1rem; line-height: 1.6; } }
+.regard { margin-top: 1rem; padding: 0.55rem 1.3rem; border-radius: 999px; border: 3px solid var(--rouge); background: var(--rouge); color: #fff; font-weight: 700; }
+.revele { margin-top: 0.8rem !important; font-family: Georgia, serif; font-style: italic; color: var(--bleu); font-size: 1.15rem !important; }
+
+/* ---------- Galerie ---------- */
+.galerie {
+  background: linear-gradient(rgb(18 48 77 / 0.8), rgb(18 48 77 / 0.9)), var(--fond) center / cover;
+  .cadre { padding: 12px; background: var(--klip) center / 100px 100px; border: 5px solid var(--neige); border-radius: 6px; box-shadow: 0 14px 28px rgb(0 0 0 / 0.55); }
+  .cadre img { border: 4px solid var(--neige); }
+  .cadre:nth-child(2) { margin-top: 1.6rem; }
+}
+
+/* ---------- Personnages ---------- */
+.gens {
+  background: linear-gradient(rgb(18 48 77 / 0.84), rgb(18 48 77 / 0.93)), var(--fond) center / cover;
+  --pc-fond: rgb(18 48 77 / 0.92);
+  --pc-texte: #fff;
+  --pc-accent: #ffd98a;
+  --pc-bord: var(--neige);
+  --pc-rayon: 10px;
+  --pc-vignette: 50%;
+}
+.chapeau { margin: 0.6rem 0 1.6rem; font-size: 1.1rem; }
+
+/* ---------- Origine ---------- */
+.origine {
+  color: #12304d;
+  background: var(--neige);
+  border-top: 12px solid var(--rouge);
+  h2 { color: var(--bleu); }
+  .etiquette { color: #a02438; }
+}
+.oeuvre { margin: 1.4rem 0; padding: 1rem 1.3rem; background: #fff; border-left: 8px solid var(--rouge); border-radius: 4px; box-shadow: 0 8px 20px rgb(0 0 0 / 0.12); }
+.oeuvre__etiquette { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rouge); font-weight: 700; }
+.oeuvre__titre { font-family: Georgia, serif; font-size: 1.4rem; font-weight: 700; margin: 0.2rem 0; font-style: italic; }
+.origine__colonnes { columns: 2 22em; column-gap: 2.4rem; font-size: 1.08rem; line-height: 1.7; p { margin: 0 0 1rem; break-inside: avoid; } }
+
+/* ---------- Fiche ---------- */
+.fiche-section { background: linear-gradient(rgb(44 95 138 / 0.9), rgb(18 48 77 / 0.94)), var(--rosemaling) center / 280px 280px; h2 { margin-bottom: 1.4rem; } --fc-fond: #f4f8fb; --fc-texte: #12304d; --fc-accent: #c8102e; --fc-accent-texte: #a02438; }
+
+/* ---------- Appel ---------- */
+.appel {
+  background: linear-gradient(rgb(18 48 77 / 0.4), rgb(18 48 77 / 0.82)), var(--fond) center / cover;
+  p { margin: 0.8rem 0 1.6rem; font-size: 1.2rem; text-shadow: 0 2px 8px #000; }
+}
+
+@media (max-width: 900px) {
+  .ouverture__interieur, .histoire__grille, .carnet, .livre-ouvert { grid-template-columns: 1fr; gap: 2rem; }
+  .livre-ouvert { gap: 0; }
+  .livre-ouvert::after { display: none; }
+  .livre-ouvert__page--g { border-radius: 10px 10px 0 0; }
+  .livre-ouvert__page--d { border-radius: 0 0 10px 10px; }
+  .ouverture__livre { order: -1; }
+}
+@media (max-width: 600px) { .section { padding: 3.5rem 1rem; } }

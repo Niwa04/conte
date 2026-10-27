@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>La bête aux yeux rouges — Le conte complet</title>
+<meta name="description" content="La bête aux yeux rouges : le lore, les personnages, les lieux et le texte à feuilleter page par page.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;line-height:1.7}
+img{display:block;max-width:100%}
+button{font:inherit;cursor:pointer;color:inherit}
+[hidden]{display:none!important}
+.voile{position:fixed;inset:0;background:#05080cee;display:grid;place-items:center;z-index:99;padding:22px;cursor:zoom-out}
+.voile figure{margin:0;max-width:min(1100px,100%);text-align:center}
+.voile img{max-height:80vh;width:auto;margin:auto;border-radius:12px;box-shadow:0 20px 70px #000a}
+.voile figcaption{color:#fff;margin-top:12px;font-size:1.05rem}
+img[data-z]{cursor:zoom-in}
+.texte hr{border:0;text-align:center;margin:1.1em 0}
+.texte hr::before{content:"✦  ✦  ✦";letter-spacing:.4em;opacity:.7}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+:root{--nuit:#060d09;--foret:#0f2318;--mousse:#4f8a62;--braise:#ff9a3c;--braise-d:#c45a10;--oeil:#ff2e22;--parchemin:#e9dcc0;--ecorce:#5a3b22;--brume:#a9c3b0}
+body{background:var(--nuit);color:var(--parchemin);font-family:"IM Fell English",Georgia,serif;font-size:1.12rem}
+/* ───── Ouverture : la lisière ───── */
+.lisiere{position:relative;overflow:hidden;min-height:620px;background:radial-gradient(900px 420px at 50% 112%,#ff8a2a66,transparent 65%),linear-gradient(180deg,#040806,#0b1a12 70%,#12281b);isolation:isolate}
+.pins{position:absolute;left:0;right:0;bottom:0;height:70%;z-index:-1;background:
+  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='260' viewBox='0 0 160 260'><path d='M80 0 L118 90 L98 90 L134 170 L108 170 L150 260 L10 260 L52 170 L26 170 L62 90 L42 90 Z' fill='%2307120c'/></svg>") repeat-x 0 100%/150px 250px,
+  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='260' viewBox='0 0 160 260'><path d='M80 0 L118 90 L98 90 L134 170 L108 170 L150 260 L10 260 L52 170 L26 170 L62 90 L42 90 Z' fill='%23040a07'/></svg>") repeat-x 70px 100%/210px 340px;opacity:.95}
+.brume{position:absolute;inset:auto 0 0 0;height:200px;background:linear-gradient(180deg,transparent,#a9c3b022);animation:brume 9s ease-in-out infinite alternate}
+@keyframes brume{from{transform:translateX(-3%)}to{transform:translateX(3%)}}
+.yeux{position:absolute;left:var(--x,80%);top:var(--y,56%);display:flex;gap:26px;pointer-events:none;transition:transform .25s ease-out}
+.yeux i{width:22px;height:12px;border-radius:50%;background:radial-gradient(circle,#fff6 0 20%,var(--oeil) 45%,#7a0a05 100%);box-shadow:0 0 22px 6px #ff2e22aa;animation:cligne 6s infinite}
+@keyframes cligne{0%,94%,100%{transform:scaleY(1)}96%{transform:scaleY(.05)}}
+.feu{position:absolute;left:50%;bottom:40px;transform:translateX(-50%);width:120px;height:120px;z-index:1}
+.feu i{position:absolute;bottom:0;left:50%;width:34px;height:80px;margin-left:-17px;border-radius:50% 50% 50% 50%/70% 70% 30% 30%;background:linear-gradient(0deg,#ff5a1a,#ffb43c 60%,#fff3b0);filter:blur(1.5px);transform-origin:50% 100%;animation:flamme var(--d) ease-in-out infinite alternate}
+.feu i:nth-child(1){--d:.7s;transform:translateX(-22px) scale(.7)}.feu i:nth-child(2){--d:.5s;height:100px}.feu i:nth-child(3){--d:.6s;transform:translateX(22px) scale(.65)}
+@keyframes flamme{from{transform:scaleY(.85) skewX(-4deg)}to{transform:scaleY(1.12) skewX(5deg)}}
+.buches{position:absolute;left:50%;bottom:34px;width:130px;height:16px;margin-left:-65px;background:linear-gradient(90deg,#2b1a0e,#5a3b22,#2b1a0e);border-radius:8px;box-shadow:0 0 30px 10px #ff7a1f88;z-index:2}
+.lisiere__in{position:relative;z-index:3;width:min(1000px,100% - 32px);margin:0 auto;padding:50px 0 190px;text-align:center}
+.sceau{display:inline-block;font-family:"Cinzel",serif;letter-spacing:.3em;font-size:.8rem;color:var(--braise);border-top:1px solid #ff9a3c88;border-bottom:1px solid #ff9a3c88;padding:4px 18px}
+.lisiere h1{font-family:"IM Fell English SC",serif;font-weight:400;font-size:clamp(2.4rem,7vw,5rem);line-height:1.02;margin:.3em 0 .2em;color:#f6ead0;text-shadow:0 0 30px #ff9a3c66,0 4px 0 #000}
+.lisiere h1 em{font-style:normal;color:var(--oeil);text-shadow:0 0 22px #ff2e22}
+.lisiere .accroche{font-style:italic;font-size:1.3rem;max-width:36em;margin:0 auto 18px;color:#d7e4d6}
+.compte{display:inline-flex;gap:14px;font-family:"Cinzel",serif;font-size:.8rem;letter-spacing:.14em;color:var(--brume)}
+.compte span+span::before{content:"✦";margin-right:14px;color:var(--braise)}
+.couv{margin:22px auto 0;width:min(380px,80%);border:3px solid var(--ecorce);outline:1px solid #ff9a3c55;outline-offset:6px;box-shadow:0 0 50px #ff7a1f44,0 20px 40px #000}
+/* onglets : deux bûches */
+.buchettes{position:relative;z-index:5;display:flex;justify-content:center;gap:16px;margin:-36px auto 0;flex-wrap:wrap}
+.buchette{border:0;font-family:"Cinzel",serif;font-weight:700;letter-spacing:.12em;font-size:.9rem;color:#f3dcc0;padding:12px 30px;border-radius:30px/50%;background:linear-gradient(180deg,#6a4628,#3d2713);box-shadow:inset 0 0 0 2px #00000055,0 8px 18px #000a;position:relative}
+.buchette::after{content:"";position:absolute;right:-1px;top:50%;width:18px;height:18px;margin-top:-9px;border-radius:50%;background:radial-gradient(circle,#c99a62 0 20%,#8a5c32 40%,#4a2f16);box-shadow:inset 0 0 0 1px #0007}
+.buchette[aria-selected=true]{background:linear-gradient(180deg,#ffb45a,var(--braise-d));color:#2b1000;box-shadow:0 0 28px #ff9a3caa,0 8px 18px #000a}
+main{width:min(1060px,100% - 24px);margin:0 auto;padding:44px 0 80px}
+h2{font-family:"IM Fell English SC",serif;font-weight:400;font-size:clamp(1.7rem,3.4vw,2.5rem);color:var(--braise);margin:0 0 4px;text-align:center}
+.mot{text-align:center;font-style:italic;color:var(--brume);margin:0 0 26px}
+/* le cercle autour du feu */
+.cercle{display:flex;justify-content:center;gap:clamp(14px,4vw,46px);flex-wrap:wrap;margin-bottom:8px}
+.veilleur{border:0;background:none;text-align:center;width:150px;transition:transform .2s}
+.veilleur .rond{display:block;width:140px;height:140px;margin:0 auto 8px;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 35%,#f1e6cc,#cbb78d);border:4px solid var(--ecorce);box-shadow:0 0 0 2px #00000066,0 0 30px #ff9a3c33;transition:box-shadow .2s}
+.veilleur .rond img{width:100%;height:100%;object-fit:cover;object-position:50% 10%;mix-blend-mode:multiply}
+.veilleur b{font-family:"IM Fell English SC",serif;font-weight:400;font-size:1.15rem;color:#e3d3b2}
+.veilleur:hover{transform:translateY(-6px)}
+.veilleur[aria-selected=true] .rond{box-shadow:0 0 0 3px var(--braise),0 0 46px 8px #ff9a3caa}
+.veilleur[aria-selected=true] b{color:var(--braise)}
+.bracelet{height:30px;margin:6px auto 22px;max-width:520px;background:radial-gradient(ellipse at 50% 100%,#ff9a3c55,transparent 70%)}
+.recit{background:linear-gradient(180deg,#e9dcc0,#d8c8a4);color:#2b2112;border-radius:4px 4px 16px 16px;padding:26px clamp(18px,4vw,44px) 30px;box-shadow:0 0 0 6px var(--ecorce),0 0 0 7px #00000066,0 20px 50px #000a;position:relative}
+.recit::before{content:"";position:absolute;inset:8px;border:1px solid #5a3b2255;pointer-events:none}
+.recit h3{font-family:"IM Fell English SC",serif;font-weight:400;font-size:2.2rem;margin:0 0 6px;color:#6b240f}
+.recit p{margin:0 0 12px;font-size:1.12rem;line-height:1.7}
+.recit .autres{display:flex;gap:14px;flex-wrap:wrap;margin:16px 0 0}
+.compagnon{display:flex;gap:10px;align-items:center;background:#00000012;border-radius:8px;padding:8px 14px 8px 8px;flex:1 1 260px}
+.compagnon img{width:62px;height:74px;object-fit:contain;mix-blend-mode:multiply}
+.compagnon b{font-family:"IM Fell English SC",serif;font-weight:400;font-size:1.15rem;color:#6b240f}
+.compagnon p{margin:0;font-size:.85rem;line-height:1.4}
+/* les lieux, à la lueur de la lanterne */
+.lanterne{margin-top:38px}
+.lanterne .etq{font-family:"Cinzel",serif;letter-spacing:.2em;font-size:.78rem;color:var(--braise);margin:0 0 10px;text-align:center}
+.lanterne__zone{display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px}
+.piquets{display:flex;flex-direction:column;gap:8px}
+.piquet{text-align:left;border:0;background:linear-gradient(90deg,#3d2713,#5a3b22);color:#f0dcc0;font-family:"IM Fell English SC",serif;font-size:1.05rem;padding:10px 16px 10px 20px;clip-path:polygon(0 8px,50% 0,100% 8px,100% 100%,0 100%);box-shadow:0 4px 8px #000a}
+.piquet[aria-current=true]{background:linear-gradient(90deg,#ff9a3c,#c45a10);color:#1d0b00}
+.vue{position:relative;aspect-ratio:16/10;border-radius:8px;overflow:hidden;background:#000;cursor:none;box-shadow:0 0 0 4px var(--ecorce)}
+.vue img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.vue::after{content:"";position:absolute;inset:0;background:radial-gradient(circle 430px at var(--lx,50%) var(--ly,45%),transparent 0,transparent 55%,#030704a8 100%);pointer-events:none}
+.vue::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle 430px at var(--lx,50%) var(--ly,45%),rgba(255,176,80,.30),rgba(255,140,40,.10) 55%,transparent 75%);mix-blend-mode:soft-light}
+.vue figcaption{position:absolute;left:12px;bottom:10px;z-index:2;font-family:"IM Fell English SC",serif;color:#ffd7a2;text-shadow:0 2px 4px #000;font-size:1.15rem}
+.vue .aide{position:absolute;right:12px;top:10px;z-index:2;font-size:.8rem;color:#ffd7a2aa}
+.objets{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:40px}
+.relique{margin:0;background:#e9dcc0;color:#2b2112;padding:10px 10px 14px;box-shadow:0 0 0 4px var(--ecorce),0 14px 26px #000a;text-align:center}
+.relique img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.relique figcaption{font-family:"IM Fell English SC",serif;font-size:1.2rem;margin-top:8px;color:#6b240f}
+/* ───── Le récit ───── */
+.lecture{position:relative}
+.chapitre{background:#0c1912;border-radius:10px;overflow:hidden;box-shadow:0 0 0 3px var(--ecorce),0 24px 60px #000}
+.chapitre__img{position:relative;aspect-ratio:16/9;background:#000}
+.chapitre__img img{width:100%;height:100%;object-fit:cover}
+.chapitre__img::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 55%,transparent 45%,#030704cc 100%),linear-gradient(180deg,transparent 70%,#0c1912)}
+.chapitre .texte{position:relative;padding:8px clamp(18px,5vw,64px) 30px;font-size:clamp(1.15rem,2.1vw,1.38rem);line-height:1.8;color:#eadfc7}
+.chapitre .texte p{margin:0 0 .75em}
+.chapitre .texte p:first-of-type::first-letter{font-family:"IM Fell English SC",serif;float:left;font-size:3.7rem;line-height:.8;padding:6px 10px 0 0;color:var(--braise);text-shadow:0 0 16px #ff9a3c99}
+.chapitre .texte p.d{padding-left:1em;text-indent:-1em;color:#f4e6c8}
+.pas{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:0 clamp(18px,5vw,64px) 26px}
+.btn{border:0;font-family:"Cinzel",serif;font-weight:700;letter-spacing:.08em;font-size:.82rem;color:#f3dcc0;padding:11px 20px;border-radius:30px;background:linear-gradient(180deg,#6a4628,#3d2713);box-shadow:0 6px 14px #000a}
+.btn--feu{background:linear-gradient(180deg,#ffb45a,var(--braise-d));color:#2b1000;box-shadow:0 0 22px #ff9a3c88,0 6px 14px #000a}.btn[disabled]{opacity:.3;pointer-events:none}
+.braises{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.braises button{width:12px;height:12px;border-radius:50%;border:0;padding:0;background:#2b3b2f}
+.braises button.fait{background:#8a3b14}.braises button[aria-current=true]{background:var(--braise);box-shadow:0 0 12px 3px #ff9a3c;transform:scale(1.35)}
+/* le guetteur : les yeux deviennent une lanterne */
+.guet{position:sticky;top:70px;z-index:20;height:0}
+.guet__in{position:absolute;right:8px;top:8px;display:flex;align-items:center;gap:10px;background:#050a07e6;border:1px solid #ffffff1a;border-radius:30px;padding:6px 16px 6px 12px;box-shadow:0 8px 20px #000a}
+.guet__yeux{display:flex;gap:calc(14px - 8px*var(--p,0))}
+.guet__yeux i{width:calc(16px - 4px*var(--p,0));height:calc(9px + 3px*var(--p,0));border-radius:50%;background:radial-gradient(circle,#fff8 0 18%,color-mix(in srgb,var(--braise) calc(var(--p,0)*100%),var(--oeil)) 48%,#4a0a05 100%);box-shadow:0 0 calc(18px - 8px*var(--p,0)) calc(5px - 2px*var(--p,0)) color-mix(in srgb,var(--braise) calc(var(--p,0)*100%),var(--oeil))}
+.guet__txt{font-family:"IM Fell English",serif;font-style:italic;font-size:.9rem;color:#d9c8a6}
+.pied{text-align:center;color:#6a8a73;font-family:"Cinzel",serif;letter-spacing:.1em;font-size:.72rem;padding:0 16px 40px}
+@media(hover:none){.vue::after,.vue::before{display:none}.vue .aide{display:none}}
+@media(max-width:820px){.lanterne__zone{grid-template-columns:1fr}.piquets{flex-direction:row;flex-wrap:wrap}.vue{cursor:default}.guet__txt{display:none}}
+
+/*VISUEL*/
+.bandeau{height:clamp(90px,15vw,170px);border-radius:14px;margin:0 0 24px;background:linear-gradient(180deg,rgba(0,0,0,.10),rgba(0,0,0,.50)),var(--bandeau) center/cover;box-shadow:0 10px 24px rgba(0,0,0,.45)}
+.orn{height:clamp(70px,11vw,130px);width:min(1100px,100% - 24px);margin:0 auto 26px;border-radius:14px;background:var(--orn) center/cover;box-shadow:0 10px 24px rgba(0,0,0,.4)}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(var(--voile-h),var(--voile-b)),var(--bg-page) center/cover no-repeat}
+body[data-vue=lore]{--bg-page:var(--bg-lore)}body[data-vue=lire]{--bg-page:var(--bg-lire)}
+body{--voile-h:rgba(4,9,6,.84);--voile-b:rgba(4,9,6,.94)}
+:root{--orn:url(/assets/recueils/bete/orn.webp);--bg-lore:url(/assets/recueils/bete/lore.webp);--bg-lire:url(/assets/recueils/bete/lire.webp)}
+.lisiere{background:radial-gradient(900px 420px at 50% 112%,#ff8a2a66,transparent 65%),linear-gradient(180deg,rgba(4,8,6,.55),rgba(11,26,18,.62) 70%,rgba(18,40,27,.8)),url(/assets/recueils/bete/hero.webp) center/cover}
+.pins{opacity:.35}
+.lisiere .accroche,.lisiere h1{text-shadow:0 2px 12px #000,0 0 30px #ff9a3c55}
+.lisiere .accroche{background:rgba(4,8,6,.45);border-radius:12px;padding:8px 18px}
+.vue{aspect-ratio:16/9}
+
+</style>
+</head>
+<body>
+<style>
+@font-face{font-family:'Contract';src:url('/fonts/ContractSans.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'Contract';src:url('/fonts/ContractSans-Bold.ttf') format('truetype');font-weight:700;font-display:swap}
+/* Copie de l'en-tête de l'accueil (home.scss) : même dégradé, même filet or, même badge suspendu */
+.entete{--mdc-royal:#1a3fa6;--mdc-navy:#12296f;--mdc-gold:#d9a93a;--mdc-gold-clair:#f3d27a;position:sticky;top:0;z-index:80;background:linear-gradient(#1f48b8,var(--mdc-navy));border-bottom:3px solid var(--mdc-gold);box-shadow:0 0 0 1px #0a1a52,0 6px 18px rgb(0 0 0/.35);font-family:'Contract','Segoe UI',system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+.entete *{box-sizing:border-box}
+.entete__interieur{max-width:1200px;margin:0 auto;padding:.5rem 1.25rem;min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.marque{position:relative;z-index:3;align-self:flex-start;margin-bottom:-48px;display:block}
+.marque__badge{display:block;height:104px;width:auto;max-width:none;filter:drop-shadow(0 6px 8px rgb(0 0 0/.45));transition:transform .3s}
+.marque:hover .marque__badge{transform:rotate(-3deg) scale(1.05)}
+.navigation{display:flex;align-items:center;gap:1.5rem}
+.navigation a:not(.bouton){color:var(--mdc-gold-clair);font-weight:700;text-decoration:none}
+.navigation a:not(.bouton):hover{color:#fff;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+.entete .bouton{position:relative;display:inline-block;overflow:hidden;padding:.5rem 1.2rem;border-radius:999px;border:3px solid var(--mdc-gold);background:linear-gradient(#f8dc8a,var(--mdc-gold) 55%,#b9831d);border-color:#fff3c9;color:#3b2606;text-shadow:0 1px 0 rgb(255 255 255/.5);font-weight:700;font-size:1rem;text-decoration:none;box-shadow:inset 0 0 0 2px rgb(255 255 255/.18),0 5px 0 #0a1a52,0 12px 20px rgb(0 0 0/.28);transition:transform .12s,box-shadow .12s}
+.entete .bouton:hover{transform:translateY(-3px) scale(1.03)}
+.entete .bouton:focus-visible{outline:3px solid var(--mdc-gold-clair);outline-offset:3px}
+.burger{display:none;width:44px;height:44px;border:2px solid var(--mdc-gold);border-radius:12px;background:var(--mdc-navy);padding:11px 9px;flex-direction:column;justify-content:space-between}
+.burger span{display:block;height:3px;border-radius:2px;background:var(--mdc-gold-clair)}
+@media(max-width:900px){
+  .marque__badge{height:84px}.marque{margin-bottom:-36px}.burger{display:flex}
+  .navigation{display:none;position:absolute;inset:100% 0 auto 0;flex-direction:column;align-items:stretch;padding:1rem 1.25rem 1.5rem;background:var(--mdc-navy);border-bottom:3px solid var(--mdc-gold);text-align:center}
+  .navigation.navigation--ouverte{display:flex}
+}
+</style>
+<header class="entete">
+  <div class="entete__interieur">
+    <a class="marque" href="/" aria-label="La Maison des Contes, accueil">
+      <img class="marque__badge" src="/assets/badge-maison-des-contes.webp" alt="La Maison des Contes" width="277" height="352">
+    </a>
+    <button type="button" class="burger" aria-expanded="false" aria-controls="navigation" aria-label="Menu" onclick="var n=document.getElementById('navigation');var o=n.classList.toggle('navigation--ouverte');this.setAttribute('aria-expanded',o)">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="navigation" class="navigation" aria-label="Principale">
+      <a href="/#interactif">Lecture interactive</a>
+      <a href="/#collection">Collection</a>
+      <a href="/#test">Tester</a>
+      <a href="/#bibliotheque">Bibliothèque</a>
+      <a href="/contes">Nos contes</a>
+      <a href="/#tarifs">Tarifs</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/connexion">Se connecter</a>
+      <a class="bouton" href="/webgl-build/game.html">Télécharger l’app</a>
+    </nav>
+  </div>
+</header>
+
+<header class="lisiere" id="lisiere">
+  <div class="pins"></div><div class="brume"></div>
+  <div class="yeux" id="yeux"><i></i><i></i></div>
+  <div class="feu"><i></i><i></i><i></i></div><div class="buches"></div>
+  <div class="lisiere__in">
+    <span class="sceau">UN CONTE DE VEILLÉE</span>
+    <h1>La bête aux <em>yeux rouges</em></h1>
+    <p class="accroche">Dans un village entouré d'une mystérieuse forêt, Tobby rêve d'approcher les animaux malgré la peur de la bête aux yeux rouges. Mais parfois, les histoires effrayantes cachent des vérités surprenantes et de belles rencontres.</p>
+    <div class="compte" id="compte"><span>15 pages illustrées</span></div>
+    <img class="couv" src="https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/cover/bdf9c22f-594d-4bf9-9ee3-1ad5b93b7815.png" alt="Couverture : La bête aux yeux rouges">
+  </div>
+</header>
+<div class="buchettes" role="tablist" aria-label="Sections">
+  <button class="buchette" role="tab" data-top="lore">LA VEILLÉE</button>
+  <button class="buchette" role="tab" data-top="lire">LE RÉCIT</button>
+</div>
+<main>
+  <div class="bandeau" id="bandeau"></div>
+  <section id="p-lore" hidden>
+    <h2>Le village et la forêt</h2>
+    <p class="mot">Approche-toi du feu : chacun a son histoire à raconter.</p>
+    <div class="cercle" id="cercle" role="tablist"></div>
+    <div class="bracelet"></div>
+    <div id="recit"></div>
+    <div id="relique"></div>
+  </section>
+  <section id="p-lire" hidden class="lecture">
+    <div class="guet"><div class="guet__in"><span class="guet__yeux" id="gyeux"><i></i><i></i></span><span class="guet__txt" id="gtxt"></span></div></div>
+    <div id="chapitre"></div>
+  </section>
+</main>
+<div class="orn" aria-hidden="true"></div>
+<p class="pied">« La bête aux yeux rouges » · La Maison des Contes · contenu en brouillon</p>
+<script id="data" type="application/json">{"titre":"La bête aux yeux rouges","unite":"Conte","mode":"conte","labels":{"persos":"Les personnages","autres":"Les silhouettes","objets":"Les objets"},"persos":[{"main":{"title":"Tobby","desc":"Tobby est un garçon curieux et gentil, qui aime beaucoup les animaux. Il va oser s'aventurer près de la forêt pour aider une petite belette en danger.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/character/fed06f7d-bf27-47bf-b10d-156ab3c61c2d.png"},"formes":[],"entourage":[{"title":"Le chef du village","desc":"Le chef du village est un homme protecteur qui veille sur tous les habitants. Il prend des décisions importantes pour garder le village en sécurité.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/character/1d6f5c8a-208c-4272-9a1a-f6fd98f46c3b.png"},{"title":"La belette","desc":"La belette est un petit animal vif qui se retrouve coincé et a besoin d'aide. Grâce à elle, Tobby va découvrir un grand secret caché dans la forêt.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/character/ffb191b7-11d5-49a8-8872-759c19d30c36.png"}],"lieux":[{"title":"Sa chambre","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/d6992a8b-7286-46fc-ae71-c5ab64e6b508.png"},{"title":"Le village","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/991c8223-b528-4027-bb51-48391d35eb28.png"},{"title":"La place du village","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/32d86e4c-4297-4ba3-9473-0405065c5af5.png"},{"title":"La clôture","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/e43eaa26-856d-44d1-af98-f6022ee114f1.png"}]},{"main":{"title":"Le garçon de la forêt","desc":"Le garçon de la forêt est un enfant mystérieux qui vit seul parmi les arbres et les animaux. Il va rencontrer Tobby et lui révéler la vérité sur la fameuse bête aux yeux rouges.","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/character/cf991da0-24a1-4eba-8418-26dccbf6b96d.png"},"formes":[],"entourage":[],"lieux":[{"title":"La forêt","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/4b1ccc43-b1db-4e6c-99ec-d24b6e92d595.png"},{"title":"Sa cabane","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/713c0e26-03df-46fd-9589-504b102b012c.png"}]}],"figurants":[],"objets":[{"title":"La lanterne aux braises rouges","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/3c237dac-0f63-4d58-b511-e2139cc223a4.png"},{"title":"Les sabots d’écorce et de mousse","img":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/7c610f28-312d-4a65-ab09-6034b0e6dd6d.png"}],"fonds":{"persos":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/d6992a8b-7286-46fc-ae71-c5ab64e6b508.png","autres":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/111e9250-c798-4975-a7cd-587fc811e9fe.png","lieux":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/4b1ccc43-b1db-4e6c-99ec-d24b6e92d595.png","objets":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/3c237dac-0f63-4d58-b511-e2139cc223a4.png"},"eps":[{"titre":"La bête aux yeux rouges","part":0,"cover":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/991c8223-b528-4027-bb51-48391d35eb28.png","pages":[{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/991c8223-b528-4027-bb51-48391d35eb28.png","b":[["p","Dans un village éloigné de tout, bordé par une immense forêt, un enfant avait disparu. C’était il y a des mois et des mois. Personne ne l’avait jamais revu. On racontait qu’il avait été emporté par une créature de la forêt : la bête aux yeux rouges. Pour éviter qu’un tel drame ne se reproduise, les villageois avaient bâti une solide clôture de bois et de pierre tout autour du village."],["d","— Nous ne laisserons jamais la bête recommencer ! avait déclaré le chef du village. Aussi longtemps que je serai debout, je lutterai contre la bête aux yeux rouges."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/d6992a8b-7286-46fc-ae71-c5ab64e6b508.png","b":[["p","Des mois et des mois plus tard Tobby était un enfant du village. Ses parents lui avaient toujours défendu de sortir de l’enceinte protectrice qui séparait le village de la forêt. Tobby était passionné par les animaux. Hérissons, loutres, écureuils et rossignols n’avaient aucun secret pour lui. Il aimait les observer depuis la fenêtre de sa chambre, perché sur son lit. Parfois, il restait des heures, immobile, à les étudier. Il aurait tant aimé s’approcher d’eux, les apprivoiser peut-être."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/111e9250-c798-4975-a7cd-587fc811e9fe.png","b":[["p","Mais ses parents lui répétaient que s’il approchait trop près, il se ferait emporter lui aussi, par la bête aux yeux rouges. Tobby frissonnait chaque fois qu’on prononçait ce nom. Certains soirs, au moment du banquet, on racontait avoir vu deux flammes rouges qui brillaient dans la nuit. Les yeux de la bête. Une fois, un homme était revenu de la forêt pâle et tremblant :"],["d","— Je suis allé chercher du bois, avait-il raconté, et j’ai vu des empreintes dans la boue… Elles avaient d’horribles griffes ! Puis j’ai entendu quelque chose bouger dans le brouillard."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/32d86e4c-4297-4ba3-9473-0405065c5af5.png","b":[["p","C’était une forme noire… la bête ! J’ai vu ses yeux rouges s’allumer dans la nuit ! Comme ceux d’un démon. J’ai cru qu’elle allait me dévorer ! Depuis, on veillait à ne plus s’éloigner du grand feu du village et même les adultes prenaient garde à ne plus sortir une fois la nuit tombée. Par une nuit sans lune, la grande veillée de l’hiver se tenait au centre du village. Tous les habitants s’étaient réunis autour d’un immense brasier allumé au centre de la place."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/7668dc13-8d60-4124-9f61-f30863e66326.png","b":[["p","Les villageois chantaient, dansaient, faisaient crépiter les bûches en jetant du bois sec dans le brasier. Parmi eux, il y avait Tobby. On célébrait une nouvelle année sans attaque de la bête aux yeux rouges. À la fin de la fête, le chef du village mit feu à un grand épouvantail qui avait une tête de citrouille. Les flammes montaient haut, et tout le monde riait. Cette année, le village avait été plus fort que la bête aux yeux rouges. À la fin de la veillée, tout le monde regagna sa maison. Tobby promit à ses parents qu’il s’endormirait vite."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/e43eaa26-856d-44d1-af98-f6022ee114f1.png","b":[["p","En réalité, il veillait encore en observant les animaux, le front appuyé contre la vitre froide. C’est alors qu’il aperçut une petite belette coincée dans la clôture. Elle se débattait, la patte coincée entre deux planches. Sans réfléchir, Tobby descendit quatre à quatre les escaliers. Personne ne l’avait vu, ses parents dormaient, comme tout le reste du village. Tobby se précipita vers la clôture qui marquait la limite du village et le début de la forêt. Il tenta d’aider l’animal, mais il comprit vite qu’il ne pouvait rien faire de ce côté-ci."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/4b1ccc43-b1db-4e6c-99ec-d24b6e92d595.png","b":[["p","Alors, il prit son courage à deux mains, escalada les planches et sauta du côté interdit sans même s’en rendre compte. Il prit la belette entre ses mains. Elle tremblait, mais le garçon finit par la dégager. Une fois libre, elle fila dans les buissons, le bout de sa queue blanche disparut dans le brouillard. C’est à ce moment-là que Tobby comprit qu’il venait de franchir la limite interdite. La forêt l’enveloppait tout entier. Le regard de Tobby se perdit dans la nappe de brouillard qui s’étendait entre les racines des arbres."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/ce597176-c9d4-464b-8f16-e3de67090b5f.png","b":[["p","C’est à ce moment qu’il la vit, la bête aux yeux rouges. Entre les ronces, ses yeux rouges apparurent. Ils rasaient le sol. On aurait dit des charbons flamboyants. Tobby recula, en surveillant le monstre qui avançait dans sa direction. Il serra son pull contre lui, se mit soudainement à tousser. Il se rendit compte que ce qu’il avait pris pour du brouillard était de la fumée. De la fumée qui provenait de la bête. C’était étrange… À mesure que la bête avançait, il lui semblait que quelque chose clochait."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/054beff5-fc08-4937-8eb8-725333d41a33.png","b":[["p","Soudain, une voix jaillit de la fumée :"],["d","— Tu es du village ? demanda la voix qui était forcément celle de la bête. La bête parlait ? s’étonna Tobby."],["d","— Oui… répondit Tobby, tout tremblant. Je… Je suis un villageois. Il se demanda s’il n’était pas en train de faire un cauchemar. Il discutait avec la bête aux yeux rouges ! Mais à bien y regarder, ces yeux… Ils brillaient étrangement… Parce que ce n’était pas vraiment des yeux."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/3c237dac-0f63-4d58-b511-e2139cc223a4.png","b":[["p","Ce que Tobby avait pris pour les yeux rouges de la bête était en fait deux braises rouges enfermées dans une vieille lanterne en métal. La silhouette noire qui s’approchait n’était pas recouverte de fourrure, comme Tobby l’avait d’abord cru, mais d’une cape couverte de boue. Devant lui se tenait un garçon au visage sale. Il affichait un air inquiet :"],["d","— Si tu es du village, alors toi aussi tu vas vouloir me chasser, dit le garçon."],["d","— Te chasser ? Non ! Viens, il faut partir, la bête rôde !"],["d","— Quelle bête ? demanda le garçon."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/713c0e26-03df-46fd-9589-504b102b012c.png","b":[["p","Je récupère les braises de votre bûcher pour me réchauffer l’hiver dans la petite cabane que j’ai construite. Un jour, je me suis perdu dans les bois. Plusieurs fois j’ai voulu rentrer au village, mais à chaque fois on m’a chassé. Je n’ose plus m’y aventurer."],["d","— Le village est juste-là, suis-moi ! insista Tobby qui montrait la clôture.."],["d","— Non, maintenant les animaux sont mes amis, et la forêt m’a accepté. Maintenant, c’est elle mon village. Tobby le regarda, stupéfait. Il comprit soudain : la bête aux yeux rouges n’avait jamais existé."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/7c610f28-312d-4a65-ab09-6034b0e6dd6d.png","b":[["p","Devant lui se tenait le garçon disparu depuis des mois et des mois."],["d","— Mais tout le monde pense que tu es la bête… dit Tobby."],["d","— C’est la peur qui nourrit l’imagination des villageois… Tiens, donne ça au chef, avec ça il devrait te croire, dit le garçon. Il remit à Tobby de drôles de sabots faits d’écorces, de branches et de mousse tressés ensemble. Tobby respecta le choix du garçon, il le comprenait. Lui aussi aurait aimé vivre parmi les animaux, mais il savait que cela ferait beaucoup trop de peine à ses parents."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/2e517868-85d7-4c7e-9b6e-74d098de503c.png","b":[["p","Alors, Tobby retourna se coucher, en pensant à ce garçon courageux que le village avait rejeté. À la première heure le lendemain matin, il alla voir le chef du village et lui expliqua la rencontre qu’il avait faite dans la nuit. Le chef fut stupéfait, il avait du mal à croire Tobby, mais le garçon de la forêt lui avait donné une preuve. Le chef l’étudia. Ce qu’on avait pris pour des traces de griffes, c’était les empreintes des branches et des touffes de mousses coincées sous les semelles du garçon de la forêt."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/2954ba20-5aee-4a09-beeb-fb63880a0c22.png","b":[["p","Ce que Tobby ignorait, c’est que le garçon avait gravé son nom en dessous. Quand le chef le lut à haute voix, ses conseillers firent le silence. Ils surent tous que Tobby leur avait dit la vérité. Personne n’avait oublié ce nom. Alors, le chef ordonna d’ouvrir une large porte dans la clôture, pour que les hommes et les animaux puissent circuler librement entre le village et la forêt. Chaque soir, on déposait un peu de nourriture, de l’eau fraîche et des braises à l’entrée du bois, pour le garçon de la forêt."]]},{"i":"https://vjvceitpecvztwfbovow.supabase.co/storage/v1/object/public/story-images/contes/ff42e90f-3689-43e1-83f6-b414981b9239/imports/page/19d54f98-c2e8-4fa1-acd2-db9c650981bb.png","b":[["p","Depuis ce jour, on continua à fêter la grande veillée de l’hiver, mais ce n’était plus par crainte de la bête : on y célébrait la paix retrouvée entre le village et la forêt. En continuant à observer les animaux, Tobby l’avait revu, le garçon de la forêt. Il l’avait rejoint et tous deux étaient devenus amis. Tobby lui avait prêté ses plus beaux habits pour participer à la grande veillée. Le soir venu, ils rirent et dansèrent autour du grand épouvantail à tête de citrouille. C’était le seul monstre qui n’avait jamais existé."]]}]}],"parties":["La bête aux yeux rouges"]}</script>
+<script>
+var DEFAUT='#lore/0';
+var D=JSON.parse(document.getElementById('data').textContent);
+function $(s,r){return (r||document).querySelector(s)}
+function $$(s,r){return [].slice.call((r||document).querySelectorAll(s))}
+function h(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+/* texte d'une page : une réplique par ligne, séparateurs ✦ */
+function texte(blocs){return blocs.map(function(b){return b[0]==='s'?'<hr>':'<p class="'+b[0]+'">'+h(b[1])+'</p>'}).join('')}
+/* lightbox : toute image marquée data-z s'ouvre en grand */
+(function(){
+  var v=document.createElement('div');v.className='voile';v.id='voile';v.hidden=true;
+  v.innerHTML='<figure><img alt=""><figcaption></figcaption></figure>';document.body.appendChild(v);
+  window.zoom=function(src,txt){$('img',v).src=src;$('figcaption',v).textContent=txt||'';v.hidden=false};
+  v.addEventListener('click',function(){v.hidden=true});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')v.hidden=true});
+  document.addEventListener('click',function(e){var im=e.target.closest('img[data-z]');if(im){zoom(im.currentSrc||im.src,im.alt)}});
+})();
+/* navigation par hash (#lore/…, #lire/e/p) ; le gabarit définit render() et DEFAUT */
+var route=location.hash||DEFAUT;
+function parse(){return route.slice(1).split('/')}
+function go(hash){route=hash;try{if(location.hash!==hash)history.pushState(null,'',hash)}catch(e){}render()}
+function reroute(){route=location.hash||DEFAUT;render()}
+window.addEventListener('hashchange',reroute);window.addEventListener('popstate',reroute);
+/* lecture : page courante et tourne-page */
+function borne(e,p){e=Math.min(Math.max(+e||1,1),D.eps.length);var n=D.eps[e-1].pages.length;p=Math.min(Math.max(+p||1,1),n);return[e,p]}
+function voisin(e,p,d){p+=d;if(p>D.eps[e-1].pages.length){if(e>=D.eps.length)return null;return[e+1,1]}if(p<1){if(e<=1)return null;return[e-1,D.eps[e-2].pages.length]}return[e,p]}
+
+/* les yeux de la bête suivent le curseur */
+(function(){var l=$('#lisiere'),y=$('#yeux');l.addEventListener('mousemove',function(e){var r=l.getBoundingClientRect(),cx=(e.clientX-r.left)/r.width-.5,cy=(e.clientY-r.top)/r.height-.5;y.style.transform='translate('+(cx*34)+'px,'+(cy*22)+'px)'})})();
+var sel=0,lieu=0;
+function render(){
+  var p=parse(),top=p[0]==='lire'?'lire':'lore';
+  $$('[data-top]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.top===top)});
+  $('#p-lore').hidden=top!=='lore';$('#p-lire').hidden=top!=='lire';document.body.dataset.vue=top;$('#bandeau').style.setProperty('--bandeau','url('+(top==='lore'?D.fonds.persos:D.fonds.lieux)+')');document.documentElement.style.setProperty('--fond-persos','url('+D.fonds.persos+')');
+  if(top==='lore'){sel=Math.min(+p[1]||0,D.persos.length-1);lieu=0;lore()}else lire(+p[1]||1,+p[2]||1);
+}
+function lore(){
+  $('#cercle').innerHTML=D.persos.map(function(g,i){return '<button class="veilleur" role="tab" aria-selected="'+(i===sel)+'" data-p="'+i+'"><span class="rond"><img src="'+h(g.main.img)+'" alt=""></span><b>'+h(g.main.title)+'</b></button>'}).join('');
+  var g=D.persos[sel],m=g.main;
+  var aut=g.entourage.map(function(x){return '<div class="compagnon"><img src="'+h(x.img)+'" alt="'+h(x.title)+'" data-z><div><b>'+h(x.title)+'</b><p>'+h(x.desc)+'</p></div></div>'}).join('');
+  var lx=g.lieux,l=lx[Math.min(lieu,lx.length-1)];
+  $('#recit').innerHTML='<article class="recit"><h3>'+h(m.title)+'</h3><p>'+h(m.desc)+'</p>'+(aut?'<div class="autres">'+aut+'</div>':'')+'</article>'+
+   (lx.length?'<div class="lanterne"><div class="etq">LES LIEUX, À LA LUEUR DE LA LANTERNE</div><div class="lanterne__zone"><div class="piquets">'+lx.map(function(x,i){return '<button class="piquet" aria-current="'+(i===lieu)+'" data-l="'+i+'">'+h(x.title)+'</button>'}).join('')+'</div><figure class="vue" id="vue" style="margin:0"><img src="'+h(l.img)+'" alt="'+h(l.title)+'"><span class="aide">promène la lanterne</span><figcaption>'+h(l.title)+'</figcaption></figure></div></div>':'');
+  $('#relique').innerHTML=D.objets.length?'<div class="etq" style="font-family:Cinzel,serif;letter-spacing:.2em;font-size:.78rem;color:#ff9a3c;text-align:center;margin:40px 0 12px">LES RELIQUES</div><div class="objets">'+D.objets.map(function(x){return '<figure class="relique"><img src="'+h(x.img)+'" alt="'+h(x.title)+'" data-z loading="lazy"><figcaption>'+h(x.title)+'</figcaption></figure>'}).join('')+'</div>':'';
+  var v=$('#vue');if(v){v.addEventListener('mousemove',function(e){var r=v.getBoundingClientRect();v.style.setProperty('--lx',(e.clientX-r.left)+'px');v.style.setProperty('--ly',(e.clientY-r.top)+'px')});v.addEventListener('click',function(){zoom($('img',v).src,l.title)})}
+}
+function lire(e,pg){
+  var r=borne(e,pg);e=r[0];pg=r[1];var ep=D.eps[e-1],page=ep.pages[pg-1],n=ep.pages.length,pre=voisin(e,pg,-1),sui=voisin(e,pg,1),p=(pg-1)/(n-1);
+  $('#chapitre').innerHTML='<article class="chapitre"><div class="chapitre__img"><img src="'+h(page.i)+'" alt="Illustration '+pg+'" data-z></div><div class="texte">'+texte(page.b)+'</div>'+
+   '<div class="pas"><button class="btn" data-n="-1"'+(pre?'':' disabled')+'>← VERS LE FEU</button><div class="braises" aria-label="Pages">'+ep.pages.map(function(_,i){return '<button class="'+(i+1<pg?'fait':'')+'" aria-label="Page '+(i+1)+'" aria-current="'+(i+1===pg)+'" data-pg="'+(i+1)+'"></button>'}).join('')+'</div><button class="btn btn--feu" data-n="1"'+(sui?'':' disabled')+'>DANS LA NUIT →</button></div></article>';
+  $('.guet').style.setProperty('--p',p);$('#gyeux').style.setProperty('--p',p);
+  $('#gtxt').textContent=p<.35?'La bête rôde…':p<.7?'Quelque chose brille entre les ronces…':'Ce n’étaient pas des yeux : juste des braises.';
+  window._cur=[e,pg];if(sui){var im=new Image();im.src=D.eps[sui[0]-1].pages[sui[1]-1].i}
+}
+document.addEventListener('click',function(ev){
+  var t=ev.target.closest('[data-top],[data-p],[data-l],[data-pg],[data-n]');if(!t)return;
+  if(t.dataset.top)return go(t.dataset.top==='lore'?'#lore/0':'#lire/1/1');
+  if(t.dataset.p!==undefined)return go('#lore/'+t.dataset.p);
+  if(t.dataset.l!==undefined){lieu=+t.dataset.l;return lore()}
+  if(t.dataset.pg)return go('#lire/'+window._cur[0]+'/'+t.dataset.pg);
+  if(t.dataset.n){var v=voisin(window._cur[0],window._cur[1],+t.dataset.n);if(v){go('#lire/'+v[0]+'/'+v[1]);$('#chapitre').scrollIntoView({block:'start'})}}
+});
+document.addEventListener('keydown',function(e){if(!$('#p-lire').hidden&&$('#voile').hidden){var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(d){var v=voisin(window._cur[0],window._cur[1],d);if(v)go('#lire/'+v[0]+'/'+v[1])}}});
+render();
+</script>
+</body>
+</html>

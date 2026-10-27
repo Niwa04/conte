@@ -1,0 +1,167 @@
+@use '../../../shared/conte-monde' as cm;
+
+@include cm.base;
+@include cm.galerie-trois;
+
+:host {
+  --terre: #b5532a;
+  --ocre: #e0a64a;
+  --indigo: #1f2f6b;
+  --turquoise: #17a0a8;
+  --creme: #f7e8c8;
+  --nuit: #2a1608;
+  color: var(--creme);
+  background: var(--nuit);
+}
+
+h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; }
+h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); color: #fff3d0; }
+.etiquette { color: var(--ocre); }
+
+/* ---------- Ouverture ---------- */
+.ouverture {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 4.5rem 1.25rem 8rem;
+  background:
+    linear-gradient(180deg, rgb(42 22 8 / 0.25), rgb(42 22 8 / 0.88)),
+    var(--fond) center / cover;
+
+  &__interieur { max-width: 1150px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.1fr; gap: 3rem; align-items: center; }
+  &__texte h1 { margin: 0.5rem 0 0.7rem; font-size: clamp(2.6rem, 6.5vw, 4.6rem); line-height: 1.05; color: #fff; text-shadow: 0 4px 22px #000; }
+  &__accroche { font-size: 1.3rem; line-height: 1.5; color: #fff; text-shadow: 0 2px 8px #000; max-width: 28em; }
+  &__origine { margin-top: 0.9rem; font-size: 0.92rem; color: #f3e1bd; text-shadow: 0 1px 6px #000; max-width: 34em; }
+  &__actions { margin-top: 1.5rem; }
+  &__livre img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border: 6px solid var(--creme); border-radius: 120px 8px 120px 8px / 60px 8px 60px 8px; box-shadow: 0 22px 46px rgb(0 0 0 / 0.55); }
+}
+.bande-motifs { position: absolute; left: 0; right: 0; bottom: 0; height: 56px; background-size: auto 100%; background-repeat: repeat-x; border-top: 4px solid var(--ocre); opacity: 0.95; }
+
+.pays-badge { padding: 0.35rem 1rem 0.35rem 0.5rem; border-radius: 999px; background: rgb(42 22 8 / 0.7); border: 1px solid var(--ocre); }
+.pastilles li { padding: 0.25rem 0.9rem; border-radius: 999px; background: rgb(42 22 8 / 0.75); border: 1px solid var(--ocre); color: #ffe7b0; font-size: 0.9rem; }
+
+/* ---------- Créneaux de terre entre les parties ---------- */
+.creneaux { height: 46px; background: #a8532c; border-top: 0;
+  mask: repeating-linear-gradient(90deg, #000 0 34px, transparent 34px 58px) top / 100% 24px no-repeat, linear-gradient(#000, #000) bottom / 100% 22px no-repeat;
+  box-shadow: inset 0 -8px 0 rgb(0 0 0 / 0.15); }
+
+/* ---------- Pays : la porte de la cité et trois étendards d'indigo ---------- */
+.pays {
+  background: linear-gradient(rgb(42 22 8 / 0.8), rgb(42 22 8 / 0.9)), var(--fond) center / cover;
+  &__grille { display: grid; grid-template-columns: 300px 1fr; gap: 3rem; align-items: center; }
+  &__intro { margin: 0.8rem 0 1.8rem; font-size: 1.15rem; line-height: 1.65; max-width: 40em; }
+}
+.porte-cite {
+  &__tour { height: 46px; background: #a8532c; mask: repeating-linear-gradient(90deg, #000 0 24px, transparent 24px 40px) top / 100% 22px no-repeat, linear-gradient(#000, #000) bottom / 100% 24px no-repeat; }
+  &__arc { text-align: center; padding: 3.4rem 1.2rem 1.6rem; background: linear-gradient(rgb(168 83 44 / 0.9), rgb(120 56 26 / 0.94)), var(--zana) center / 150px 150px; border-radius: 0 0 6px 6px; box-shadow: 0 22px 40px rgb(0 0 0 / 0.55); position: relative; }
+  &__arc::before { content: ''; position: absolute; left: 14%; right: 14%; top: -2px; height: 52px; border-radius: 0 0 100px 100px; background: #2a1608; box-shadow: inset 0 -8px 12px rgb(0 0 0 / 0.5); }
+  img { position: relative; width: 74%; height: auto; border-radius: 3px; border: 3px solid var(--creme); }
+  &__nom { margin-top: 0.8rem; font-family: Georgia, serif; font-size: 1.8rem; font-weight: 700; color: #fff; text-shadow: 0 2px 6px #000; }
+  &__natif, &__ou { font-size: 0.95rem; color: #fff0d0; text-shadow: 0 1px 4px #000; }
+}
+.mots-titre { margin-top: 1.2rem; font-size: 0.82rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ocre); }
+.etendards { display: flex; flex-wrap: wrap; gap: 1.4rem; margin: 0; padding: 0 0 0 6px; list-style: none; border-left: 6px solid #5a3a1c; }
+.etendards li {
+  position: relative;
+  display: grid;
+  gap: 0.15rem;
+  width: 170px;
+  padding: 1rem 0.8rem 2.6rem;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(rgb(20 30 80 / 0.55), rgb(20 30 80 / 0.55)), var(--indigo-tissu) center / 170px 170px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 26px), 0 100%);
+  filter: drop-shadow(0 8px 10px rgb(0 0 0 / 0.5));
+  &:nth-child(2) { margin-top: 26px; }
+}
+.etendard__natif { font-family: Georgia, serif; font-size: 1.6rem; font-weight: 700; color: #ffe7b0; text-shadow: 0 2px 6px #000; }
+.etendard__prononce { font-style: italic; text-shadow: 0 1px 4px #000; }
+.etendard__sens { font-size: 0.95rem; text-shadow: 0 1px 4px #000; }
+
+/* ---------- Histoire : la ville en bandeau, un mur de terre travaillé, une fenêtre à arc ---------- */
+.histoire { position: relative; }
+.histoire__ciel { height: clamp(180px, 26vw, 320px); background-size: cover; background-position: center 40%; border-bottom: 8px solid #5a3a1c; }
+.histoire__mur { background: linear-gradient(rgb(120 56 26 / 0.93), rgb(90 40 18 / 0.96)), var(--zana) center / 200px 200px; }
+.histoire__grille { display: grid; grid-template-columns: 1fr 1.1fr; gap: 3rem; align-items: center; }
+.citation { margin: 1.2rem 0; padding: 0.4rem 0 0.4rem 1.2rem; border-left: 4px solid var(--ocre); font-family: Georgia, serif; font-size: 1.35rem; font-style: italic; color: #ffe7b0; }
+.resume { font-size: 1.15rem; line-height: 1.75; }
+.histoire__visuel { margin: 0; figcaption { margin-top: 0.6rem; text-align: center; font-style: italic; color: #f3e1bd; } }
+.fenetre-arc { padding: 14px 14px 0; background: var(--indigo-tissu) center / 160px 160px; border-radius: 140px 140px 6px 6px; border: 4px solid var(--creme); box-shadow: 0 20px 40px rgb(0 0 0 / 0.55);
+  img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 120px 120px 0 0 / 80px 80px 0 0; border: 3px solid var(--creme); border-bottom: 0; } }
+
+/* ---------- Deux chemins ---------- */
+.chemins {
+  position: relative;
+  isolation: isolate;
+  background: var(--fond) center / cover;
+  &::before { content: ''; position: absolute; inset: 0; z-index: -1; background: rgb(42 22 8 / 0.82); }
+  &__corps { display: grid; grid-template-columns: minmax(280px, 460px) 1fr; gap: 2.4rem; margin-top: 1.6rem; align-items: start; }
+}
+.carte { border: 6px solid var(--creme); border-radius: 12px; overflow: hidden; box-shadow: 0 18px 40px rgb(0 0 0 / 0.5); background: #e9c98f; }
+.carte svg { display: block; width: 100%; height: auto; }
+.piste { fill: none; stroke: rgb(120 70 30 / 0.45); stroke-width: 10; stroke-dasharray: 3 14; stroke-linecap: round; transition: stroke 0.4s; &--prise { stroke: var(--turquoise); stroke-dasharray: none; } }
+.adversaires { transition: opacity 0.8s, transform 0.8s; &--partis { opacity: 0; transform: translateY(-30px); } }
+.etiquette-carte { font-family: Georgia, serif; font-weight: 700; font-size: 18px; fill: #3b1d0c; }
+.cav { transform: translate(200px, 296px); transition: transform 1.1s ease-in-out; }
+.cav--g.cav--parti { transform: translate(150px, 76px); }
+.cav--d.cav--parti { transform: translate(250px, 76px); }
+@media (prefers-reduced-motion: reduce) { .cav, .adversaires, .piste { transition: none; } }
+
+.commande { display: grid; gap: 1rem; align-content: start;
+  &__msg { padding: 1rem 1.2rem; border-radius: 12px; background: rgb(247 232 200 / 0.96); color: #3b1d0c; font-size: 1.12rem; line-height: 1.55; border-left: 8px solid var(--turquoise); }
+  &__boutons { display: flex; flex-wrap: wrap; gap: 0.8rem; } }
+.ordre { padding: 0.7rem 1.3rem; border-radius: 999px; border: 3px solid var(--creme); background: var(--turquoise); color: #fff; font-weight: 700; &:focus-visible { outline: 3px solid #fff; outline-offset: 3px; } &[disabled] { opacity: 0.45; background: #4a6264; } }
+.reset { justify-self: start; padding: 0.4rem 1rem; border-radius: 999px; border: 2px solid var(--creme); background: transparent; color: var(--creme); }
+.victoire { margin: 0; }
+.victoire img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 8px; border: 4px solid var(--ocre); animation: apparait 0.8s ease both; }
+@keyframes apparait { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: none; } }
+
+/* ---------- Galerie ---------- */
+.galerie {
+  background: linear-gradient(rgb(42 22 8 / 0.8), rgb(42 22 8 / 0.9)), var(--fond) center / cover;
+  .cadre { padding: 14px; background: var(--indigo-tissu) center / 150px 150px; border: 4px solid var(--creme); border-radius: 60px 60px 6px 6px; box-shadow: 0 14px 28px rgb(0 0 0 / 0.55); }
+  .cadre img { border: 3px solid var(--creme); border-radius: 46px 46px 2px 2px / 28px 28px 2px 2px; }
+  .cadre:nth-child(2) { margin-top: 1.6rem; }
+}
+
+/* ---------- Personnages ---------- */
+.gens {
+  background: linear-gradient(rgb(42 22 8 / 0.84), rgb(42 22 8 / 0.93)), var(--fond) center / cover;
+  --pc-fond: rgb(31 47 107 / 0.9);
+  --pc-texte: #fff;
+  --pc-accent: var(--ocre);
+  --pc-bord: var(--ocre);
+  --pc-rayon: 18px;
+  --pc-vignette: 50%;
+}
+.chapeau { margin: 0.6rem 0 1.6rem; font-size: 1.1rem; }
+
+/* ---------- Origine ---------- */
+.origine {
+  color: #2c1808;
+  background: var(--creme);
+  border-top: 10px solid var(--terre);
+  h2 { color: var(--indigo); }
+  .etiquette { color: #8a4a14; }
+}
+.oeuvre { margin: 1.4rem 0; padding: 1rem 1.3rem; background: #fff; border-left: 8px solid var(--indigo); border-radius: 6px; box-shadow: 0 8px 20px rgb(0 0 0 / 0.12); }
+.oeuvre__etiquette { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--indigo); font-weight: 700; }
+.oeuvre__titre { font-family: Georgia, serif; font-size: 1.3rem; font-weight: 700; margin: 0.2rem 0; }
+.origine__colonnes { columns: 2 22em; column-gap: 2.4rem; font-size: 1.08rem; line-height: 1.7; p { margin: 0 0 1rem; break-inside: avoid; } }
+
+/* ---------- Fiche ---------- */
+.fiche-section { background: linear-gradient(rgb(31 47 107 / 0.86), rgb(20 30 80 / 0.92)), var(--indigo-tissu) center / 300px 300px; h2 { margin-bottom: 1.4rem; color: #fff; } --fc-fond: #f7e8c8; --fc-texte: #2c1808; --fc-accent: #1f2f6b; --fc-accent-texte: #1f2f6b; }
+
+/* ---------- Appel ---------- */
+.appel {
+  background: linear-gradient(rgb(42 22 8 / 0.45), rgb(42 22 8 / 0.85)), var(--fond) center / cover;
+  p { margin: 0.8rem 0 1.6rem; font-size: 1.2rem; text-shadow: 0 2px 8px #000; }
+}
+
+@media (max-width: 900px) {
+  .ouverture__interieur, .histoire__grille, .pays__grille, .chemins__corps { grid-template-columns: 1fr; gap: 2rem; }
+  .ouverture__livre { order: -1; }
+  .porte-cite { max-width: 320px; margin: 0 auto; }
+  .etendards { justify-content: center; border-left: 0; }
+}
+@media (max-width: 600px) { .section { padding: 3.5rem 1rem; } }

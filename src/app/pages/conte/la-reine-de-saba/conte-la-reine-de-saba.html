@@ -1,0 +1,193 @@
+<main class="sa" [style.--manuscrit]="deco('motif')" [style.--albatre]="deco('tuile')">
+  <!-- Ouverture : la caravane sous les étoiles -->
+  <section class="ouverture" [style.--fond]="deco('caravane')">
+    <div class="ouverture__interieur">
+      <div class="ouverture__texte">
+        <div class="pays-badge">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <span><strong>Éthiopie</strong> · ኢትዮጵያ</span>
+        </div>
+        <h1>{{ conte().titre }}</h1>
+        <p class="ouverture__accroche">{{ conte().accroche }}</p>
+        <p class="ouverture__origine">{{ conte().mentionOrigine }}</p>
+        <ul class="pastilles">
+          @for (e of conte().etiquettes; track e) { <li>{{ e }}</li> }
+        </ul>
+        <div class="ouverture__actions">
+          <a class="bouton bouton--vert bouton--brille" [href]="appUrl">Lire dans l’application</a>
+        </div>
+      </div>
+      <div class="ouverture__livre">
+        <img [src]="conte().couverture" [alt]="conte().couvertureAlt" width="1400" height="788" fetchpriority="high">
+      </div>
+    </div>
+    <div class="bande-croix" aria-hidden="true"></div>
+  </section>
+
+  <!-- Le pays : un triptyque d'icône, trois onglets de parchemin réglé -->
+  <section class="pays section" aria-labelledby="titre-pays" [style.--fond]="deco('encens')">
+    <div class="interieur pays__grille">
+      <div class="triptyque">
+        <div class="triptyque__aile" aria-hidden="true"></div>
+        <div class="triptyque__centre">
+          <img [src]="conte().drapeau.src" [alt]="conte().drapeau.alt" width="300" height="200">
+          <p class="triptyque__nom">Éthiopie</p>
+          <p class="triptyque__natif" lang="am">ኢትዮጵያ · Ityopp’ya</p>
+          <p class="triptyque__ou">Royaume de Saba</p>
+        </div>
+        <div class="triptyque__aile" aria-hidden="true"></div>
+      </div>
+      <div class="pays__texte">
+        <p class="etiquette">Un conte venu d’Éthiopie</p>
+        <h2 id="titre-pays">Un pays de hautes montagnes et de rivières claires</h2>
+        <p class="pays__intro">En Éthiopie, on raconte que la reine Makeda régnait sur Saba et qu’elle a traversé le désert pour rencontrer le roi Salomon. Cette histoire se transmet depuis des siècles.</p>
+        <ul class="onglets-mots">
+          @for (m of mots; track m.roman) {
+            <li appApparition>
+              <span class="onglet__geez" lang="am">{{ m.geez }}</span>
+              <span class="onglet__roman">{{ m.roman }} <em>· {{ m.prononce }}</em></span>
+              <span class="onglet__sens">{{ m.sens }}</span>
+            </li>
+          }
+        </ul>
+        <p class="mots-note">Trois mots amhariques, écrits en écriture éthiopienne (à vérifier).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- L'histoire : un folio de manuscrit, lettrine rubriquée, miniature ornée -->
+  <section class="histoire section" id="histoire" [style.--fond]="deco('bibliotheque')">
+    <div class="interieur">
+      <div class="folio">
+        <div class="folio__page">
+          <div class="folio__texte">
+            <p class="etiquette">L’histoire</p>
+            <h2>La reine qui comptait les étoiles</h2>
+            <blockquote appApparition class="citation"><p>{{ conte().citation }}</p></blockquote>
+            <p appApparition class="resume">{{ conte().resume }}</p>
+          </div>
+          <figure appApparition class="miniature">
+            <div class="miniature__cadre">
+              <img [src]="conte().imageHistoire.src" [alt]="conte().imageHistoire.alt" loading="lazy" width="1400" height="788">
+            </div>
+            <figcaption>{{ conte().imageHistoire.legende }}</figcaption>
+          </figure>
+        </div>
+        <span class="signet" aria-hidden="true"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Les énigmes et les étoiles -->
+  <section class="enigmes section" aria-labelledby="titre-enigmes" [style.--fond]="deco('etoiles')">
+    <div class="interieur">
+      <p class="etiquette">À toi de réfléchir</p>
+      <h2 id="titre-enigmes">Les énigmes de Makeda</h2>
+      <p class="chapeau">Chaque bonne réponse allume une étoile dans le ciel de la reine.</p>
+
+      <div class="enigmes__corps">
+        <div class="ciel" [class.ciel--fini]="fini()">
+          <svg viewBox="0 0 300 200" role="img" [attr.aria-label]="trouvees() + ' étoiles allumées sur 3'">
+            <path class="liaison" d="M60 140 L130 70 L210 110 L250 50" [class.liaison--vive]="fini()"/>
+            @for (p of [[60, 140], [130, 70], [210, 110]]; track $index) {
+              <g [attr.transform]="'translate(' + p[0] + ' ' + p[1] + ')'" class="etoile" [class.etoile--allumee]="$index < trouvees()">
+                <path d="M0 -16 L4 -4 L16 0 L4 4 L0 16 L-4 4 L-16 0 L-4 -4Z"/>
+              </g>
+            }
+            <g transform="translate(250 50)" class="etoile etoile--reine" [class.etoile--allumee]="fini()">
+              <path d="M0 -26 L6 -7 L26 0 L6 7 L0 26 L-6 7 L-26 0 L-6 -7Z"/>
+            </g>
+          </svg>
+          <p class="ciel__legende">{{ fini() ? 'L’étoile de Makeda brille !' : trouvees() + ' / 3 étoiles' }}</p>
+        </div>
+
+        <div class="question">
+          @if (!fini() || resolue()) {
+            <p class="question__num">Énigme {{ index() + 1 }} sur {{ enigmes.length }}</p>
+            <h3>{{ enigme().question }}</h3>
+            <ul class="choix">
+              @for (c of enigme().choix; track c; let i = $index) {
+                <li>
+                  <button type="button" class="reponse" [class.reponse--bonne]="resolue() && i === enigme().bonne" [class.reponse--mauvaise]="!resolue() && essai() === i" [disabled]="resolue()" (click)="repondre(i)">{{ c }}</button>
+                </li>
+              }
+            </ul>
+            @if (!resolue() && essai() !== null) {
+              <p class="retour retour--non" aria-live="polite">Pas tout à fait. Réfléchis encore, comme Makeda.</p>
+            }
+            @if (resolue()) {
+              <p class="retour retour--oui" aria-live="polite">{{ enigme().explication }}</p>
+              @if (!fini()) {
+                <button type="button" class="suite" (click)="suivante()">Énigme suivante →</button>
+              }
+            }
+          }
+          @if (fini()) {
+            <p class="bravo">Bravo ! Les trois énigmes sont résolues. Makeda a trouvé quelqu’un qui aime réfléchir autant qu’elle.</p>
+            <button type="button" class="suite suite--clair" (click)="recommencer()">Rejouer</button>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Illustrations -->
+  <section class="galerie section" id="illustrations" [style.--fond]="fond(9)">
+    <div class="interieur">
+      <p class="etiquette">Les illustrations</p>
+      <h2>Un conte à regarder autant qu’à lire</h2>
+      <ul class="galerie-trois">
+        @for (i of conte().illustrations; track i.src; let n = $index) {
+          <li appApparition class="cadre" [style.transition-delay.ms]="n * 120">
+            <img [src]="i.src" [alt]="i.alt" loading="lazy" width="1400" height="788">
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Personnages -->
+  <section class="gens section" id="personnages" aria-labelledby="titre-gens" [style.--fond]="deco('palais')">
+    <div class="interieur">
+      <p class="etiquette">Les personnages</p>
+      <h2 id="titre-gens">Ceux de Saba et de Jérusalem</h2>
+      <p class="chapeau">Choisis un personnage pour le découvrir.</p>
+      <app-personnages-conte [personnages]="conte().personnages" idBase="saba" />
+    </div>
+  </section>
+
+  <!-- Origine -->
+  <section class="origine section">
+    <div class="interieur">
+      <p class="etiquette">L’origine</p>
+      <h2>{{ conte().origine.titre }}</h2>
+      <aside class="oeuvre" appApparition>
+        <p class="oeuvre__etiquette">L’œuvre d’origine</p>
+        <p class="oeuvre__titre">Kebra Nagast · <span lang="am">ክብረ ነገሥት</span></p>
+        <p class="oeuvre__auteur">« La Gloire des rois » · Éthiopie, XIVe siècle · d’après la Bible, 1 Rois 10 et 2 Chroniques 9</p>
+      </aside>
+      <div class="origine__colonnes">
+        @for (p of conte().origine.paragraphes; track p) {
+          <p appApparition>{{ p }}</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Fiche -->
+  <section class="fiche-section section" id="fiche">
+    <div class="interieur centre">
+      <p class="etiquette">En un coup d’œil</p>
+      <h2>La fiche du conte</h2>
+      <app-fiche-conte [titre]="conte().titre" [infos]="conte().infos" />
+    </div>
+  </section>
+
+  <section class="appel section" [style.--fond]="fond(12)">
+    <div class="interieur centre">
+      <h2>Prêt à suivre la caravane ?</h2>
+      <p>Ouvre l’application et découvre Makeda en entier.</p>
+      <button type="button" class="bouton bouton--vert bouton--brille bouton--grand" (click)="installer()">Télécharger l’application</button>
+    </div>
+  </section>
+</main>
