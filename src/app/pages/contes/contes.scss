@@ -88,6 +88,14 @@
   color: var(--mdc-cream);
   text-shadow: 0 0 18px rgb(243 210 122 / 0.4);
 }
+.categorie__nombre {
+  margin-left: 0.4rem;
+  font-family: inherit;
+  font-size: 0.55em;
+  font-weight: 400;
+  vertical-align: baseline;
+  opacity: 0.55;
+}
 
 /* Uniquement les couvertures : chaque image est affichée en entier, sans texte ni cadre. */
 .cartes {
@@ -114,6 +122,17 @@
     &:not(&--inactif):hover, &:focus-visible { transform: translateY(-6px); box-shadow: 0 20px 34px rgb(0 0 0 / 0.55); }
     &:focus-visible { outline: 3px solid var(--mdc-gold-clair); outline-offset: 3px; }
     &--inactif { cursor: default; }
+  }
+
+  /* Couverture 3D (livre en perspective, fond transparent) : pas de cadre ni de coins coupés,
+     l'ombre épouse la forme du livre. */
+  &--3d &__lien {
+    border-radius: 0;
+    overflow: visible;
+    box-shadow: none;
+    img { filter: drop-shadow(0 14px 16px rgb(0 0 0 / 0.5)); transition: filter 0.25s ease; }
+    &:not(.carte__lien--inactif):hover, &:focus-visible { box-shadow: none; }
+    &:not(.carte__lien--inactif):hover img, &:focus-visible img { filter: drop-shadow(0 22px 24px rgb(0 0 0 / 0.6)); }
   }
 }
 

@@ -7,9 +7,20 @@ export interface ContePublic {
   title: string;
   /** Catégorie du conte dans le studio : classique, enfant, original, monde… */
   category: string;
+  /** Couverture à plat (toujours présente). */
   cover_url: string;
+  /** Couverture 3D / perspective, quand elle existe : c'est elle qu'on affiche dans la liste. */
+  cover_perspective_url?: string | null;
+  /** Tranche / dos du livre, quand elle existe. */
+  cover_spine_url?: string | null;
   /** Chemin du site (/contes/…) ou lien http(s) ; null tant qu'aucune page de présentation n'est renseignée. */
   presentation_url: string | null;
+}
+
+/** Catégorie définie dans le studio (table story_categories), dans son ordre d'affichage. */
+export interface CategoriePublique {
+  slug: string;
+  label: string;
 }
 
 /**
@@ -19,6 +30,7 @@ export interface ContePublic {
 @Injectable({ providedIn: 'root' })
 export class ContesPublicsService {
   readonly contes = signal<ContePublic[]>([]);
+  readonly categories = signal<CategoriePublique[]>([]);
   readonly chargement = signal(false);
   readonly erreur = signal<string | null>(null);
   readonly charge = signal(false);
@@ -42,8 +54,9 @@ export class ContesPublicsService {
         headers: supabasePublishableKey ? { apikey: supabasePublishableKey } : {}
       });
       if (!reponse.ok) throw new Error(`Liste des contes indisponible (erreur ${reponse.status}).`);
-      const { stories } = (await reponse.json()) as { stories?: ContePublic[] };
+      const { stories, categories } = (await reponse.json()) as { stories?: ContePublic[]; categories?: CategoriePublique[] };
       this.contes.set((stories ?? []).filter((conte) => !!conte.cover_url));
+      this.categories.set(categories ?? []);
       this.charge.set(true);
     } catch (erreur) {
       this.erreur.set(erreur instanceof Error ? erreur.message : 'Impossible de charger les contes.');

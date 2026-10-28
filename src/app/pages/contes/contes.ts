@@ -5,15 +5,6 @@ import { ContesPublicsService, type ContePublic } from '../../core/contes-public
 import { PwaService } from '../../core/pwa.service';
 import { Lucioles } from '../../shared/lucioles';
 
-/** Ordre d'affichage des catégories ; les autres catégories passent ensuite, sous « Autres contes ». */
-const CATEGORIES = [
-  { cle: 'classique', titre: 'Contes classiques' },
-  { cle: 'enfant', titre: 'Contes pour enfants' },
-  { cle: 'original', titre: 'Contes originaux' },
-  { cle: 'monde', titre: 'Contes du monde' },
-  { cle: 'extension_univers', titre: 'Contes d’extension d’univers' }
-] as const;
-
 /**
  * Liste des contes du studio qui ont une image de couverture.
  * Un clic ouvre l'URL de présentation du conte quand elle est renseignée dans le studio.
@@ -28,13 +19,15 @@ export class Contes implements OnInit {
   private readonly pwa = inject(PwaService);
   protected readonly catalogue = inject(ContesPublicsService);
 
+  /** Une section par catégorie du studio (dans son ordre) ; les contes sans catégorie connue passent sous « Autres contes ». */
   protected readonly sections = computed(() => {
     const contes = this.catalogue.contes();
-    const connues = new Set<string>(CATEGORIES.map((categorie) => categorie.cle));
-    const sections: Array<{ cle: string; titre: string; contes: ContePublic[] }> = CATEGORIES.map(({ cle, titre }) => ({
-      cle,
-      titre,
-      contes: contes.filter((conte) => conte.category === cle)
+    const categories = this.catalogue.categories();
+    const connues = new Set<string>(categories.map((categorie) => categorie.slug));
+    const sections: Array<{ cle: string; titre: string; contes: ContePublic[] }> = categories.map(({ slug, label }) => ({
+      cle: slug,
+      titre: label,
+      contes: contes.filter((conte) => conte.category === slug)
     }));
     sections.push({ cle: 'autres', titre: 'Autres contes', contes: contes.filter((conte) => !connues.has(conte.category)) });
     return sections.filter((section) => section.contes.length > 0);
@@ -47,6 +40,15 @@ export class Contes implements OnInit {
 
   ngOnInit(): void {
     void this.catalogue.charger();
+  }
+
+  /** Image de la liste : la couverture 3D / perspective si elle existe, sinon la couverture normale. */
+  protected image(conte: ContePublic): string {
+    return conte.cover_perspective_url || conte.cover_url;
+  }
+
+  protected est3d(conte: ContePublic): boolean {
+    return !!conte.cover_perspective_url;
   }
 
   /** Chemin du site (/contes/…) : navigation interne ; sinon lien externe, ouvert dans un nouvel onglet. */

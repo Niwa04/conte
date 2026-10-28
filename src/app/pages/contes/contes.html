@@ -26,27 +26,27 @@
       } @else {
         @for (section of sections(); track section.cle) {
           <section class="categorie" [attr.aria-labelledby]="'categorie-' + section.cle">
-            <h2 [id]="'categorie-' + section.cle">{{ section.titre }}</h2>
+            <h2 [id]="'categorie-' + section.cle">{{ section.titre }} <span class="categorie__nombre">{{ section.contes.length }}</span></h2>
             <ul class="cartes">
             @for (c of section.contes; track c.id) {
-              <li class="carte">
+              <li class="carte" [class.carte--3d]="est3d(c)">
                 @if (c.presentation_url; as url) {
                   @if (estInterne(url)) {
                     <a class="carte__lien" [routerLink]="url" [attr.aria-label]="c.title">
-                      <img [src]="c.cover_url" [alt]="'Couverture de ' + c.title" loading="lazy">
+                      <img [src]="image(c)" [alt]="'Couverture de ' + c.title" loading="lazy">
                     </a>
                   } @else if (estFichier(url)) {
                     <a class="carte__lien" [href]="url" [attr.aria-label]="c.title">
-                      <img [src]="c.cover_url" [alt]="'Couverture de ' + c.title" loading="lazy">
+                      <img [src]="image(c)" [alt]="'Couverture de ' + c.title" loading="lazy">
                     </a>
                   } @else {
                     <a class="carte__lien" [href]="url" target="_blank" rel="noopener noreferrer" [attr.aria-label]="c.title + ' (nouvel onglet)'">
-                      <img [src]="c.cover_url" [alt]="'Couverture de ' + c.title" loading="lazy">
+                      <img [src]="image(c)" [alt]="'Couverture de ' + c.title" loading="lazy">
                     </a>
                   }
                 } @else {
                   <div class="carte__lien carte__lien--inactif">
-                    <img [src]="c.cover_url" [alt]="'Couverture de ' + c.title" loading="lazy">
+                    <img [src]="image(c)" [alt]="'Couverture de ' + c.title" loading="lazy">
                   </div>
                 }
               </li>
